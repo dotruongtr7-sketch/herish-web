@@ -74,7 +74,7 @@
     </div>
     <header class="site-header">
       <div class="container">
-        <a class="logo" href="index.html">Herish<span>.</span></a>
+        <a class="logo" href="index.html">Her<span class="i-dot">ı</span>sh</a>
         <nav class="main-nav" id="mainNav">
           <a href="index.html" ${active === 'home' ? 'class="active"' : ''}>Trang chủ</a>
           <a href="products.html" ${active === 'products' ? 'class="active"' : ''}>Sản phẩm</a>
@@ -92,7 +92,7 @@
       <div class="container">
         <div class="footer-grid">
           <div>
-            <a class="logo" href="index.html">Herish<span>.</span></a>
+            <a class="logo" href="index.html">Her<span class="i-dot">ı</span>sh</a>
             <p>Herish — thương hiệu quà tặng giúp bạn trao gửi yêu thương trọn vẹn.
             Mỗi hộp quà được tuyển chọn và gói ghém tỉ mỉ, sẵn sàng thay bạn nói lời trân quý nhất.</p>
           </div>
