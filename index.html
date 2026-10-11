@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Herish — Quà tặng trao gửi yêu thương | Hộp quà, set quà cho nàng</title>
-  <meta name="description" content="Herish — thương hiệu quà tặng cao cấp: hộp quà trái tim, set quà gấu bông, combo son & nước hoa cho người thương. Freeship đơn từ 300K, gói quà miễn phí.">
+  <title>Herish — Thương hiệu quà tặng trao gửi yêu thương</title>
+  <meta name="description" content="Herish — thương hiệu quà tặng cho phái đẹp: tầm nhìn, sứ mệnh và câu chuyện 'trân quý cô ấy'. Gói quà thủ công, giao trong 24h, nhắc hẹn tặng quà miễn phí.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,63 +14,142 @@
 <body>
   <div id="app-header"></div>
 
-  <!-- HERO -->
+  <!-- HERO: giới thiệu thương hiệu, không bán hàng -->
   <section class="hero">
     <div class="kv-flower" style="color:var(--pink); top:-30px; right:8%"></div>
     <div class="kv-flower" style="color:var(--lav-200); bottom:-40px; left:4%; width:200px; height:200px"></div>
     <div class="container">
       <div>
-        <span class="hero-badge">✨ Quà tặng được tuyển chọn tỉ mỉ</span>
-        <h1>Trao một hộp quà,<br>gửi <em>trọn yêu thương</em></h1>
-        <p class="lead">Herish giúp bạn nói những điều khó nói — bằng những hộp quà trái tim,
-          set son & nước hoa, gấu bông đáng yêu… được gói ghém chỉn chu đến từng chiếc nơ.</p>
+        <span class="hero-badge">✿ Thương hiệu quà tặng cho phái đẹp</span>
+        <h1>Trao một món quà,<br>gửi <em>trọn yêu thương</em></h1>
+        <p class="lead">Herish tin rằng mỗi món quà là một lời yêu thương được nói bằng sự tỉ mỉ.
+          Chúng tôi tuyển chọn, gói ghém và trao tận tay — để người bạn trân quý
+          cảm nhận được tấm lòng của bạn trong từng chi tiết.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="products.html">🎁 Khám phá quà tặng</a>
-          <a class="btn btn-ghost" href="#featured">Xem combo bán chạy</a>
+          <a class="btn btn-ghost" href="reminders.html">⏰ Đặt lịch nhắc hẹn</a>
         </div>
         <div class="hero-stats">
-          <div><b id="statProducts">—</b><span>Mẫu quà tặng</span></div>
-          <div><b>-40%</b><span>Ưu đãi tới</span></div>
+          <div><b>100%</b><span>Gói quà thủ công</span></div>
           <div><b>24h</b><span>Gói & gửi quà</span></div>
+          <div><b>Miễn phí</b><span>Nhắc hẹn tặng quà</span></div>
         </div>
       </div>
       <div class="hero-visual">
-        <div class="hero-card"><img id="heroImg" src="assets/img/products/LOVE20.png" alt="Hộp quà Herish"></div>
+        <div class="hero-art">
+          <svg viewBox="0 0 420 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Hộp quà Herish">
+            <!-- hoa keyvisual 4 cánh -->
+            <g fill="#e4a9cd" opacity=".55">
+              <circle cx="60" cy="52" r="16"/><circle cx="92" cy="52" r="16"/>
+              <circle cx="60" cy="84" r="16"/><circle cx="92" cy="84" r="16"/>
+            </g>
+            <g fill="#cdc7ec" opacity=".7">
+              <circle cx="356" cy="300" r="12"/><circle cx="380" cy="300" r="12"/>
+              <circle cx="356" cy="324" r="12"/><circle cx="380" cy="324" r="12"/>
+            </g>
+            <g fill="#fce8e6">
+              <circle cx="372" cy="70" r="9"/><circle cx="390" cy="70" r="9"/>
+              <circle cx="372" cy="88" r="9"/><circle cx="390" cy="88" r="9"/>
+            </g>
+            <!-- bóng -->
+            <ellipse cx="212" cy="346" rx="150" ry="16" fill="#e8e4f7"/>
+            <!-- thân hộp -->
+            <rect x="92" y="190" width="240" height="150" rx="14" fill="#665baf"/>
+            <rect x="92" y="190" width="240" height="150" rx="14" fill="url(#shade)"/>
+            <!-- nắp hộp -->
+            <rect x="74" y="150" width="276" height="56" rx="12" fill="#574c9e"/>
+            <!-- ruy băng dọc -->
+            <rect x="196" y="150" width="32" height="190" fill="#e4a9cd"/>
+            <!-- nơ -->
+            <path d="M212 140 C 180 100, 130 112, 142 148 C 150 170, 190 160, 212 148 Z" fill="#e4a9cd"/>
+            <path d="M212 140 C 244 100, 294 112, 282 148 C 274 170, 234 160, 212 148 Z" fill="#f6dcec"/>
+            <circle cx="212" cy="146" r="13" fill="#c75b9b"/>
+            <!-- hoa trên hộp -->
+            <g fill="#f6dcec" opacity=".9">
+              <circle cx="140" cy="250" r="10"/><circle cx="160" cy="250" r="10"/>
+              <circle cx="140" cy="270" r="10"/><circle cx="160" cy="270" r="10"/>
+            </g>
+            <g fill="#fce8e6" opacity=".9">
+              <circle cx="272" cy="286" r="8"/><circle cx="288" cy="286" r="8"/>
+              <circle cx="272" cy="302" r="8"/><circle cx="288" cy="302" r="8"/>
+            </g>
+            <!-- trái tim bay -->
+            <path d="M330 150 c 6 -12 24 -8 22 6 c -2 10 -14 16 -22 22 c -8 -6 -20 -12 -22 -22 c -2 -14 16 -18 22 -6 Z" fill="#c75b9b" opacity=".85"/>
+            <path d="M96 120 c 4 -8 16 -5 15 4 c -1 7 -9 11 -15 15 c -6 -4 -14 -8 -15 -15 c -1 -9 11 -12 15 -4 Z" fill="#e4a9cd" opacity=".8"/>
+            <defs>
+              <linearGradient id="shade" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ffffff" stop-opacity=".12"/>
+                <stop offset="1" stop-color="#37306b" stop-opacity=".18"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
         <div class="hero-float f1">💝 Gói quà miễn phí</div>
         <div class="hero-float f2">🚚 Freeship đơn từ 300K</div>
       </div>
     </div>
   </section>
 
-  <!-- CATEGORIES -->
-  <section class="section">
+  <!-- CÂU CHUYỆN THƯƠNG HIỆU -->
+  <section class="section section-alt" id="story">
     <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">Bộ sưu tập</span>
-        <h2>Chọn quà theo phong cách của người ấy</h2>
-        <p>Mỗi bộ sưu tập là một cách nói yêu thương khác nhau.</p>
+      <div class="story-grid">
+        <div class="story-text">
+          <span class="eyebrow" style="color:var(--pink-strong); font-weight:700; letter-spacing:2.5px; text-transform:uppercase; font-size:.78rem">✿ Câu chuyện Herish</span>
+          <h2>Her + Cherish — trân quý người phụ nữ bạn yêu thương</h2>
+          <p>Cái tên <b>Herish</b> được ghép từ <b>"Her"</b> (cô ấy) và <b>"Cherish"</b> (trân quý).
+            Chúng tôi ra đời từ một điều rất giản dị: ai cũng có những người phụ nữ quan trọng trong đời —
+            mẹ, vợ, bạn gái, cô bạn thân — nhưng không phải ai cũng giỏi nói lời yêu thương.</p>
+          <p>Herish thay bạn nói điều đó bằng những hộp quà được tuyển chọn từng món,
+            gói ghém thủ công từng chiếc nơ, và trao đi đúng khoảnh khắc. Một món quà đúng lúc
+            có thể không đắt tiền, nhưng luôn đáng nhớ.</p>
+          <p>Vì vậy, ngoài những hộp quà, Herish còn tặng bạn một điều nữa:
+            <b>dịch vụ nhắc hẹn miễn phí</b> — để bạn không bao giờ lỡ một ngày quan trọng nào.</p>
+        </div>
+        <div class="story-art">
+          <div class="kv-flower" style="color:#7e73c0; top:-20px; left:-20px; width:180px; height:180px; opacity:.8"></div>
+          <div class="kv-flower" style="color:#7e73c0; bottom:-30px; right:-20px; width:220px; height:220px; opacity:.6"></div>
+          <div class="big-word">Her + Cherish<small>TRÂN QUÝ CÔ ẤY — TRÂN QUÝ YÊU THƯƠNG</small></div>
+        </div>
       </div>
-      <div class="cat-grid" id="catGrid"></div>
     </div>
   </section>
 
-  <!-- FEATURED -->
-  <section class="section section-alt" id="featured">
+  <!-- TẦM NHÌN / SỨ MỆNH / GIÁ TRỊ -->
+  <section class="section" id="vision">
     <div class="container">
       <div class="section-head">
-        <span class="eyebrow">Bán chạy</span>
-        <h2>Những hộp quà được yêu thích nhất</h2>
-        <p>Ưu đãi sâu nhất — số lượng có hạn mỗi ngày.</p>
+        <span class="eyebrow">Định hướng</span>
+        <h2>Tầm nhìn — Sứ mệnh — Giá trị cốt lõi</h2>
       </div>
-      <div class="prod-grid" id="featuredGrid"></div>
-      <div style="text-align:center; margin-top:38px">
-        <a class="btn btn-primary" href="products.html">Xem tất cả sản phẩm →</a>
+      <div class="vmv-grid">
+        <div class="vmv-card">
+          <div class="ico">🔭</div>
+          <h3>Tầm nhìn</h3>
+          <p>Trở thành thương hiệu quà tặng cho phái đẹp được yêu thích nhất Việt Nam —
+            nơi đầu tiên mọi người nghĩ đến khi muốn nói lời trân quý với một người phụ nữ.</p>
+        </div>
+        <div class="vmv-card">
+          <div class="ico">🎯</div>
+          <h3>Sứ mệnh</h3>
+          <p>Giúp hàng triệu lời yêu thương được trao đi đúng lúc — qua những hộp quà
+            tinh tế, vừa túi tiền và dịch vụ nhắc hẹn để không ai lỡ một dịp quan trọng.</p>
+        </div>
+        <div class="vmv-card">
+          <div class="ico">💎</div>
+          <h3>Giá trị cốt lõi</h3>
+          <ul>
+            <li><b>Tận tâm</b> — chăm chút như quà tặng chính người thân mình</li>
+            <li><b>Tinh tế</b> — đẹp từ món quà đến cách trao</li>
+            <li><b>Tin cậy</b> — đúng hàng, đúng hẹn, đúng cam kết</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- WHY US -->
-  <section class="section" id="why">
+  <section class="section section-alt" id="why">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow">Vì sao chọn Herish</span>
@@ -80,7 +159,21 @@
         <div class="why-card"><div class="ico">🎀</div><h3>Gói quà thủ công</h3><p>Hộp cứng cáp, nơ thắt tay, thiệp viết lời chúc theo yêu cầu.</p></div>
         <div class="why-card"><div class="ico">💎</div><h3>Tuyển chọn kỹ</h3><p>Son, nước hoa, gấu bông… đều được kiểm tra chất lượng từng món.</p></div>
         <div class="why-card"><div class="ico">🖼️</div><h3>Cá nhân hóa</h3><p>In ảnh kỷ niệm miễn phí cho các set quà có khung ảnh.</p></div>
-        <div class="why-card"><div class="ico">🚀</div><h3>Giao nhanh đúng hẹn</h3><p>Gói và gửi trong 24h — kịp mọi dịp đặc biệt của bạn.</p></div>
+        <div class="why-card"><div class="ico">⏰</div><h3>Nhắc hẹn miễn phí</h3><p>Đặt lịch nhắc sinh nhật, kỷ niệm — Herish nhắc bạn trước nhiều ngày.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NHẮC HẸN TEASER -->
+  <section class="section">
+    <div class="container">
+      <div class="reminder-cta">
+        <div class="kv-flower" style="color:#ffffff; opacity:.12; top:-30px; right:5%"></div>
+        <div class="kv-flower" style="color:#ffffff; opacity:.1; bottom:-50px; left:3%; width:220px; height:220px"></div>
+        <h2>⏰ Đừng để lỡ một dịp quan trọng nào nữa</h2>
+        <p>Tạo tài khoản nhắc hẹn miễn phí — đặt lịch sinh nhật, kỷ niệm của những người bạn thương.
+          Herish sẽ nhắc bạn trước nhiều ngày qua email hoặc điện thoại, kèm gợi ý quà phù hợp.</p>
+        <a class="btn btn-primary" href="reminders.html">Tạo lịch nhắc hẹn ngay →</a>
       </div>
     </div>
   </section>
@@ -134,59 +227,21 @@
       const H = window.Herish, D = H.data;
       H.renderChrome('home');
 
-      function render() {
-        // Thống kê
-        document.getElementById('statProducts').textContent = D.products.length;
+      // FAQ (giữ xuống dòng bằng white-space: pre-line)
+      document.getElementById('faqList').innerHTML = D.faqs.map(f => `
+        <details class="faq-item">
+          <summary>${H.escapeHtml(f.question)}</summary>
+          <div class="faq-answer">${H.escapeHtml(f.answer)}</div>
+        </details>`).join('');
 
-        // Danh mục: đếm số sản phẩm thật từng nhóm, ảnh đại diện lấy từ sản phẩm có ảnh
-        const catGrid = document.getElementById('catGrid');
-        catGrid.innerHTML = Object.entries(H.CATEGORIES).map(([key, label]) => {
-          const items = D.products.filter(p => p.category === key);
-          const withImg = items.find(p => p.image);
-          const img = withImg
-            ? `<img src="${withImg.image}" alt="${label}" loading="lazy">`
-            : `<div class="no-img" style="height:230px"><span class="gift-ico">🎁</span></div>`;
-          const descs = {
-            'hop-qua-cao-cap': 'Combo V.I.P son, nước hoa, khung ảnh — dành cho dịp thật đặc biệt.',
-            'hop-trai-tim': 'Hộp trái tim đỏ rực — lời tỏ tình không cần nói thành lời.',
-            'set-gau-bong': 'Gấu bông, thỏ, cừu… kèm quà xinh — mềm như một cái ôm.',
-          };
-          return `<a class="cat-card" href="products.html?cat=${key}">
-            ${img}
-            <div class="cat-body">
-              <h3>${label}</h3>
-              <p>${descs[key]}</p>
-              <span class="cat-link">Xem ${items.length} mẫu →</span>
-            </div>
-          </a>`;
-        }).join('');
-
-        // Nổi bật: ưu tiên flag featured, sau đó % giảm sâu nhất (sort giảm dần — đúng chiều)
-        const featured = [...D.products]
-          .filter(p => p.stock > 0)
-          .sort((a, b) => (b.featured === true) - (a.featured === true) || H.discountOf(b) - H.discountOf(a))
-          .slice(0, 8);
-        document.getElementById('featuredGrid').innerHTML = featured.map(H.productCard).join('');
-
-        // FAQ (giữ xuống dòng bằng white-space: pre-line)
-        document.getElementById('faqList').innerHTML = D.faqs.map(f => `
-          <details class="faq-item">
-            <summary>${H.escapeHtml(f.question)}</summary>
-            <div class="faq-answer">${H.escapeHtml(f.answer)}</div>
-          </details>`).join('');
-
-        // Liên hệ
-        const c = D.contact;
-        document.getElementById('contactInfo').innerHTML = `
-          <h3>Thông tin liên hệ</h3>
-          <div class="contact-line"><div class="ico">📞</div><div><b>Hotline / Zalo</b><span><a href="tel:${c.hotline}">${c.hotline}</a></span></div></div>
-          <div class="contact-line"><div class="ico">✉️</div><div><b>Email</b><span><a href="mailto:${c.email}">${c.email}</a></span></div></div>
-          <div class="contact-line"><div class="ico">🕣</div><div><b>Thời gian hỗ trợ</b><span>${c.availability}</span></div></div>
-          <div class="contact-line"><div class="ico">💬</div><div><b>Chat nhanh</b><span><a href="https://zalo.me/${c.hotline}" target="_blank" rel="noopener">zalo.me/${c.hotline}</a></span></div></div>`;
-      }
-
-      render();
-      H.tryRefreshFromApi(render);
+      // Liên hệ
+      const c = D.contact;
+      document.getElementById('contactInfo').innerHTML = `
+        <h3>Thông tin liên hệ</h3>
+        <div class="contact-line"><div class="ico">📞</div><div><b>Hotline / Zalo</b><span><a href="tel:${c.hotline}">${c.hotline}</a></span></div></div>
+        <div class="contact-line"><div class="ico">✉️</div><div><b>Email</b><span><a href="mailto:${c.email}">${c.email}</a></span></div></div>
+        <div class="contact-line"><div class="ico">🕣</div><div><b>Thời gian hỗ trợ</b><span>${c.availability}</span></div></div>
+        <div class="contact-line"><div class="ico">💬</div><div><b>Chat nhanh</b><span><a href="https://zalo.me/${c.hotline}" target="_blank" rel="noopener">zalo.me/${c.hotline}</a></span></div></div>`;
 
       // Form liên hệ: mở mail soạn sẵn (web tĩnh, không cần server)
       document.getElementById('contactForm').addEventListener('submit', function (e) {
@@ -197,8 +252,8 @@
         const notify = document.getElementById('cfNotify').checked ? 'Có' : 'Không';
         const body = encodeURIComponent(
           `Tên: ${name}\nSĐT: ${phone}\nNhận thông báo ưu đãi: ${notify}\n\nNội dung:\n${msg}`);
-        window.location.href = `mailto:${D.contact.email}?subject=${encodeURIComponent('[Herish.vn] Tư vấn chọn quà — ' + name)}&body=${body}`;
-        window.Herish.toast('Đang mở ứng dụng email để gửi lời nhắn…');
+        window.location.href = `mailto:${D.contact.email}?subject=${encodeURIComponent('[Herish] Tư vấn chọn quà — ' + name)}&body=${body}`;
+        H.toast('Đang mở ứng dụng email để gửi lời nhắn…');
       });
     })();
   </script>

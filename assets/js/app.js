@@ -24,11 +24,30 @@
     'set-gau-bong': 'Set quà gấu bông',
   };
 
+  // Dịp tặng / tặng ai — gắn thẻ theo bộ sưu tập
+  const OCCASIONS = {
+    'ban-gai': '💝 Bạn gái · Vợ',
+    'me': '🌷 Mẹ & người thân',
+    'sinh-nhat': '🎂 Sinh nhật',
+    'valentine': '❤️ Valentine',
+    '8-3-20-10': '🌸 8/3 · 20/10',
+    'giang-sinh': '🎄 Giáng sinh',
+    'doanh-nghiep': '🏢 Doanh nghiệp',
+  };
+
+  function occasionsOf(p) {
+    const occ = ['ban-gai', 'sinh-nhat', '8-3-20-10'];
+    if (p.category === 'hop-trai-tim') occ.push('valentine');
+    if (p.category === 'hop-qua-cao-cap') occ.push('valentine', 'me', 'giang-sinh');
+    if (p.category === 'set-gau-bong') occ.push('giang-sinh');
+    return occ;
+  }
+
   function categoryLabel(key) { return CATEGORIES[key] || 'Quà tặng'; }
 
   function productUrl(p) { return 'product.html?code=' + encodeURIComponent(p.code); }
 
-  // ---- Product card (dùng chung trang chủ + trang sản phẩm) ----
+  // ---- Product card (dùng chung các trang) ----
   function productCard(p) {
     const disc = discountOf(p);
     const img = p.image
@@ -62,7 +81,7 @@
     }[c]));
   }
 
-  // ---- Header/footer chung ----
+  // ---- Header/footer chung (menu căn giữa, CTA tách riêng bên phải) ----
   function renderChrome(active) {
     const c = D.contact;
     const header = `
@@ -78,12 +97,15 @@
         <nav class="main-nav" id="mainNav">
           <a href="index.html" ${active === 'home' ? 'class="active"' : ''}>Trang chủ</a>
           <a href="products.html" ${active === 'products' ? 'class="active"' : ''}>Sản phẩm</a>
+          <a href="reminders.html" ${active === 'reminders' ? 'class="active"' : ''}>Nhắc hẹn</a>
           <a href="index.html#why">Vì sao chọn Herish</a>
           <a href="index.html#faq">Hỏi đáp</a>
           <a href="index.html#contact">Liên hệ</a>
-          <a class="nav-cta" href="tel:${c.hotline}">📞 Đặt quà ngay</a>
         </nav>
-        <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
+        <div class="header-actions">
+          <a class="nav-cta" href="products.html">🎁 Đặt quà ngay</a>
+          <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
+        </div>
       </div>
     </header>`;
 
@@ -103,6 +125,7 @@
               <li><a href="products.html?cat=hop-trai-tim">Hộp quà trái tim</a></li>
               <li><a href="products.html?cat=hop-qua-cao-cap">Hộp quà cao cấp</a></li>
               <li><a href="products.html?cat=set-gau-bong">Set quà gấu bông</a></li>
+              <li><a href="reminders.html">Nhắc hẹn tặng quà</a></li>
             </ul>
           </div>
           <div>
@@ -178,8 +201,55 @@
       .catch(() => { /* backend sập → giữ snapshot, web vẫn chạy */ });
   }
 
+  // ---- Nhắc hẹn: lưu hồ sơ + danh sách nhắc trên máy người dùng ----
+  const Reminder = {
+    getProfile() {
+      try { return JSON.parse(localStorage.getItem('herish_profile')); } catch (e) { return null; }
+    },
+    saveProfile(p) { localStorage.setItem('herish_profile', JSON.stringify(p)); },
+    clearProfile() { localStorage.removeItem('herish_profile'); },
+    list() {
+      try { return JSON.parse(localStorage.getItem('herish_reminders')) || []; } catch (e) { return []; }
+    },
+    save(items) { localStorage.setItem('herish_reminders', JSON.stringify(items)); },
+    add(r) { const items = this.list(); r.id = 'r' + (items.length ? Math.max(...items.map(x => +x.id.slice(1))) + 1 : 1); items.push(r); this.save(items); return r; },
+    remove(id) { this.save(this.list().filter(r => r.id !== id)); },
+
+    // Ngày sự kiện sắp tới (tự nhảy sang năm sau nếu đã qua, với lịch lặp hằng năm)
+    nextDate(r) {
+      const today = new Date(); today.setHours(0, 0, 0, 0);
+      let d = new Date(r.date + 'T00:00:00');
+      if (r.yearly) {
+        d.setFullYear(today.getFullYear());
+        if (d < today) d.setFullYear(today.getFullYear() + 1);
+      }
+      return d;
+    },
+    daysUntil(r) {
+      const today = new Date(); today.setHours(0, 0, 0, 0);
+      return Math.round((this.nextDate(r) - today) / 86400000);
+    },
+    // Link Google Calendar: sự kiện đặt vào NGÀY NHẮC (trước sự kiện N ngày), lặp hằng năm
+    // → Google tự thông báo về Gmail của người dùng đúng ngày nhắc
+    calendarUrl(r, profile) {
+      const ev = this.nextDate(r);
+      const remind = new Date(ev); remind.setDate(remind.getDate() - (+r.before || 0));
+      const fmt = d => d.toISOString().slice(0, 10).replace(/-/g, '');
+      const end = new Date(remind); end.setDate(end.getDate() + 1);
+      const text = encodeURIComponent(`🎁 Nhắc: còn ${r.before} ngày đến "${r.title}"`);
+      const details = encodeURIComponent(
+        `Lời nhắc từ Herish — còn ${r.before} ngày nữa là đến "${r.title}" (${ev.toLocaleDateString('vi-VN')}).\n` +
+        `Chọn quà sớm tại: https://dotruongtr7-sketch.github.io/herish-web/products.html\n` +
+        `Hotline Herish: ${D.contact.hotline}`);
+      let url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${text}&dates=${fmt(remind)}/${fmt(end)}&details=${details}`;
+      if (r.yearly) url += '&recur=RRULE:FREQ=YEARLY';
+      return url;
+    },
+  };
+
   window.Herish = {
     data: D, formatPrice, discountOf, productCard, categoryLabel,
-    CATEGORIES, renderChrome, toast, escapeHtml, tryRefreshFromApi, productUrl,
+    CATEGORIES, OCCASIONS, occasionsOf, renderChrome, toast, escapeHtml,
+    tryRefreshFromApi, productUrl, Reminder,
   };
 })();

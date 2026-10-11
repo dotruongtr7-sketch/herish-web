@@ -42,6 +42,15 @@
         <button class="btn-reset" id="fReset">↺ Xóa bộ lọc</button>
       </div>
       <div class="chip-row" id="chipRow"></div>
+      <!-- Lọc theo người nhận quà / dịp tặng -->
+      <div class="result-count" style="margin-bottom:8px">🎀 Tặng ai · dịp gì:</div>
+      <div class="chip-row" id="occRow"></div>
+      <!-- Quà doanh nghiệp: tư vấn riêng theo số lượng -->
+      <div class="rem-note" id="bizBanner" hidden style="margin:0 0 18px">
+        🏢 <b>Quà tặng doanh nghiệp:</b> Herish nhận đặt số lượng lớn, in logo thương hiệu theo yêu cầu —
+        <a href="tel:0972340107" style="color:var(--primary); font-weight:700">gọi 0972 340 107</a> hoặc
+        <a href="https://zalo.me/0972340107" target="_blank" rel="noopener" style="color:var(--primary); font-weight:700">chat Zalo</a> để nhận báo giá riêng.
+      </div>
       <div class="result-count" id="resultCount"></div>
       <div class="prod-grid" id="prodGrid"></div>
       <!-- Màn hình khi không có sản phẩm phù hợp (bug #8) -->
@@ -63,11 +72,14 @@
       const H = window.Herish, D = H.data;
       H.renderChrome('products');
 
-      const state = { q: '', cat: '', price: '', sort: 'default' };
+      const state = { q: '', cat: '', occ: '', price: '', sort: 'default' };
 
-      // Nhận ?cat= từ URL (link từ trang chủ / footer phải trỏ đúng — bug #12)
-      const urlCat = new URLSearchParams(location.search).get('cat');
+      // Nhận ?cat= và ?occ= từ URL (link từ trang chủ / footer phải trỏ đúng — bug #12)
+      const params = new URLSearchParams(location.search);
+      const urlCat = params.get('cat');
       if (urlCat && H.CATEGORIES[urlCat]) state.cat = urlCat;
+      const urlOcc = params.get('occ');
+      if (urlOcc && H.OCCASIONS[urlOcc]) state.occ = urlOcc;
 
       const el = {
         search: document.getElementById('fSearch'),
@@ -75,6 +87,8 @@
         sort: document.getElementById('fSort'),
         reset: document.getElementById('fReset'),
         chips: document.getElementById('chipRow'),
+        occRow: document.getElementById('occRow'),
+        bizBanner: document.getElementById('bizBanner'),
         count: document.getElementById('resultCount'),
         grid: document.getElementById('prodGrid'),
         empty: document.getElementById('emptyState'),
@@ -90,12 +104,25 @@
         el.chips.querySelectorAll('.chip').forEach(btn => {
           btn.addEventListener('click', () => { state.cat = btn.dataset.cat; apply(); });
         });
+
+        const occs = [['', 'Tất cả'], ...Object.entries(H.OCCASIONS)];
+        el.occRow.innerHTML = occs.map(([key, label]) =>
+          `<button class="chip ${state.occ === key ? 'active' : ''}" data-occ="${key}">${label}</button>`
+        ).join('');
+        el.occRow.querySelectorAll('.chip').forEach(btn => {
+          btn.addEventListener('click', () => { state.occ = btn.dataset.occ; apply(); });
+        });
       }
 
       function apply() {
         let items = [...D.products];
 
         if (state.cat) items = items.filter(p => p.category === state.cat);
+        // Lọc theo dịp tặng; riêng "Doanh nghiệp" hiện banner tư vấn riêng + toàn bộ mẫu tham khảo
+        el.bizBanner.hidden = state.occ !== 'doanh-nghiep';
+        if (state.occ && state.occ !== 'doanh-nghiep') {
+          items = items.filter(p => H.occasionsOf(p).includes(state.occ));
+        }
         if (state.q) {
           const q = state.q.toLowerCase();
           items = items.filter(p =>
@@ -126,7 +153,7 @@
       }
 
       function resetFilters() {
-        state.q = ''; state.cat = ''; state.price = ''; state.sort = 'default';
+        state.q = ''; state.cat = ''; state.occ = ''; state.price = ''; state.sort = 'default';
         el.search.value = ''; el.price.value = ''; el.sort.value = 'default';
         history.replaceState(null, '', 'products.html');
         apply();
