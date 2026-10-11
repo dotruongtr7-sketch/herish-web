@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi tiết sản phẩm — Herish</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div id="app-header"></div>
+
+  <div class="container">
+    <div class="breadcrumb" id="breadcrumb"></div>
+    <div class="detail-wrap" id="detailWrap"></div>
+
+    <section class="section" id="relatedSection">
+      <div class="section-head">
+        <span class="eyebrow">Có thể bạn thích</span>
+        <h2>Quà tặng cùng bộ sưu tập</h2>
+      </div>
+      <div class="prod-grid" id="relatedGrid"></div>
+    </section>
+  </div>
+
+  <div id="app-footer"></div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    (function () {
+      const H = window.Herish, D = H.data;
+      H.renderChrome('products');
+
+      const code = new URLSearchParams(location.search).get('code');
+
+      function render() {
+        const p = D.products.find(x => x.code === code);
+        const wrap = document.getElementById('detailWrap');
+        const bc = document.getElementById('breadcrumb');
+
+        if (!p) {
+          bc.innerHTML = `<a href="products.html">← Quay lại danh sách sản phẩm</a>`;
+          wrap.innerHTML = `
+            <div class="empty-state" style="grid-column:1/-1">
+              <div class="ico">🎁</div>
+              <h3>Không tìm thấy sản phẩm</h3>
+              <p>Sản phẩm có thể đã ngừng bán hoặc đường dẫn chưa đúng.</p>
+              <a class="btn btn-primary" href="products.html">Xem tất cả quà tặng</a>
+            </div>`;
+          document.getElementById('relatedSection').hidden = true;
+          return;
+        }
+
+        document.title = p.name + ' — Herish';
+        bc.innerHTML = `<a href="index.html">Trang chủ</a> › <a href="products.html">Sản phẩm</a> › <a href="products.html?cat=${p.category}">${H.categoryLabel(p.category)}</a> › ${H.escapeHtml(p.code)}`;
+
+        // % giảm dùng CHUNG hàm discountOf — khớp tuyệt đối với card bên ngoài (bug #2)
+        const disc = H.discountOf(p);
+        const inStock = p.stock > 0;
+        const img = p.image
+          ? `<img src="${p.image}" alt="${H.escapeHtml(p.name)}">`
+          : `<div class="no-img" style="aspect-ratio:1/1"><span class="gift-ico" style="font-size:5rem">🎁</span><span>${H.escapeHtml(p.code)}</span></div>`;
+
+        wrap.innerHTML = `
+          <div class="detail-gallery">${img}</div>
+          <div class="detail-info">
+            <h1>${H.escapeHtml(p.name)}</h1>
+            <div class="detail-meta">
+              <span>Mã: <b>${H.escapeHtml(p.code)}</b></span>
+              <span>👁 ${p.views} lượt xem</span>
+              <span>🛒 Đã bán ${p.sold}</span>
+            </div>
+            <!-- Giá gốc gạch ngang, đ đứng sau số (bug #6) -->
+            <div class="detail-price-row">
+              <span class="price-sale">${H.formatPrice(p.sale)}</span>
+              ${disc > 0 ? `<span class="price-old">${H.formatPrice(p.price)}</span>
+              <span class="badge-discount">Tiết kiệm ${disc}%</span>` : ''}
+            </div>
+            <span class="stock-pill ${inStock ? '' : 'out'}">
+              ${inStock ? `✔ Còn hàng (${p.stock} hộp)` : '✖ Tạm hết hàng'}
+            </span>
+
+            <div class="detail-actions">
+              <a class="btn btn-primary" href="tel:${D.contact.hotline}">📞 Gọi đặt ngay — ${D.contact.hotline}</a>
+              <a class="btn btn-ghost" href="https://zalo.me/${D.contact.hotline}" target="_blank" rel="noopener">💬 Đặt qua Zalo</a>
+            </div>
+
+            ${!inStock ? `
+            <div class="notify-box">
+              <b>Sản phẩm tạm hết — để lại SĐT, Herish báo ngay khi có hàng:</b>
+              <form id="notifyForm" class="contact-form" style="margin-top:10px">
+                <input type="tel" id="notifyPhone" placeholder="Số điện thoại của bạn" required pattern="[0-9+ ]{8,15}">
+                <!-- "Thông báo cho tôi" mặc định ĐƯỢC tick (bug #4) -->
+                <div class="checkbox-line">
+                  <input type="checkbox" id="notifyCheck" checked>
+                  <label for="notifyCheck" style="margin:0; font-weight:500">Thông báo cho tôi khi có hàng trở lại</label>
+                </div>
+                <button class="btn btn-primary" type="submit">Đăng ký nhận tin</button>
+              </form>
+            </div>` : ''}
+
+            ${p.short ? `
+            <div class="detail-section">
+              <h2>🎁 Bên trong hộp quà có gì?</h2>
+              <!-- white-space: pre-line giữ nguyên xuống dòng nhập từ CMS (bug #14) -->
+              <div class="content">${H.escapeHtml(p.short)}</div>
+            </div>` : ''}
+
+            ${p.desc ? `
+            <div class="detail-section">
+              <h2>💝 Giới thiệu chi tiết</h2>
+              <div class="content">${H.escapeHtml(p.desc)}</div>
+            </div>` : ''}
+          </div>`;
+
+        const notifyForm = document.getElementById('notifyForm');
+        if (notifyForm) {
+          notifyForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const phone = document.getElementById('notifyPhone').value.trim();
+            const body = encodeURIComponent(`Khách đăng ký nhận thông báo có hàng.\nSản phẩm: ${p.code} — ${p.name}\nSĐT: ${phone}`);
+            window.location.href = `mailto:${D.contact.email}?subject=${encodeURIComponent('[Herish.vn] Đăng ký báo hàng về — ' + p.code)}&body=${body}`;
+            H.toast('Cảm ơn bạn! Herish sẽ báo ngay khi có hàng 💌');
+          });
+        }
+
+        // Sản phẩm liên quan: cùng bộ sưu tập, loại chính nó
+        const related = D.products
+          .filter(x => x.category === p.category && x.code !== p.code)
+          .slice(0, 4);
+        document.getElementById('relatedSection').hidden = related.length === 0;
+        document.getElementById('relatedGrid').innerHTML = related.map(H.productCard).join('');
+        window.scrollTo(0, 0);
+      }
+
+      render();
+      H.tryRefreshFromApi(render);
+    })();
+  </script>
+</body>
+</html>

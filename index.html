@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Herish — Quà tặng trao gửi yêu thương | Hộp quà, set quà cho nàng</title>
+  <meta name="description" content="Herish — thương hiệu quà tặng cao cấp: hộp quà trái tim, set quà gấu bông, combo son & nước hoa cho người thương. Freeship đơn từ 300K, gói quà miễn phí.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div id="app-header"></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div>
+        <span class="hero-badge">✨ Quà tặng được tuyển chọn tỉ mỉ</span>
+        <h1>Trao một hộp quà,<br>gửi <em>trọn yêu thương</em></h1>
+        <p class="lead">Herish giúp bạn nói những điều khó nói — bằng những hộp quà trái tim,
+          set son & nước hoa, gấu bông đáng yêu… được gói ghém chỉn chu đến từng chiếc nơ.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="products.html">🎁 Khám phá quà tặng</a>
+          <a class="btn btn-ghost" href="#featured">Xem combo bán chạy</a>
+        </div>
+        <div class="hero-stats">
+          <div><b id="statProducts">—</b><span>Mẫu quà tặng</span></div>
+          <div><b>-40%</b><span>Ưu đãi tới</span></div>
+          <div><b>24h</b><span>Gói & gửi quà</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card"><img id="heroImg" src="assets/img/products/LOVE20.png" alt="Hộp quà Herish"></div>
+        <div class="hero-float f1">💝 Gói quà miễn phí</div>
+        <div class="hero-float f2">🚚 Freeship đơn từ 300K</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Bộ sưu tập</span>
+        <h2>Chọn quà theo phong cách của người ấy</h2>
+        <p>Mỗi bộ sưu tập là một cách nói yêu thương khác nhau.</p>
+      </div>
+      <div class="cat-grid" id="catGrid"></div>
+    </div>
+  </section>
+
+  <!-- FEATURED -->
+  <section class="section section-alt" id="featured">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Bán chạy</span>
+        <h2>Những hộp quà được yêu thích nhất</h2>
+        <p>Ưu đãi sâu nhất — số lượng có hạn mỗi ngày.</p>
+      </div>
+      <div class="prod-grid" id="featuredGrid"></div>
+      <div style="text-align:center; margin-top:38px">
+        <a class="btn btn-primary" href="products.html">Xem tất cả sản phẩm →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="section" id="why">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Vì sao chọn Herish</span>
+        <h2>Một món quà — vạn điều trân quý</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-card"><div class="ico">🎀</div><h3>Gói quà thủ công</h3><p>Hộp cứng cáp, nơ thắt tay, thiệp viết lời chúc theo yêu cầu.</p></div>
+        <div class="why-card"><div class="ico">💎</div><h3>Tuyển chọn kỹ</h3><p>Son, nước hoa, gấu bông… đều được kiểm tra chất lượng từng món.</p></div>
+        <div class="why-card"><div class="ico">🖼️</div><h3>Cá nhân hóa</h3><p>In ảnh kỷ niệm miễn phí cho các set quà có khung ảnh.</p></div>
+        <div class="why-card"><div class="ico">🚀</div><h3>Giao nhanh đúng hẹn</h3><p>Gói và gửi trong 24h — kịp mọi dịp đặc biệt của bạn.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section-alt" id="faq">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Hỏi đáp</span>
+        <h2>Câu hỏi thường gặp</h2>
+      </div>
+      <div class="faq-list" id="faqList"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Liên hệ</span>
+        <h2>Cần tư vấn chọn quà? Herish luôn sẵn sàng</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-card" id="contactInfo"></div>
+        <div class="contact-card">
+          <h3>Gửi lời nhắn cho Herish</h3>
+          <form class="contact-form" id="contactForm">
+            <label for="cfName">Tên của bạn</label>
+            <input id="cfName" type="text" placeholder="Nguyễn Văn A" required>
+            <label for="cfPhone">Số điện thoại</label>
+            <input id="cfPhone" type="tel" placeholder="09xx xxx xxx" required pattern="[0-9+ ]{8,15}">
+            <label for="cfMsg">Bạn cần tư vấn điều gì?</label>
+            <textarea id="cfMsg" rows="4" placeholder="Ví dụ: Mình cần một hộp quà sinh nhật cho bạn gái, ngân sách khoảng 500K…"></textarea>
+            <div class="checkbox-line">
+              <input type="checkbox" id="cfNotify" checked>
+              <label for="cfNotify" style="margin:0; font-weight:500">Thông báo cho tôi khi có ưu đãi & mẫu quà mới</label>
+            </div>
+            <button class="btn btn-primary" type="submit">Gửi lời nhắn 💌</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="app-footer"></div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    (function () {
+      const H = window.Herish, D = H.data;
+      H.renderChrome('home');
+
+      function render() {
+        // Thống kê
+        document.getElementById('statProducts').textContent = D.products.length;
+
+        // Danh mục: đếm số sản phẩm thật từng nhóm, ảnh đại diện lấy từ sản phẩm có ảnh
+        const catGrid = document.getElementById('catGrid');
+        catGrid.innerHTML = Object.entries(H.CATEGORIES).map(([key, label]) => {
+          const items = D.products.filter(p => p.category === key);
+          const withImg = items.find(p => p.image);
+          const img = withImg
+            ? `<img src="${withImg.image}" alt="${label}" loading="lazy">`
+            : `<div class="no-img" style="height:230px"><span class="gift-ico">🎁</span></div>`;
+          const descs = {
+            'hop-qua-cao-cap': 'Combo V.I.P son, nước hoa, khung ảnh — dành cho dịp thật đặc biệt.',
+            'hop-trai-tim': 'Hộp trái tim đỏ rực — lời tỏ tình không cần nói thành lời.',
+            'set-gau-bong': 'Gấu bông, thỏ, cừu… kèm quà xinh — mềm như một cái ôm.',
+          };
+          return `<a class="cat-card" href="products.html?cat=${key}">
+            ${img}
+            <div class="cat-body">
+              <h3>${label}</h3>
+              <p>${descs[key]}</p>
+              <span class="cat-link">Xem ${items.length} mẫu →</span>
+            </div>
+          </a>`;
+        }).join('');
+
+        // Nổi bật: ưu tiên flag featured, sau đó % giảm sâu nhất (sort giảm dần — đúng chiều)
+        const featured = [...D.products]
+          .filter(p => p.stock > 0)
+          .sort((a, b) => (b.featured === true) - (a.featured === true) || H.discountOf(b) - H.discountOf(a))
+          .slice(0, 8);
+        document.getElementById('featuredGrid').innerHTML = featured.map(H.productCard).join('');
+
+        // FAQ (giữ xuống dòng bằng white-space: pre-line)
+        document.getElementById('faqList').innerHTML = D.faqs.map(f => `
+          <details class="faq-item">
+            <summary>${H.escapeHtml(f.question)}</summary>
+            <div class="faq-answer">${H.escapeHtml(f.answer)}</div>
+          </details>`).join('');
+
+        // Liên hệ
+        const c = D.contact;
+        document.getElementById('contactInfo').innerHTML = `
+          <h3>Thông tin liên hệ</h3>
+          <div class="contact-line"><div class="ico">📞</div><div><b>Hotline / Zalo</b><span><a href="tel:${c.hotline}">${c.hotline}</a></span></div></div>
+          <div class="contact-line"><div class="ico">✉️</div><div><b>Email</b><span><a href="mailto:${c.email}">${c.email}</a></span></div></div>
+          <div class="contact-line"><div class="ico">🕣</div><div><b>Thời gian hỗ trợ</b><span>${c.availability}</span></div></div>
+          <div class="contact-line"><div class="ico">💬</div><div><b>Chat nhanh</b><span><a href="https://zalo.me/${c.hotline}" target="_blank" rel="noopener">zalo.me/${c.hotline}</a></span></div></div>`;
+      }
+
+      render();
+      H.tryRefreshFromApi(render);
+
+      // Form liên hệ: mở mail soạn sẵn (web tĩnh, không cần server)
+      document.getElementById('contactForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const name = document.getElementById('cfName').value.trim();
+        const phone = document.getElementById('cfPhone').value.trim();
+        const msg = document.getElementById('cfMsg').value.trim();
+        const notify = document.getElementById('cfNotify').checked ? 'Có' : 'Không';
+        const body = encodeURIComponent(
+          `Tên: ${name}\nSĐT: ${phone}\nNhận thông báo ưu đãi: ${notify}\n\nNội dung:\n${msg}`);
+        window.location.href = `mailto:${D.contact.email}?subject=${encodeURIComponent('[Herish.vn] Tư vấn chọn quà — ' + name)}&body=${body}`;
+        window.Herish.toast('Đang mở ứng dụng email để gửi lời nhắn…');
+      });
+    })();
+  </script>
+</body>
+</html>

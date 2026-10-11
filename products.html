@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sản phẩm — Herish | Hộp quà & set quà tặng</title>
+  <meta name="description" content="Tất cả hộp quà, set quà tặng của Herish — lọc theo bộ sưu tập, khoảng giá, sắp xếp theo giá và ưu đãi.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div id="app-header"></div>
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>Tất cả quà tặng</h1>
+      <p>Chọn bộ sưu tập, khoảng giá phù hợp — Herish gói sẵn yêu thương cho bạn.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:36px">
+    <div class="container">
+      <!-- Bộ lọc: có nút reset (bug #3), đếm kết quả động (bug #7) -->
+      <div class="toolbar">
+        <input type="search" id="fSearch" placeholder="🔍 Tìm theo tên hoặc mã sản phẩm…">
+        <select id="fPrice" aria-label="Khoảng giá">
+          <option value="">Mọi khoảng giá</option>
+          <option value="0-300000">Dưới 300.000đ</option>
+          <option value="300000-500000">300.000đ – 500.000đ</option>
+          <option value="500000-99999999">Trên 500.000đ</option>
+        </select>
+        <select id="fSort" aria-label="Sắp xếp">
+          <option value="default">Sắp xếp: Nổi bật</option>
+          <option value="price-asc">Giá: Thấp → Cao</option>
+          <option value="price-desc">Giá: Cao → Thấp</option>
+          <option value="discount-desc">Giảm giá sâu nhất</option>
+          <option value="views-desc">Xem nhiều nhất</option>
+        </select>
+        <button class="btn-reset" id="fReset">↺ Xóa bộ lọc</button>
+      </div>
+      <div class="chip-row" id="chipRow"></div>
+      <div class="result-count" id="resultCount"></div>
+      <div class="prod-grid" id="prodGrid"></div>
+      <!-- Màn hình khi không có sản phẩm phù hợp (bug #8) -->
+      <div class="empty-state" id="emptyState" hidden>
+        <div class="ico">🔍🎁</div>
+        <h3>Không tìm thấy sản phẩm phù hợp</h3>
+        <p>Thử đổi từ khóa hoặc nới rộng bộ lọc nhé — hoặc để Herish tư vấn trực tiếp cho bạn.</p>
+        <button class="btn btn-primary" id="emptyReset">↺ Xóa bộ lọc & xem tất cả</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="app-footer"></div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    (function () {
+      const H = window.Herish, D = H.data;
+      H.renderChrome('products');
+
+      const state = { q: '', cat: '', price: '', sort: 'default' };
+
+      // Nhận ?cat= từ URL (link từ trang chủ / footer phải trỏ đúng — bug #12)
+      const urlCat = new URLSearchParams(location.search).get('cat');
+      if (urlCat && H.CATEGORIES[urlCat]) state.cat = urlCat;
+
+      const el = {
+        search: document.getElementById('fSearch'),
+        price: document.getElementById('fPrice'),
+        sort: document.getElementById('fSort'),
+        reset: document.getElementById('fReset'),
+        chips: document.getElementById('chipRow'),
+        count: document.getElementById('resultCount'),
+        grid: document.getElementById('prodGrid'),
+        empty: document.getElementById('emptyState'),
+        emptyReset: document.getElementById('emptyReset'),
+      };
+
+      function renderChips() {
+        const cats = [['', 'Tất cả'], ...Object.entries(H.CATEGORIES)];
+        el.chips.innerHTML = cats.map(([key, label]) => {
+          const n = key ? D.products.filter(p => p.category === key).length : D.products.length;
+          return `<button class="chip ${state.cat === key ? 'active' : ''}" data-cat="${key}">${label} (${n})</button>`;
+        }).join('');
+        el.chips.querySelectorAll('.chip').forEach(btn => {
+          btn.addEventListener('click', () => { state.cat = btn.dataset.cat; apply(); });
+        });
+      }
+
+      function apply() {
+        let items = [...D.products];
+
+        if (state.cat) items = items.filter(p => p.category === state.cat);
+        if (state.q) {
+          const q = state.q.toLowerCase();
+          items = items.filter(p =>
+            p.name.toLowerCase().includes(q) || p.code.toLowerCase().includes(q));
+        }
+        if (state.price) {
+          const [min, max] = state.price.split('-').map(Number);
+          items = items.filter(p => p.sale >= min && p.sale <= max);
+        }
+
+        // Sort đúng chiều (bug #1: "cao → thấp" phải là giảm dần thật)
+        switch (state.sort) {
+          case 'price-asc': items.sort((a, b) => a.sale - b.sale); break;
+          case 'price-desc': items.sort((a, b) => b.sale - a.sale); break;
+          case 'discount-desc': items.sort((a, b) => H.discountOf(b) - H.discountOf(a)); break;
+          case 'views-desc': items.sort((a, b) => b.views - a.views); break;
+          default: items.sort((a, b) => (b.stock > 0) - (a.stock > 0) || H.discountOf(b) - H.discountOf(a));
+        }
+
+        // Số lượng hiển thị = số sản phẩm thực trên trang (bug #7: không hardcode)
+        el.count.innerHTML = `Hiển thị <b>${items.length}</b> / ${D.products.length} sản phẩm` +
+          (state.cat ? ` trong <b>${H.categoryLabel(state.cat)}</b>` : '');
+
+        el.grid.innerHTML = items.map(H.productCard).join('');
+        el.empty.hidden = items.length > 0;
+        el.grid.style.display = items.length > 0 ? '' : 'none';
+        renderChips();
+      }
+
+      function resetFilters() {
+        state.q = ''; state.cat = ''; state.price = ''; state.sort = 'default';
+        el.search.value = ''; el.price.value = ''; el.sort.value = 'default';
+        history.replaceState(null, '', 'products.html');
+        apply();
+        H.toast('Đã xóa toàn bộ bộ lọc');
+      }
+
+      el.search.addEventListener('input', () => { state.q = el.search.value.trim(); apply(); });
+      el.price.addEventListener('change', () => { state.price = el.price.value; apply(); });
+      el.sort.addEventListener('change', () => { state.sort = el.sort.value; apply(); });
+      el.reset.addEventListener('click', resetFilters);
+      el.emptyReset.addEventListener('click', resetFilters);
+
+      apply();
+      H.tryRefreshFromApi(apply);
+    })();
+  </script>
+</body>
+</html>
