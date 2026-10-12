@@ -16,7 +16,72 @@
 
   <section class="section" style="background:linear-gradient(135deg,var(--lav-50),#fff)">
     <div class="container">
-      <div class="auth-wrap">
+      <div class="auth-layout">
+
+        <!-- Panel minh họa cô gái cầm hộp quà -->
+        <div class="auth-visual">
+          <div class="kv-flower" style="color:#ffffff; opacity:.1; top:-24px; right:8%; width:120px; height:120px"></div>
+          <div class="kv-flower" style="color:#ffffff; opacity:.08; bottom:-40px; left:-10px; width:190px; height:190px"></div>
+          <div class="auth-illus">
+            <svg viewBox="0 0 360 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cô gái cầm hộp quà Herish">
+              <!-- nền tròn mềm -->
+              <circle cx="180" cy="210" r="168" fill="#ffffff" opacity=".10"/>
+              <circle cx="180" cy="210" r="134" fill="#fce8e6" opacity=".16"/>
+              <!-- tóc sau -->
+              <path d="M112 156 Q106 58 180 54 Q254 58 248 156 Q254 232 228 262 L132 262 Q106 232 112 156 Z" fill="#3f2f4a"/>
+              <!-- cổ -->
+              <rect x="163" y="176" width="34" height="38" rx="13" fill="#eec099"/>
+              <!-- thân váy + vai -->
+              <path d="M118 420 Q116 262 180 250 Q244 262 242 420 Z" fill="#e8a9cb"/>
+              <path d="M138 300 Q140 258 180 252 Q220 258 222 300 Z" fill="#edb8d6"/>
+              <!-- mặt -->
+              <ellipse cx="180" cy="132" rx="56" ry="60" fill="#f7d3b0"/>
+              <!-- tai + bông tai -->
+              <circle cx="125" cy="136" r="10" fill="#f7d3b0"/>
+              <circle cx="235" cy="136" r="10" fill="#f7d3b0"/>
+              <circle cx="125" cy="150" r="4" fill="#c75b9b"/>
+              <circle cx="235" cy="150" r="4" fill="#c75b9b"/>
+              <!-- tóc mái -->
+              <path d="M123 136 Q126 70 180 66 Q234 70 237 136 Q224 102 180 106 Q136 102 123 136 Z" fill="#3f2f4a"/>
+              <!-- hoa keyvisual cài tóc -->
+              <g fill="#e8a9cb"><circle cx="220" cy="86" r="9"/><circle cx="238" cy="86" r="9"/><circle cx="220" cy="104" r="9"/><circle cx="238" cy="104" r="9"/></g>
+              <circle cx="229" cy="95" r="5.5" fill="#c75b9b"/>
+              <!-- má hồng + mắt + miệng -->
+              <circle cx="150" cy="150" r="8" fill="#ef9fbb" opacity=".6"/>
+              <circle cx="210" cy="150" r="8" fill="#ef9fbb" opacity=".6"/>
+              <circle cx="160" cy="132" r="5" fill="#3a2f45"/>
+              <circle cx="200" cy="132" r="5" fill="#3a2f45"/>
+              <path d="M168 154 Q180 164 192 154" stroke="#b5718a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <!-- tay áo + bàn tay ôm hộp -->
+              <path d="M138 266 Q108 300 122 334 L150 322 Q138 296 156 276 Z" fill="#e8a9cb"/>
+              <path d="M222 266 Q252 300 238 334 L210 322 Q222 296 204 276 Z" fill="#e8a9cb"/>
+              <ellipse cx="126" cy="330" rx="17" ry="13" fill="#f7d3b0"/>
+              <ellipse cx="234" cy="330" rx="17" ry="13" fill="#f7d3b0"/>
+              <!-- hộp quà -->
+              <rect x="104" y="286" width="152" height="30" rx="8" fill="#f3edfb"/>
+              <rect x="116" y="314" width="128" height="74" rx="10" fill="#ffffff"/>
+              <rect x="116" y="314" width="128" height="74" rx="10" fill="url(#boxShade)"/>
+              <rect x="170" y="286" width="20" height="102" fill="#665baf"/>
+              <!-- nơ -->
+              <path d="M180 288 Q150 262 136 284 Q128 302 164 300 Q180 298 180 290 Z" fill="#665baf"/>
+              <path d="M180 288 Q210 262 224 284 Q232 302 196 300 Q180 298 180 290 Z" fill="#7a6fc0"/>
+              <circle cx="180" cy="290" r="11" fill="#c75b9b"/>
+              <!-- tim bay -->
+              <path d="M286 150 c 5 -11 22 -7 20 6 c -2 9 -13 15 -20 20 c -7 -5 -18 -11 -20 -20 c -2 -13 15 -17 20 -6 Z" fill="#f6dcec" opacity=".9"/>
+              <path d="M70 196 c 4 -8 16 -5 15 4 c -1 7 -9 11 -15 14 c -6 -3 -14 -7 -15 -14 c -1 -9 11 -12 15 -4 Z" fill="#e8a9cb" opacity=".85"/>
+              <defs>
+                <linearGradient id="boxShade" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#ffffff"/>
+                  <stop offset="1" stop-color="#efe8fb"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h2>Trao yêu thương,<br>Herish lo phần còn lại 💜</h2>
+          <p>Đăng nhập để lưu lịch nhắc những ngày quan trọng — và không bao giờ lỡ một dịp tặng quà nào nữa.</p>
+        </div>
+
+        <!-- Form -->
         <div class="auth-card">
           <div class="auth-logo"><span class="logo">Her<span class="i-dot">ı</span>sh</span></div>
           <p class="auth-sub">Tài khoản Herish — để lưu & quản lý lịch nhắc hẹn tặng quà của bạn</p>
@@ -43,8 +108,8 @@
             <input id="rgName" type="text" placeholder="Nguyễn Văn A" autocomplete="name" required>
             <label for="rgEmail">Email</label>
             <input id="rgEmail" type="email" placeholder="ban@gmail.com" autocomplete="email" required>
-            <label for="rgPhone">Số điện thoại <span style="font-weight:400;color:var(--ink-soft)">(không bắt buộc)</span></label>
-            <input id="rgPhone" type="tel" placeholder="09xx xxx xxx" autocomplete="tel" pattern="[0-9+ ]{8,15}">
+            <label for="rgPhone">Số điện thoại *</label>
+            <input id="rgPhone" type="tel" placeholder="09xx xxx xxx" autocomplete="tel" pattern="[0-9+ ]{8,15}" required>
             <label for="rgPass">Mật khẩu <span style="font-weight:400;color:var(--ink-soft)">(ít nhất 6 ký tự)</span></label>
             <input id="rgPass" type="password" placeholder="••••••" autocomplete="new-password" required minlength="6">
             <button class="btn btn-primary" type="submit">Tạo tài khoản</button>
@@ -57,6 +122,7 @@
             Herish không gửi dữ liệu của bạn đi đâu khác.
           </div>
         </div>
+
       </div>
     </div>
   </section>

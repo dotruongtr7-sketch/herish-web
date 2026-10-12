@@ -102,12 +102,14 @@
       name = (name || '').trim();
       if (!name) throw new Error('Bạn hãy nhập tên nhé.');
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new Error('Email chưa đúng định dạng.');
+      phone = (phone || '').trim();
+      if (!/^[0-9+][0-9+ ]{7,14}$/.test(phone)) throw new Error('Bạn hãy nhập số điện thoại để Herish nhắc hẹn qua điện thoại nhé.');
       if ((password || '').length < 6) throw new Error('Mật khẩu cần ít nhất 6 ký tự.');
       const users = this.users();
       if (users[email]) throw new Error('Email này đã có tài khoản — bạn hãy đăng nhập nhé.');
       const salt = this._salt();
       const hash = await this._hash(password, salt);
-      users[email] = { name, email, phone: (phone || '').trim(), salt, hash, created: this._today() };
+      users[email] = { name, email, phone, salt, hash, created: this._today() };
       this._saveUsers(users);
       this._setSession(email);
       this._migrateGuest(email);
