@@ -150,8 +150,12 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; color: var(--prima
   color: #fff; padding: 44px 36px; position: relative; overflow: hidden;
   display: flex; flex-direction: column; justify-content: center;
 }
-.auth-visual .auth-illus { position: relative; z-index: 1; max-width: 320px; margin: 0 auto 14px; }
+.auth-visual .auth-illus { position: relative; z-index: 1; max-width: 340px; margin: 0 auto 18px; }
 .auth-visual .auth-illus svg { width: 100%; height: auto; display: block; }
+.auth-visual .auth-illus img {
+  width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;
+  border-radius: 18px; box-shadow: 0 16px 40px rgba(0,0,0,.25);
+}
 .auth-visual h2 { color: #fff; font-size: 1.5rem; line-height: 1.3; margin-bottom: 10px; position: relative; z-index: 1; }
 .auth-visual p { color: var(--lav-200); font-size: .92rem; position: relative; z-index: 1; }
 .auth-layout .auth-card { box-shadow: none; border-radius: 0; }
@@ -254,7 +258,7 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; color: var(--prima
   background: #fff; border-radius: 26px; box-shadow: var(--shadow-lg);
   overflow: hidden; transform: rotate(2deg); padding: 10px;
 }
-.hero-photo img { width: 100%; height: auto; display: block; border-radius: 18px; }
+.hero-photo img { width: 100%; aspect-ratio: 4/5; object-fit: cover; object-position: center top; display: block; border-radius: 18px; }
 .hero-float {
   position: absolute; background: #fff; border-radius: 16px; box-shadow: var(--shadow-lg);
   padding: 12px 18px; font-size: .88rem; font-weight: 600; color: var(--primary-900);
