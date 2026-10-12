@@ -167,7 +167,6 @@
           <a href="index.html" ${active === 'home' ? 'class="active"' : ''}>Trang chủ</a>
           <a href="products.html" ${active === 'products' ? 'class="active"' : ''}>Sản phẩm</a>
           <a href="reminders.html" ${active === 'reminders' ? 'class="active"' : ''}>Nhắc hẹn</a>
-          <a href="index.html#why">Vì sao chọn Herish</a>
           <a href="index.html#faq">Hỏi đáp</a>
           <a href="index.html#contact">Liên hệ</a>
         </nav>
