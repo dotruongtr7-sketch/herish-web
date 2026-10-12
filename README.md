@@ -8,7 +8,9 @@ Web tĩnh thay thế **herish.vn** (tên miền cũ đã hết hạn). Chạy đ
 - `product.html?code=MÃ` — chi tiết sản phẩm, form "thông báo khi có hàng"
 - `assets/js/data.js` — snapshot dữ liệu thật lấy từ API `https://herish.id.vn/api` (19 sản phẩm, FAQ, liên hệ)
 - `assets/img/products/` — ảnh sản phẩm đã tải về repo (web tự chạy kể cả khi server cũ sập)
-- `assets/img/hero-girl.jpg`, `assets/img/login-girl.jpg` — ảnh người mẫu từ Pexels (giấy phép Pexels: miễn phí dùng thương mại, không cần ghi nguồn). Nguồn: pexels.com/photo/5705085 và /6699470. Thay bằng ảnh brand thật khi có.
+- `assets/img/hero-girl.png` — ảnh cô gái bất ngờ mở quà, ĐÃ TÁCH NỀN (rembg) để đặt thẳng trên gradient hero. Nguồn Pexels photo 6699463.
+- `assets/img/login-girl.jpg` — ảnh người mẫu panel login, Pexels photo 6699470.
+- Ảnh Pexels: giấy phép miễn phí dùng thương mại, không cần ghi nguồn. Thay bằng ảnh brand thật khi có (đè đúng tên file).
 
 ## Cơ chế dữ liệu
 Trang luôn render từ snapshot trong `data.js` trước, sau đó **tự gọi API cũ** (`herish.id.vn/api/products`) để làm mới giá/tồn kho nếu backend còn sống. Backend chết → web vẫn hoạt động bình thường.
