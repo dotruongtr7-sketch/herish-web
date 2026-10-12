@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nhắc hẹn tặng quà — Herish</title>
-  <meta name="description" content="Tạo tài khoản nhắc hẹn miễn phí của Herish: đặt lịch sinh nhật, kỷ niệm — nhận nhắc trước nhiều ngày qua email hoặc điện thoại để không bao giờ lỡ dịp tặng quà.">
+  <meta name="description" content="Quản lý lịch nhắc hẹn tặng quà của bạn trên Herish: đặt lịch sinh nhật, kỷ niệm — nhận nhắc trước nhiều ngày qua email hoặc điện thoại.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,75 +24,70 @@
 
   <section class="section" style="padding-top:36px">
     <div class="container">
-      <div class="rem-grid">
 
-        <!-- CỘT TRÁI: tài khoản + tạo lịch nhắc -->
+      <!-- CỔNG CHẶN: chưa đăng nhập -->
+      <div class="auth-gate" id="gate" hidden>
+        <div class="ico">🔐🎁</div>
+        <h2>Đăng nhập để quản lý lịch nhắc hẹn</h2>
+        <p>Tạo tài khoản Herish miễn phí để lưu lịch nhắc sinh nhật, kỷ niệm của những người bạn thương —
+          và nhận nhắc trước nhiều ngày qua email hoặc điện thoại.</p>
+        <div class="gate-actions">
+          <a class="btn btn-primary" href="login.html?next=reminders.html">👤 Đăng nhập / Đăng ký</a>
+          <a class="btn btn-ghost" href="products.html">🎁 Xem quà tặng</a>
+        </div>
+      </div>
+
+      <!-- KHU LÀM VIỆC: đã đăng nhập -->
+      <div class="rem-grid" id="workspace" hidden>
+
+        <!-- CỘT TRÁI: hồ sơ + thêm lịch nhắc -->
         <div class="contact-card">
-          <!-- Chưa có tài khoản -->
-          <div id="regBox">
-            <h3>Tạo tài khoản nhắc hẹn</h3>
-            <p style="font-size:.88rem; color:var(--ink-soft); margin-bottom:6px">
-              Chỉ cần 30 giây — để Herish biết nhắc bạn qua đâu.</p>
-            <form class="contact-form" id="regForm">
-              <label for="rgName">Tên của bạn *</label>
-              <input id="rgName" type="text" placeholder="Nguyễn Văn A" required>
-              <label for="rgEmail">Email (nhận nhắc qua Gmail) *</label>
-              <input id="rgEmail" type="email" placeholder="ban@gmail.com" required>
-              <label for="rgPhone">Số điện thoại (nhận cuộc gọi/Zalo nhắc hẹn)</label>
-              <input id="rgPhone" type="tel" placeholder="09xx xxx xxx" pattern="[0-9+ ]{8,15}">
-              <button class="btn btn-primary" type="submit" style="margin-top:14px">Tạo tài khoản miễn phí</button>
-            </form>
+          <div class="rem-profile-badge">
+            <div class="avatar" id="pAvatar">H</div>
+            <div><b id="pName"></b><span id="pContact"></span></div>
+            <button id="pLogout" type="button">Đăng xuất</button>
           </div>
 
-          <!-- Đã có tài khoản -->
-          <div id="accBox" hidden>
-            <div class="rem-profile-badge">
-              <div class="avatar" id="pAvatar">H</div>
-              <div><b id="pName"></b><span id="pContact"></span></div>
-              <button id="pLogout" type="button">Đổi tài khoản</button>
+          <h3>Thêm lịch nhắc mới</h3>
+          <form class="contact-form" id="remForm">
+            <label for="rmTitle">Dịp cần nhắc *</label>
+            <input id="rmTitle" type="text" placeholder="Sinh nhật mẹ, kỷ niệm ngày cưới…" required>
+            <div class="form-row-2">
+              <div>
+                <label for="rmDate">Ngày diễn ra *</label>
+                <input id="rmDate" type="date" required>
+              </div>
+              <div>
+                <label for="rmBefore">Nhắc trước</label>
+                <select id="rmBefore" style="width:100%; font-family:inherit; font-size:.92rem; padding:11px 14px; border:1.5px solid var(--lav-100); border-radius:12px; background:var(--lav-50); color:var(--ink)">
+                  <option value="3">3 ngày</option>
+                  <option value="5">5 ngày</option>
+                  <option value="7" selected>7 ngày</option>
+                  <option value="10">10 ngày</option>
+                  <option value="15">15 ngày</option>
+                </select>
+              </div>
             </div>
-            <h3>Thêm lịch nhắc mới</h3>
-            <form class="contact-form" id="remForm">
-              <label for="rmTitle">Dịp cần nhắc *</label>
-              <input id="rmTitle" type="text" placeholder="Sinh nhật mẹ, kỷ niệm ngày cưới…" required>
-              <div class="form-row-2">
-                <div>
-                  <label for="rmDate">Ngày diễn ra *</label>
-                  <input id="rmDate" type="date" required>
-                </div>
-                <div>
-                  <label for="rmBefore">Nhắc trước</label>
-                  <select id="rmBefore" style="width:100%; font-family:inherit; font-size:.92rem; padding:11px 14px; border:1.5px solid var(--lav-100); border-radius:12px; background:var(--lav-50); color:var(--ink)">
-                    <option value="3">3 ngày</option>
-                    <option value="5">5 ngày</option>
-                    <option value="7" selected>7 ngày</option>
-                    <option value="10">10 ngày</option>
-                    <option value="15">15 ngày</option>
-                  </select>
-                </div>
-              </div>
-              <label>Nhắc qua kênh nào?</label>
-              <div class="checkbox-line" style="margin:6px 0 2px">
-                <input type="radio" name="rmChannel" id="chEmail" value="email" checked>
-                <label for="chEmail" style="margin:0; font-weight:500">📧 Email / Gmail (qua Google Calendar)</label>
-              </div>
-              <div class="checkbox-line" style="margin:2px 0 6px">
-                <input type="radio" name="rmChannel" id="chPhone" value="phone">
-                <label for="chPhone" style="margin:0; font-weight:500">📞 Điện thoại / Zalo (Herish gọi nhắc)</label>
-              </div>
-              <div class="checkbox-line" style="margin:2px 0 10px">
-                <input type="checkbox" id="rmYearly" checked>
-                <label for="rmYearly" style="margin:0; font-weight:500">Lặp lại hằng năm (sinh nhật, kỷ niệm…)</label>
-              </div>
-              <button class="btn btn-primary" type="submit">➕ Thêm lịch nhắc</button>
-            </form>
-          </div>
+            <label>Nhắc qua kênh nào?</label>
+            <div class="checkbox-line" style="margin:6px 0 2px">
+              <input type="radio" name="rmChannel" id="chEmail" value="email" checked>
+              <label for="chEmail" style="margin:0; font-weight:500">📧 Email / Gmail (qua Google Calendar)</label>
+            </div>
+            <div class="checkbox-line" style="margin:2px 0 6px">
+              <input type="radio" name="rmChannel" id="chPhone" value="phone">
+              <label for="chPhone" style="margin:0; font-weight:500">📞 Điện thoại / Zalo (Herish gọi nhắc)</label>
+            </div>
+            <div class="checkbox-line" style="margin:2px 0 10px">
+              <input type="checkbox" id="rmYearly" checked>
+              <label for="rmYearly" style="margin:0; font-weight:500">Lặp lại hằng năm (sinh nhật, kỷ niệm…)</label>
+            </div>
+            <button class="btn btn-primary" type="submit">➕ Thêm lịch nhắc</button>
+          </form>
 
           <div class="rem-note">
             💡 <b>Cách nhận nhắc hẹn:</b> với kênh <b>Email</b>, bấm "Nhắc qua Gmail" ở mỗi lịch —
             Google Calendar sẽ tự báo về hộp thư của bạn đúng ngày, lặp lại hằng năm.
             Với kênh <b>Điện thoại</b>, bấm "Nhờ Herish nhắc" — đội CSKH sẽ gọi/Zalo nhắc bạn trước dịp.
-            Dữ liệu lịch lưu ngay trên thiết bị của bạn.
           </div>
         </div>
 
@@ -116,36 +111,45 @@
   <script src="assets/js/app.js"></script>
   <script>
     (function () {
-      const H = window.Herish, R = H.Reminder, D = H.data;
+      const H = window.Herish, R = H.Reminder, A = H.Auth, D = H.data;
       H.renderChrome('reminders');
 
       const $ = id => document.getElementById(id);
+      const user = A.current();
 
-      function renderAccount() {
-        const p = R.getProfile();
-        $('regBox').hidden = !!p;
-        $('accBox').hidden = !p;
-        if (p) {
-          $('pAvatar').textContent = (p.name || 'H').trim().charAt(0).toUpperCase();
-          $('pName').textContent = p.name;
-          $('pContact').textContent = [p.email, p.phone].filter(Boolean).join(' · ');
-        }
+      // Chưa đăng nhập → hiện cổng chặn
+      if (!user) {
+        $('gate').hidden = false;
+        $('workspace').hidden = true;
+        return;
       }
+
+      // Đã đăng nhập
+      $('gate').hidden = true;
+      $('workspace').hidden = false;
+      $('pAvatar').textContent = (user.name || 'H').trim().split(/\s+/).slice(-1)[0].charAt(0).toUpperCase();
+      $('pName').textContent = user.name;
+      $('pContact').textContent = [user.email, user.phone].filter(Boolean).join(' · ');
+
+      $('pLogout').addEventListener('click', function () {
+        A.logout();
+        H.toast('Đã đăng xuất');
+        setTimeout(() => window.location.href = 'index.html', 600);
+      });
 
       function renderList() {
         const items = R.list().sort((a, b) => R.daysUntil(a) - R.daysUntil(b));
         $('remCount').textContent = items.length ? `(${items.length})` : '';
         $('remEmpty').style.display = items.length ? 'none' : '';
-        const profile = R.getProfile() || {};
         $('remList').innerHTML = items.map(r => {
           const days = R.daysUntil(r);
           const ev = R.nextDate(r).toLocaleDateString('vi-VN');
           const soon = days <= (+r.before || 7);
           const channel = r.channel === 'phone' ? '📞 Điện thoại' : '📧 Email';
           const askHerish = 'mailto:' + D.contact.email
-            + '?subject=' + encodeURIComponent(`[Nhắc hẹn] ${r.title} — ${profile.name || ''}`)
+            + '?subject=' + encodeURIComponent(`[Nhắc hẹn] ${r.title} — ${user.name}`)
             + '&body=' + encodeURIComponent(
-              `Nhờ Herish nhắc giúp:\n- Dịp: ${r.title}\n- Ngày: ${ev}${r.yearly ? ' (hằng năm)' : ''}\n- Nhắc trước: ${r.before} ngày\n- Kênh: ${channel}\n- Khách: ${profile.name || ''}\n- SĐT: ${profile.phone || '(chưa có)'}\n- Email: ${profile.email || ''}`);
+              `Nhờ Herish nhắc giúp:\n- Dịp: ${r.title}\n- Ngày: ${ev}${r.yearly ? ' (hằng năm)' : ''}\n- Nhắc trước: ${r.before} ngày\n- Kênh: ${channel}\n- Khách: ${user.name}\n- SĐT: ${user.phone || '(chưa có)'}\n- Email: ${user.email}`);
           return `
           <div class="rem-item">
             <div class="rem-item-head">
@@ -154,7 +158,7 @@
             </div>
             <div class="rem-meta">📅 ${ev}${r.yearly ? ' · lặp hằng năm' : ''} · nhắc trước ${r.before} ngày · ${channel}</div>
             <div class="rem-actions">
-              <a href="${R.calendarUrl(r, profile)}" target="_blank" rel="noopener">📧 Nhắc qua Gmail</a>
+              <a href="${R.calendarUrl(r, user)}" target="_blank" rel="noopener">📧 Nhắc qua Gmail</a>
               <a href="${askHerish}">💌 Nhờ Herish nhắc</a>
               <a href="products.html">🎁 Chọn quà trước</a>
               <button class="rem-del" data-id="${r.id}">Xóa</button>
@@ -170,45 +174,24 @@
         });
       }
 
-      $('regForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        R.saveProfile({
-          name: $('rgName').value.trim(),
-          email: $('rgEmail').value.trim(),
-          phone: $('rgPhone').value.trim(),
-          created: new Date().toISOString().slice(0, 10),
-        });
-        renderAccount();
-        H.toast('Tạo tài khoản thành công! Thêm lịch nhắc đầu tiên nhé 💜');
-      });
-
-      $('pLogout').addEventListener('click', function () {
-        if (confirm('Đổi sang tài khoản khác? Lịch nhắc trên thiết bị này vẫn được giữ nguyên.')) {
-          R.clearProfile();
-          renderAccount();
-        }
-      });
-
       $('remForm').addEventListener('submit', function (e) {
         e.preventDefault();
-        const date = $('rmDate').value;
-        if (!date) return;
+        if (!$('rmDate').value) return;
         R.add({
           title: $('rmTitle').value.trim(),
-          date,
+          date: $('rmDate').value,
           before: +$('rmBefore').value,
           channel: document.querySelector('input[name="rmChannel"]:checked').value,
           yearly: $('rmYearly').checked,
         });
         this.reset();
         $('rmBefore').value = '7';
-        $('rmYearly').checked = true;   // mặc định tick (bug #4 cũ)
+        $('rmYearly').checked = true;
         $('chEmail').checked = true;
         renderList();
         H.toast('Đã thêm lịch nhắc 🎉 Bấm "Nhắc qua Gmail" để nhận thông báo tự động');
       });
 
-      renderAccount();
       renderList();
     })();
   </script>

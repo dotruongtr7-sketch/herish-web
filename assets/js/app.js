@@ -12,7 +12,6 @@
   }
 
   // % giảm giá tính MỘT chỗ duy nhất, dùng chung cho card + trang chi tiết
-  // (tránh bug #2: tỉ lệ giảm lệch giữa màn ngoài và màn detail)
   function discountOf(p) {
     if (!p.price || !p.sale || p.sale >= p.price) return 0;
     return Math.round((1 - p.sale / p.price) * 100);
@@ -44,10 +43,15 @@
   }
 
   function categoryLabel(key) { return CATEGORIES[key] || 'Quà tặng'; }
-
   function productUrl(p) { return 'product.html?code=' + encodeURIComponent(p.code); }
 
-  // ---- Product card (dùng chung các trang) ----
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+
+  // ---- Product card ----
   function productCard(p) {
     const disc = discountOf(p);
     const img = p.image
@@ -75,13 +79,78 @@
     </article>`;
   }
 
-  function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, c => ({
-      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-    }[c]));
-  }
+  // ============ CỔNG ĐĂNG NHẬP ============
+  // Web tĩnh (GitHub Pages) → tài khoản lưu trên trình duyệt người dùng.
+  // Mật khẩu KHÔNG lưu trần: băm SHA-256 kèm salt ngẫu nhiên riêng mỗi người.
+  const Auth = {
+    async _hash(password, salt) {
+      const data = new TextEncoder().encode(salt + '::' + password);
+      const buf = await crypto.subtle.digest('SHA-256', data);
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    },
+    _salt() {
+      const a = new Uint8Array(16);
+      crypto.getRandomValues(a);
+      return Array.from(a).map(b => b.toString(16).padStart(2, '0')).join('');
+    },
+    _today() { return new Date().toISOString().slice(0, 10); },
+    users() { try { return JSON.parse(localStorage.getItem('herish_users')) || {}; } catch (e) { return {}; } },
+    _saveUsers(u) { localStorage.setItem('herish_users', JSON.stringify(u)); },
 
-  // ---- Header/footer chung (menu căn giữa, CTA tách riêng bên phải) ----
+    async register({ name, email, password, phone }) {
+      email = (email || '').trim().toLowerCase();
+      name = (name || '').trim();
+      if (!name) throw new Error('Bạn hãy nhập tên nhé.');
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new Error('Email chưa đúng định dạng.');
+      if ((password || '').length < 6) throw new Error('Mật khẩu cần ít nhất 6 ký tự.');
+      const users = this.users();
+      if (users[email]) throw new Error('Email này đã có tài khoản — bạn hãy đăng nhập nhé.');
+      const salt = this._salt();
+      const hash = await this._hash(password, salt);
+      users[email] = { name, email, phone: (phone || '').trim(), salt, hash, created: this._today() };
+      this._saveUsers(users);
+      this._setSession(email);
+      this._migrateGuest(email);
+      return this.current();
+    },
+
+    async login(email, password) {
+      email = (email || '').trim().toLowerCase();
+      const users = this.users();
+      const u = users[email];
+      if (!u) throw new Error('Email này chưa đăng ký. Bạn hãy tạo tài khoản mới nhé.');
+      const hash = await this._hash(password || '', u.salt);
+      if (hash !== u.hash) throw new Error('Mật khẩu không đúng. Bạn thử lại nhé.');
+      this._setSession(email);
+      this._migrateGuest(email);
+      return this.current();
+    },
+
+    _setSession(email) { localStorage.setItem('herish_session', email); },
+    logout() { localStorage.removeItem('herish_session'); },
+
+    current() {
+      const email = localStorage.getItem('herish_session');
+      if (!email) return null;
+      const u = this.users()[email];
+      if (!u) return null;
+      const { salt, hash, ...safe } = u;   // không trả ra salt/hash
+      return safe;
+    },
+
+    // Gộp lịch nhắc đã tạo lúc chưa đăng nhập (khách) vào tài khoản vừa vào
+    _migrateGuest(email) {
+      const old = localStorage.getItem('herish_reminders');
+      if (old) {
+        const key = 'herish_reminders_' + email;
+        if (!localStorage.getItem(key)) localStorage.setItem(key, old);
+        localStorage.removeItem('herish_reminders');
+      }
+      localStorage.removeItem('herish_profile');
+    },
+  };
+
+  // ---- Header/footer chung (menu căn giữa, có khu vực đăng nhập) ----
   function renderChrome(active) {
     const c = D.contact;
     const header = `
@@ -103,6 +172,7 @@
           <a href="index.html#contact">Liên hệ</a>
         </nav>
         <div class="header-actions">
+          <span id="authSlot"></span>
           <a class="nav-cta" href="products.html">🎁 Đặt quà ngay</a>
           <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
         </div>
@@ -129,11 +199,11 @@
             </ul>
           </div>
           <div>
-            <h4>Liên hệ</h4>
+            <h4>Tài khoản & liên hệ</h4>
             <ul>
+              <li><a href="login.html">Đăng nhập / Đăng ký</a></li>
               <li><a href="tel:${c.hotline}">📞 ${c.hotline}</a></li>
               <li><a href="mailto:${c.email}">✉️ ${c.email}</a></li>
-              <li>🕣 ${c.availability}</li>
               <li><a href="https://zalo.me/${c.hotline}" target="_blank" rel="noopener">💬 Chat Zalo</a></li>
             </ul>
           </div>
@@ -147,6 +217,8 @@
     document.getElementById('app-header').innerHTML = header;
     document.getElementById('app-footer').innerHTML = footer;
 
+    renderAuthSlot();
+
     document.getElementById('navToggle').addEventListener('click', () => {
       document.getElementById('mainNav').classList.toggle('open');
     });
@@ -157,15 +229,57 @@
     fab.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   }
 
+  // Khu vực đăng nhập trên header
+  function renderAuthSlot() {
+    const slot = document.getElementById('authSlot');
+    if (!slot) return;
+    const user = Auth.current();
+    if (!user) {
+      slot.innerHTML = `<a class="nav-login" href="login.html">👤 Đăng nhập</a>`;
+      return;
+    }
+    const callName = user.name.trim().split(/\s+/).slice(-1)[0] || user.name;
+    const initial = callName.charAt(0).toUpperCase();
+    slot.innerHTML = `
+      <div class="user-chip" id="userChip" tabindex="0">
+        <span class="avatar-sm">${escapeHtml(initial)}</span>
+        <span class="user-name">${escapeHtml(callName)}</span>
+        <span class="caret">▾</span>
+        <div class="user-menu" id="userMenu">
+          <div class="user-menu-head">
+            <b>${escapeHtml(user.name)}</b>
+            <span>${escapeHtml(user.email)}</span>
+          </div>
+          <a href="reminders.html">⏰ Nhắc hẹn của tôi</a>
+          <button type="button" id="logoutBtn">↩ Đăng xuất</button>
+        </div>
+      </div>`;
+    const chip = document.getElementById('userChip');
+    const menu = document.getElementById('userMenu');
+    chip.addEventListener('click', (e) => {
+      if (e.target.id === 'logoutBtn') return;
+      menu.classList.toggle('open');
+    });
+    document.addEventListener('click', (e) => {
+      if (!chip.contains(e.target)) menu.classList.remove('open');
+    });
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      Auth.logout();
+      toast('Đã đăng xuất. Hẹn gặp lại bạn 💜');
+      setTimeout(() => { window.location.href = 'index.html'; }, 700);
+    });
+  }
+
   function toast(msg) {
     const t = document.getElementById('toast');
+    if (!t) return;
     t.textContent = msg;
     t.classList.add('show');
     clearTimeout(t._h);
     t._h = setTimeout(() => t.classList.remove('show'), 2600);
   }
 
-  // ---- Làm mới dữ liệu từ API thật (nếu backend còn sống); lỗi thì im lặng dùng snapshot ----
+  // ---- Làm mới dữ liệu từ API thật (nếu backend còn sống) ----
   function tryRefreshFromApi(onUpdate) {
     fetch(D.api + '/products?per_page=100', { signal: AbortSignal.timeout(6000) })
       .then(r => r.json())
@@ -180,42 +294,34 @@
             if (name.toUpperCase().includes('SET QUÀ')) cat = 'set-gau-bong';
             else if (name.toUpperCase().includes('TRÁI TIM')) cat = 'hop-trai-tim';
             return {
-              code: p.product_code,
-              name,
-              short: p.short_description || '',
-              desc: p.description || '',
-              price: p.price,
-              sale: p.sale_price,
-              stock: p.stock || 0,
-              sold: p.sold_count || 0,
-              views: p.views || 0,
+              code: p.product_code, name,
+              short: p.short_description || '', desc: p.description || '',
+              price: p.price, sale: p.sale_price, stock: p.stock || 0,
+              sold: p.sold_count || 0, views: p.views || 0,
               image: (old && old.image) || (p.thumbnail ? p.thumbnail.replace('http://', 'https://') : ''),
               category: cat,
             };
           });
-        if (fresh.length) {
-          D.products = fresh;
-          if (onUpdate) onUpdate();
-        }
+        if (fresh.length) { D.products = fresh; if (onUpdate) onUpdate(); }
       })
-      .catch(() => { /* backend sập → giữ snapshot, web vẫn chạy */ });
+      .catch(() => { /* backend sập → giữ snapshot */ });
   }
 
-  // ---- Nhắc hẹn: lưu hồ sơ + danh sách nhắc trên máy người dùng ----
+  // ---- Nhắc hẹn: lưu THEO TỪNG TÀI KHOẢN ----
   const Reminder = {
-    getProfile() {
-      try { return JSON.parse(localStorage.getItem('herish_profile')); } catch (e) { return null; }
+    _key() {
+      const u = Auth.current();
+      return 'herish_reminders_' + (u ? u.email : 'guest');
     },
-    saveProfile(p) { localStorage.setItem('herish_profile', JSON.stringify(p)); },
-    clearProfile() { localStorage.removeItem('herish_profile'); },
-    list() {
-      try { return JSON.parse(localStorage.getItem('herish_reminders')) || []; } catch (e) { return []; }
+    list() { try { return JSON.parse(localStorage.getItem(this._key())) || []; } catch (e) { return []; } },
+    save(items) { localStorage.setItem(this._key(), JSON.stringify(items)); },
+    add(r) {
+      const items = this.list();
+      r.id = 'r' + (items.length ? Math.max(...items.map(x => +x.id.slice(1))) + 1 : 1);
+      items.push(r); this.save(items); return r;
     },
-    save(items) { localStorage.setItem('herish_reminders', JSON.stringify(items)); },
-    add(r) { const items = this.list(); r.id = 'r' + (items.length ? Math.max(...items.map(x => +x.id.slice(1))) + 1 : 1); items.push(r); this.save(items); return r; },
     remove(id) { this.save(this.list().filter(r => r.id !== id)); },
 
-    // Ngày sự kiện sắp tới (tự nhảy sang năm sau nếu đã qua, với lịch lặp hằng năm)
     nextDate(r) {
       const today = new Date(); today.setHours(0, 0, 0, 0);
       let d = new Date(r.date + 'T00:00:00');
@@ -229,8 +335,6 @@
       const today = new Date(); today.setHours(0, 0, 0, 0);
       return Math.round((this.nextDate(r) - today) / 86400000);
     },
-    // Link Google Calendar: sự kiện đặt vào NGÀY NHẮC (trước sự kiện N ngày), lặp hằng năm
-    // → Google tự thông báo về Gmail của người dùng đúng ngày nhắc
     calendarUrl(r, profile) {
       const ev = this.nextDate(r);
       const remind = new Date(ev); remind.setDate(remind.getDate() - (+r.before || 0));
@@ -249,7 +353,7 @@
 
   window.Herish = {
     data: D, formatPrice, discountOf, productCard, categoryLabel,
-    CATEGORIES, OCCASIONS, occasionsOf, renderChrome, toast, escapeHtml,
-    tryRefreshFromApi, productUrl, Reminder,
+    CATEGORIES, OCCASIONS, occasionsOf, renderChrome, renderAuthSlot, toast,
+    escapeHtml, tryRefreshFromApi, productUrl, Reminder, Auth,
   };
 })();

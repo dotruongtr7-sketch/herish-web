@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập / Đăng ký — Herish</title>
+  <meta name="description" content="Đăng nhập hoặc tạo tài khoản Herish để quản lý lịch nhắc hẹn tặng quà của riêng bạn.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div id="app-header"></div>
+
+  <section class="section" style="background:linear-gradient(135deg,var(--lav-50),#fff)">
+    <div class="container">
+      <div class="auth-wrap">
+        <div class="auth-card">
+          <div class="auth-logo"><span class="logo">Her<span class="i-dot">ı</span>sh</span></div>
+          <p class="auth-sub">Tài khoản Herish — để lưu & quản lý lịch nhắc hẹn tặng quà của bạn</p>
+
+          <div class="auth-tabs">
+            <button id="tabLogin" class="active" type="button">Đăng nhập</button>
+            <button id="tabRegister" type="button">Đăng ký</button>
+          </div>
+
+          <!-- ĐĂNG NHẬP -->
+          <form class="auth-form" id="loginForm">
+            <label for="lgEmail">Email</label>
+            <input id="lgEmail" type="email" placeholder="ban@gmail.com" autocomplete="email" required>
+            <label for="lgPass">Mật khẩu</label>
+            <input id="lgPass" type="password" placeholder="••••••" autocomplete="current-password" required>
+            <button class="btn btn-primary" type="submit">Đăng nhập</button>
+            <div class="auth-msg" id="lgMsg"></div>
+            <p class="auth-hint">Chưa có tài khoản? <a href="#" id="toRegister">Đăng ký miễn phí</a></p>
+          </form>
+
+          <!-- ĐĂNG KÝ -->
+          <form class="auth-form" id="registerForm" hidden>
+            <label for="rgName">Họ và tên</label>
+            <input id="rgName" type="text" placeholder="Nguyễn Văn A" autocomplete="name" required>
+            <label for="rgEmail">Email</label>
+            <input id="rgEmail" type="email" placeholder="ban@gmail.com" autocomplete="email" required>
+            <label for="rgPhone">Số điện thoại <span style="font-weight:400;color:var(--ink-soft)">(không bắt buộc)</span></label>
+            <input id="rgPhone" type="tel" placeholder="09xx xxx xxx" autocomplete="tel" pattern="[0-9+ ]{8,15}">
+            <label for="rgPass">Mật khẩu <span style="font-weight:400;color:var(--ink-soft)">(ít nhất 6 ký tự)</span></label>
+            <input id="rgPass" type="password" placeholder="••••••" autocomplete="new-password" required minlength="6">
+            <button class="btn btn-primary" type="submit">Tạo tài khoản</button>
+            <div class="auth-msg" id="rgMsg"></div>
+            <p class="auth-hint">Đã có tài khoản? <a href="#" id="toLogin">Đăng nhập</a></p>
+          </form>
+
+          <div class="auth-privacy">
+            🔒 Tài khoản được lưu an toàn ngay trên trình duyệt của bạn, mật khẩu được mã hóa (băm SHA-256).
+            Herish không gửi dữ liệu của bạn đi đâu khác.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="app-footer"></div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    (function () {
+      const H = window.Herish, A = H.Auth;
+      H.renderChrome('');
+
+      const $ = id => document.getElementById(id);
+
+      // Nếu đã đăng nhập rồi → sang thẳng trang đích
+      const next = new URLSearchParams(location.search).get('next') || 'reminders.html';
+      if (A.current()) { window.location.replace(next); return; }
+
+      // Chuyển tab
+      function show(tab) {
+        const isLogin = tab === 'login';
+        $('tabLogin').classList.toggle('active', isLogin);
+        $('tabRegister').classList.toggle('active', !isLogin);
+        $('loginForm').hidden = !isLogin;
+        $('registerForm').hidden = isLogin;
+      }
+      $('tabLogin').addEventListener('click', () => show('login'));
+      $('tabRegister').addEventListener('click', () => show('register'));
+      $('toRegister').addEventListener('click', e => { e.preventDefault(); show('register'); });
+      $('toLogin').addEventListener('click', e => { e.preventDefault(); show('login'); });
+
+      function msg(el, text, ok) {
+        el.textContent = text;
+        el.className = 'auth-msg ' + (ok ? 'ok' : 'err');
+      }
+
+      // Đăng nhập
+      $('loginForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const btn = this.querySelector('button[type=submit]');
+        btn.disabled = true;
+        try {
+          const u = await A.login($('lgEmail').value, $('lgPass').value);
+          msg($('lgMsg'), 'Đăng nhập thành công! Đang chuyển trang…', true);
+          setTimeout(() => window.location.replace(next), 600);
+        } catch (err) {
+          msg($('lgMsg'), err.message, false);
+          btn.disabled = false;
+        }
+      });
+
+      // Đăng ký
+      $('registerForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const btn = this.querySelector('button[type=submit]');
+        btn.disabled = true;
+        try {
+          await A.register({
+            name: $('rgName').value,
+            email: $('rgEmail').value,
+            phone: $('rgPhone').value,
+            password: $('rgPass').value,
+          });
+          msg($('rgMsg'), 'Tạo tài khoản thành công! Đang chuyển trang…', true);
+          setTimeout(() => window.location.replace(next), 700);
+        } catch (err) {
+          msg($('rgMsg'), err.message, false);
+          btn.disabled = false;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
