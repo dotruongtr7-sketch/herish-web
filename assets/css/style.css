@@ -253,17 +253,17 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; color: var(--prima
   overflow: hidden; transform: rotate(2deg);
 }
 .hero-card img { width: 100%; height: 420px; object-fit: cover; }
-/* Hero có khung (ảnh sản phẩm): khung trắng bo tròn, nghiêng nhẹ */
-.hero-photo.framed {
-  background: #fff; border-radius: 26px; box-shadow: var(--shadow-lg);
-  overflow: hidden; transform: rotate(2deg); padding: 10px;
+/* Hero: ảnh hòa vào nền — mờ nhòe 4 mép, không khung/viền/bóng */
+.hero-visual { position: relative; }
+.hero-visual::before {
+  content: ''; position: absolute; inset: -28% -22%; z-index: 0;
+  background: radial-gradient(ellipse 60% 60% at 52% 46%, #e6ddf6 0%, #ece6f8 55%, rgba(236,230,248,0) 78%);
 }
-.hero-photo.framed img { width: 100%; height: auto; display: block; border-radius: 18px; }
-/* Hero người tách nền (không khung) — dùng khi có ảnh người đẹp */
-.hero-photo.cutout { position: relative; display: flex; justify-content: center; }
-.hero-photo.cutout img {
-  width: 100%; max-width: 440px; height: auto; display: block;
-  filter: drop-shadow(0 22px 34px rgba(55, 48, 107, .28));
+.hero-photo { position: relative; z-index: 1; }
+.hero-photo img {
+  width: 100%; height: auto; display: block;
+  -webkit-mask-image: radial-gradient(ellipse 92% 96% at 52% 45%, #000 46%, transparent 96%);
+          mask-image: radial-gradient(ellipse 92% 96% at 52% 45%, #000 46%, transparent 96%);
 }
 .hero-float {
   position: absolute; background: #fff; border-radius: 16px; box-shadow: var(--shadow-lg);
