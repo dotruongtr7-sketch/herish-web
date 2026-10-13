@@ -232,7 +232,7 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; color: var(--prima
 }
 .hero-cover::before {
   content: ''; position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(to right, #efe9fa 0%, rgba(239,233,250,.88) 28%, rgba(239,233,250,.35) 47%, rgba(239,233,250,0) 60%);
+  background: linear-gradient(to right, rgba(239,233,250,.62) 0%, rgba(239,233,250,.22) 24%, rgba(239,233,250,0) 42%);
 }
 .hero-cover .container { display: block; position: relative; z-index: 2; }
 .hero-cover .hero-text { max-width: 520px; }
