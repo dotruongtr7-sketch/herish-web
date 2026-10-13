@@ -253,9 +253,15 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; color: var(--prima
   overflow: hidden; transform: rotate(2deg);
 }
 .hero-card img { width: 100%; height: 420px; object-fit: cover; }
-/* Hero: ảnh người đã tách nền, đặt thẳng trên nền gradient (không khung) */
-.hero-photo { position: relative; display: flex; justify-content: center; }
-.hero-photo img {
+/* Hero có khung (ảnh sản phẩm): khung trắng bo tròn, nghiêng nhẹ */
+.hero-photo.framed {
+  background: #fff; border-radius: 26px; box-shadow: var(--shadow-lg);
+  overflow: hidden; transform: rotate(2deg); padding: 10px;
+}
+.hero-photo.framed img { width: 100%; height: auto; display: block; border-radius: 18px; }
+/* Hero người tách nền (không khung) — dùng khi có ảnh người đẹp */
+.hero-photo.cutout { position: relative; display: flex; justify-content: center; }
+.hero-photo.cutout img {
   width: 100%; max-width: 440px; height: auto; display: block;
   filter: drop-shadow(0 22px 34px rgba(55, 48, 107, .28));
 }
