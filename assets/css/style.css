@@ -217,9 +217,9 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; color: var(--prima
 .hero {
   position: relative;
   background:
-    radial-gradient(1200px 500px at 85% -10%, var(--lav-100) 0%, transparent 60%),
+    radial-gradient(1200px 520px at 85% -10%, #e4d8f3 0%, transparent 62%),
     radial-gradient(900px 420px at -10% 110%, var(--blush) 0%, transparent 55%),
-    linear-gradient(135deg, var(--lav-50) 0%, #fff 100%);
+    linear-gradient(135deg, #efe9fa 0%, #f5f0fb 100%);
   padding: 72px 0 86px;
   overflow: hidden;
 }
@@ -256,14 +256,14 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; color: var(--prima
 /* Hero: ảnh hòa vào nền — mờ nhòe 4 mép, không khung/viền/bóng */
 .hero-visual { position: relative; }
 .hero-visual::before {
-  content: ''; position: absolute; inset: -28% -22%; z-index: 0;
-  background: radial-gradient(ellipse 60% 60% at 52% 46%, #e6ddf6 0%, #ece6f8 55%, rgba(236,230,248,0) 78%);
+  content: ''; position: absolute; inset: -26% -22%; z-index: 0;
+  background: radial-gradient(ellipse 56% 58% at 52% 46%, #dcc4d3 0%, #e4d5e3 48%, rgba(228,213,227,0) 76%);
 }
 .hero-photo { position: relative; z-index: 1; }
 .hero-photo img {
   width: 100%; height: auto; display: block;
-  -webkit-mask-image: radial-gradient(ellipse 92% 96% at 52% 45%, #000 46%, transparent 96%);
-          mask-image: radial-gradient(ellipse 92% 96% at 52% 45%, #000 46%, transparent 96%);
+  -webkit-mask-image: radial-gradient(ellipse 96% 99% at 52% 45%, #000 40%, transparent 90%);
+          mask-image: radial-gradient(ellipse 96% 99% at 52% 45%, #000 40%, transparent 90%);
 }
 .hero-float {
   position: absolute; background: #fff; border-radius: 16px; box-shadow: var(--shadow-lg);
