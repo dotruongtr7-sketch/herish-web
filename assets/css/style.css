@@ -232,15 +232,15 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; color: var(--prima
 }
 .hero-cover::before {
   content: ''; position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(to right, rgba(241,235,251,.9) 0%, rgba(241,235,251,.5) 22%, rgba(241,235,251,0) 46%);
+  background: linear-gradient(to right, rgba(238,231,249,.97) 0%, rgba(238,231,249,.9) 30%, rgba(238,231,249,.45) 46%, rgba(238,231,249,0) 60%);
 }
 .hero-cover .container { display: block; position: relative; z-index: 2; }
 .hero-cover .hero-text { max-width: 520px; }
-/* Chữ hero: đậm + viền sáng nhẹ để rõ trên nền ảnh sáng */
-.hero.hero-cover p.lead { color: #453c66; text-shadow: 0 1px 2px rgba(255,255,255,.6); }
-.hero-cover .hero-stats b { color: var(--primary-900); text-shadow: 0 1px 2px rgba(255,255,255,.7); }
-.hero-cover .hero-stats span { color: #4f456f; font-weight: 500; text-shadow: 0 1px 2px rgba(255,255,255,.7); }
-.hero-cover .hero-badge { background: rgba(232,228,247,.92); }
+/* Chữ hero: đậm, nét — KHÔNG dùng viền trắng (gây lóa trên nền sáng) */
+.hero.hero-cover p.lead { color: #3f3760; }
+.hero-cover .hero-stats b { color: #2e2856; font-weight: 700; }
+.hero-cover .hero-stats span { color: #3c3560; font-weight: 600; }
+.hero-cover .hero-badge { background: rgba(228,224,245,.95); color: var(--primary-700); }
 /* Mép đáy banner tan dần vào nền khu bên dưới (hết đường cắt ngang) */
 .hero-cover::after {
   content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 140px; z-index: 1;
