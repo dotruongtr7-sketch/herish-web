@@ -224,8 +224,17 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; color: var(--prima
   overflow: hidden;
 }
 
+/* Trang chủ: menu trong suốt ở đầu trang, có nền khi cuộn xuống */
+.site-header.home-hero.at-top {
+  background: transparent; border-bottom-color: transparent;
+  box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none;
+}
+
 /* HERO BANNER (ảnh bìa toàn khổ, chữ + nút thật đè lên trái) */
-.hero-cover { padding: 0; min-height: 540px; display: flex; align-items: center; overflow: hidden; }
+.hero-cover { padding: 0; min-height: 600px; display: flex; align-items: center; overflow: hidden;
+  margin-top: -72px; /* kéo banner lên sau menu để ảnh full, không bị cắt */
+}
+.hero-cover .container { padding-top: 72px; }
 .hero-cover .hero-bg {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; object-position: center right; z-index: 0;
@@ -651,6 +660,7 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; color: var(--prima
   .hero-cover::before { display: none; }
   .hero-cover .hero-text { max-width: 100%; text-align: center; padding-top: 28px; }
   .hero-cover .hero-actions, .hero-cover .hero-stats { justify-content: center; }
+  .hero-cover .container { padding-top: 0; }
   .cat-grid { grid-template-columns: 1fr; }
   .story-grid { grid-template-columns: 1fr; }
   .vmv-grid { grid-template-columns: 1fr; }
