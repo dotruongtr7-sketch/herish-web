@@ -65,9 +65,12 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; color: var(--prima
 .topbar a { color: #fff; font-weight: 600; }
 
 /* ---------- Header ---------- */
-/* Thanh menu kiểu dock iPhone: viên kính mờ nổi, bo tròn, trong suốt */
+/* Khối bọc "tàng hình" để viên kính dính trực tiếp với TRANG (không bị khối bọc giới hạn) */
+#app-header { display: contents; }
+/* Thanh menu kiểu dock iPhone: viên kính mờ nổi, dính màn hình — lướt xuống KHÔNG mất */
 .site-header {
   position: sticky; top: 10px; z-index: 50;
+  padding: 0 0 8px;
   background: transparent; border-bottom: none;
 }
 .site-header .container {
