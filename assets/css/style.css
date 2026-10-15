@@ -65,15 +65,20 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; color: var(--prima
 .topbar a { color: #fff; font-weight: 600; }
 
 /* ---------- Header ---------- */
+/* Thanh menu kiểu dock iPhone: viên kính mờ nổi, bo tròn, trong suốt */
 .site-header {
-  position: sticky; top: 0; z-index: 50;
-  background: rgba(253, 251, 252, .92);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--lav-100);
+  position: sticky; top: 10px; z-index: 50;
+  background: transparent; border-bottom: none;
 }
 .site-header .container {
   display: flex; align-items: center;
-  padding: 14px 0; gap: 20px;
+  padding: 9px 22px; gap: 20px;
+  background: rgba(255, 255, 255, .55);
+  backdrop-filter: blur(22px) saturate(1.6);
+  -webkit-backdrop-filter: blur(22px) saturate(1.6);
+  border: 1px solid rgba(255, 255, 255, .65);
+  border-radius: 999px;
+  box-shadow: 0 10px 34px rgba(55, 48, 107, .14);
 }
 .site-header .logo { flex-shrink: 0; }
 /* Menu căn GIỮA header; logo trái, nút CTA phải */
@@ -224,10 +229,9 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; color: var(--prima
   overflow: hidden;
 }
 
-/* Trang chủ: menu trong suốt ở đầu trang, có nền khi cuộn xuống */
-.site-header.home-hero.at-top {
-  background: transparent; border-bottom-color: transparent;
-  box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none;
+/* Trang chủ: viên kính nổi trên banner (giữ hiệu ứng kính cả khi cuộn) */
+.site-header.home-hero.at-top .container {
+  background: rgba(255, 255, 255, .42);
 }
 
 /* HERO BANNER (ảnh bìa toàn khổ, chữ + nút thật đè lên trái) */
@@ -509,6 +513,17 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; color: var(--prima
 }
 .stock-pill.out { background: var(--blush); color: #b91c1c; }
 .detail-actions { display: flex; gap: 12px; flex-wrap: wrap; margin: 24px 0; }
+
+/* ---------- 3 kênh đặt hàng: TikTok / Shopee / Zalo ---------- */
+.order-note { font-size: .9rem; color: var(--ink-soft); margin: 22px 0 10px; font-weight: 500; }
+.order-channels { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+.order-channels .btn { flex: 1 1 130px; min-width: 120px; }
+.btn-tiktok { background: #161616; color: #fff; }
+.btn-tiktok:hover { background: #000; transform: translateY(-2px); }
+.btn-shopee { background: #ee4d2d; color: #fff; }
+.btn-shopee:hover { background: #d8431f; transform: translateY(-2px); }
+.btn-zalo { background: #0068ff; color: #fff; }
+.btn-zalo:hover { background: #0054d6; transform: translateY(-2px); }
 .detail-section { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 26px 28px; margin-top: 22px; }
 .detail-section h2 { font-size: 1.15rem; margin-bottom: 12px; }
 .detail-section .content { white-space: pre-line; color: var(--ink-soft); font-size: .94rem; }

@@ -4,6 +4,23 @@
 
   const D = window.HERISH_DATA;
 
+  // ===== KÊNH ĐẶT HÀNG CHÍNH — thay link shop thật TẠI ĐÂY là đồng bộ toàn trang =====
+  const SOCIAL = {
+    tiktok: 'https://www.tiktok.com/search?q=herish',   // TODO: thay bằng link TikTok Shop Herish
+    shopee: 'https://shopee.vn/search?keyword=herish',  // TODO: thay bằng link Shopee Herish
+    zalo: 'https://zalo.me/0972340107',
+  };
+
+  // 3 nút đặt hàng dùng chung mọi nơi
+  function orderButtons() {
+    return `
+    <div class="order-channels">
+      <a class="btn btn-tiktok" href="${SOCIAL.tiktok}" target="_blank" rel="noopener">♪ TikTok</a>
+      <a class="btn btn-shopee" href="${SOCIAL.shopee}" target="_blank" rel="noopener">🛒 Shopee</a>
+      <a class="btn btn-zalo" href="${SOCIAL.zalo}" target="_blank" rel="noopener">💬 Zalo</a>
+    </div>`;
+  }
+
   // ---- Helpers ----
   // Định dạng giá: "649.000đ" (đ đứng SAU số — tránh lỗi "d500.000" như bug #6)
   function formatPrice(v) {
@@ -214,12 +231,14 @@
             </ul>
           </div>
           <div>
-            <h4>Tài khoản & liên hệ</h4>
+            <h4>Tài khoản & đặt hàng</h4>
             <ul>
               <li><a href="login.html">Đăng nhập / Đăng ký</a></li>
+              <li><a href="${SOCIAL.tiktok}" target="_blank" rel="noopener">♪ TikTok Shop</a></li>
+              <li><a href="${SOCIAL.shopee}" target="_blank" rel="noopener">🛒 Shopee</a></li>
+              <li><a href="${SOCIAL.zalo}" target="_blank" rel="noopener">💬 Chat Zalo</a></li>
               <li><a href="tel:${c.hotline}">📞 ${c.hotline}</a></li>
               <li><a href="mailto:${c.email}">✉️ ${c.email}</a></li>
-              <li><a href="https://zalo.me/${c.hotline}" target="_blank" rel="noopener">💬 Chat Zalo</a></li>
             </ul>
           </div>
         </div>
@@ -373,7 +392,7 @@
   window.Herish = {
     data: D, formatPrice, discountOf, productCard, categoryLabel,
     CATEGORIES, RECIPIENTS, recipientsOf, OCCASIONS, occasionsOf,
-    renderChrome, renderAuthSlot, toast,
+    SOCIAL, orderButtons, renderChrome, renderAuthSlot, toast,
     escapeHtml, tryRefreshFromApi, productUrl, Reminder, Auth,
   };
 })();

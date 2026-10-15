@@ -84,10 +84,8 @@
               ${inStock ? `✔ Còn hàng (${p.stock} hộp)` : '✖ Tạm hết hàng'}
             </span>
 
-            <div class="detail-actions">
-              <a class="btn btn-primary" href="tel:${D.contact.hotline}">📞 Gọi đặt ngay — ${D.contact.hotline}</a>
-              <a class="btn btn-ghost" href="https://zalo.me/${D.contact.hotline}" target="_blank" rel="noopener">💬 Đặt qua Zalo</a>
-            </div>
+            <div class="order-note">🎁 Chọn kênh bạn quen dùng — Herish hỗ trợ đặt hàng ngay:</div>
+            ${H.orderButtons()}
 
             ${!inStock ? `
             <div class="notify-box">

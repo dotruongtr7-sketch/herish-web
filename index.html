@@ -186,11 +186,12 @@
       // Liên hệ
       const c = D.contact;
       document.getElementById('contactInfo').innerHTML = `
-        <h3>Thông tin liên hệ</h3>
-        <div class="contact-line"><div class="ico">📞</div><div><b>Hotline / Zalo</b><span><a href="tel:${c.hotline}">${c.hotline}</a></span></div></div>
-        <div class="contact-line"><div class="ico">✉️</div><div><b>Email</b><span><a href="mailto:${c.email}">${c.email}</a></span></div></div>
-        <div class="contact-line"><div class="ico">🕣</div><div><b>Thời gian hỗ trợ</b><span>${c.availability}</span></div></div>
-        <div class="contact-line"><div class="ico">💬</div><div><b>Chat nhanh</b><span><a href="https://zalo.me/${c.hotline}" target="_blank" rel="noopener">zalo.me/${c.hotline}</a></span></div></div>`;
+        <h3>Thông tin liên hệ & đặt hàng</h3>
+        <div class="contact-line"><div class="ico">♪</div><div><b>TikTok Shop</b><span><a href="${H.SOCIAL.tiktok}" target="_blank" rel="noopener">Đặt hàng qua TikTok</a></span></div></div>
+        <div class="contact-line"><div class="ico">🛒</div><div><b>Shopee</b><span><a href="${H.SOCIAL.shopee}" target="_blank" rel="noopener">Đặt hàng qua Shopee</a></span></div></div>
+        <div class="contact-line"><div class="ico">💬</div><div><b>Zalo</b><span><a href="${H.SOCIAL.zalo}" target="_blank" rel="noopener">Nhắn tin — Herish hỗ trợ đặt ngay</a></span></div></div>
+        <div class="contact-line"><div class="ico">📞</div><div><b>Hotline</b><span><a href="tel:${c.hotline}">${c.hotline}</a> · ${c.availability}</span></div></div>
+        <div class="contact-line"><div class="ico">✉️</div><div><b>Email</b><span><a href="mailto:${c.email}">${c.email}</a></span></div></div>`;
 
       // Form liên hệ: mở mail soạn sẵn (web tĩnh, không cần server)
       document.getElementById('contactForm').addEventListener('submit', function (e) {
