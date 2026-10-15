@@ -41,9 +41,10 @@
         </select>
         <button class="btn-reset" id="fReset">↺ Xóa bộ lọc</button>
       </div>
+      <!-- Lọc chính: tặng ai -->
       <div class="chip-row" id="chipRow"></div>
-      <!-- Lọc theo người nhận quà / dịp tặng -->
-      <div class="result-count" style="margin-bottom:8px">🎀 Tặng ai · dịp gì:</div>
+      <!-- Lọc phụ: dịp tặng -->
+      <div class="result-count" style="margin-bottom:8px">🎀 Dịp tặng:</div>
       <div class="chip-row" id="occRow"></div>
       <!-- Quà doanh nghiệp: tư vấn riêng theo số lượng -->
       <div class="rem-note" id="bizBanner" hidden style="margin:0 0 18px">
@@ -72,10 +73,12 @@
       const H = window.Herish, D = H.data;
       H.renderChrome('products');
 
-      const state = { q: '', cat: '', occ: '', price: '', sort: 'default' };
+      const state = { q: '', rec: '', cat: '', occ: '', price: '', sort: 'default' };
 
-      // Nhận ?cat= và ?occ= từ URL (link từ trang chủ / footer phải trỏ đúng — bug #12)
+      // Nhận ?rec= / ?occ= từ URL; ?cat= giữ cho link cũ (breadcrumb bộ sưu tập) — bug #12
       const params = new URLSearchParams(location.search);
+      const urlRec = params.get('rec');
+      if (urlRec && H.RECIPIENTS[urlRec]) state.rec = urlRec;
       const urlCat = params.get('cat');
       if (urlCat && H.CATEGORIES[urlCat]) state.cat = urlCat;
       const urlOcc = params.get('occ');
@@ -96,13 +99,15 @@
       };
 
       function renderChips() {
-        const cats = [['', 'Tất cả'], ...Object.entries(H.CATEGORIES)];
-        el.chips.innerHTML = cats.map(([key, label]) => {
-          const n = key ? D.products.filter(p => p.category === key).length : D.products.length;
-          return `<button class="chip ${state.cat === key ? 'active' : ''}" data-cat="${key}">${label} (${n})</button>`;
+        const recs = [['', 'Tất cả'], ...Object.entries(H.RECIPIENTS)];
+        el.chips.innerHTML = recs.map(([key, label]) => {
+          const n = key === 'doanh-nghiep' || key === ''
+            ? D.products.length
+            : D.products.filter(p => H.recipientsOf(p).includes(key)).length;
+          return `<button class="chip ${state.rec === key ? 'active' : ''}" data-rec="${key}">${label} (${n})</button>`;
         }).join('');
         el.chips.querySelectorAll('.chip').forEach(btn => {
-          btn.addEventListener('click', () => { state.cat = btn.dataset.cat; apply(); });
+          btn.addEventListener('click', () => { state.rec = btn.dataset.rec; apply(); });
         });
 
         const occs = [['', 'Tất cả'], ...Object.entries(H.OCCASIONS)];
@@ -118,11 +123,13 @@
         let items = [...D.products];
 
         if (state.cat) items = items.filter(p => p.category === state.cat);
-        // Lọc theo dịp tặng; riêng "Doanh nghiệp" hiện banner tư vấn riêng + toàn bộ mẫu tham khảo
-        el.bizBanner.hidden = state.occ !== 'doanh-nghiep';
-        if (state.occ && state.occ !== 'doanh-nghiep') {
-          items = items.filter(p => H.occasionsOf(p).includes(state.occ));
+        // Lọc "tặng ai"; riêng Doanh nghiệp hiện banner tư vấn riêng + toàn bộ mẫu tham khảo
+        el.bizBanner.hidden = state.rec !== 'doanh-nghiep';
+        if (state.rec && state.rec !== 'doanh-nghiep') {
+          items = items.filter(p => H.recipientsOf(p).includes(state.rec));
         }
+        // Lọc dịp tặng
+        if (state.occ) items = items.filter(p => H.occasionsOf(p).includes(state.occ));
         if (state.q) {
           const q = state.q.toLowerCase();
           items = items.filter(p =>
@@ -144,6 +151,7 @@
 
         // Số lượng hiển thị = số sản phẩm thực trên trang (bug #7: không hardcode)
         el.count.innerHTML = `Hiển thị <b>${items.length}</b> / ${D.products.length} sản phẩm` +
+          (state.rec ? ` trong <b>${H.RECIPIENTS[state.rec]}</b>` : '') +
           (state.cat ? ` trong <b>${H.categoryLabel(state.cat)}</b>` : '');
 
         el.grid.innerHTML = items.map(H.productCard).join('');
@@ -153,7 +161,7 @@
       }
 
       function resetFilters() {
-        state.q = ''; state.cat = ''; state.occ = ''; state.price = ''; state.sort = 'default';
+        state.q = ''; state.rec = ''; state.cat = ''; state.occ = ''; state.price = ''; state.sort = 'default';
         el.search.value = ''; el.price.value = ''; el.sort.value = 'default';
         history.replaceState(null, '', 'products.html');
         apply();

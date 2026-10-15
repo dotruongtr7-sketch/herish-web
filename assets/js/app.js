@@ -23,21 +23,35 @@
     'set-gau-bong': 'Set quà gấu bông',
   };
 
-  // Dịp tặng / tặng ai — gắn thẻ theo bộ sưu tập
+  // Tặng ai — bộ lọc chính trang sản phẩm
+  const RECIPIENTS = {
+    'cha-me': '🌷 Quà tặng cha mẹ',
+    'be': '🧸 Quà tặng bé',
+    'doanh-nghiep': '🏢 Quà tặng Doanh nghiệp',
+    'nguoi-yeu': '❤️ Quà tặng người yêu',
+    'ban-gai': '💝 Quà tặng bạn gái',
+  };
+
+  function recipientsOf(p) {
+    const rec = ['ban-gai'];                                  // mọi set quà đều hợp tặng bạn gái
+    if (p.category === 'hop-trai-tim') rec.push('nguoi-yeu');
+    if (p.category === 'hop-qua-cao-cap') rec.push('nguoi-yeu', 'cha-me');
+    if (p.category === 'set-gau-bong') rec.push('be');
+    return rec;
+  }
+
+  // Dịp tặng — bộ lọc phụ
   const OCCASIONS = {
-    'ban-gai': '💝 Bạn gái · Vợ',
-    'me': '🌷 Mẹ & người thân',
     'sinh-nhat': '🎂 Sinh nhật',
     'valentine': '❤️ Valentine',
     '8-3-20-10': '🌸 8/3 · 20/10',
     'giang-sinh': '🎄 Giáng sinh',
-    'doanh-nghiep': '🏢 Doanh nghiệp',
   };
 
   function occasionsOf(p) {
-    const occ = ['ban-gai', 'sinh-nhat', '8-3-20-10'];
+    const occ = ['sinh-nhat', '8-3-20-10'];
     if (p.category === 'hop-trai-tim') occ.push('valentine');
-    if (p.category === 'hop-qua-cao-cap') occ.push('valentine', 'me', 'giang-sinh');
+    if (p.category === 'hop-qua-cao-cap') occ.push('valentine', 'giang-sinh');
     if (p.category === 'set-gau-bong') occ.push('giang-sinh');
     return occ;
   }
@@ -193,9 +207,9 @@
             <h4>Khám phá</h4>
             <ul>
               <li><a href="products.html">Tất cả sản phẩm</a></li>
-              <li><a href="products.html?cat=hop-trai-tim">Hộp quà trái tim</a></li>
-              <li><a href="products.html?cat=hop-qua-cao-cap">Hộp quà cao cấp</a></li>
-              <li><a href="products.html?cat=set-gau-bong">Set quà gấu bông</a></li>
+              <li><a href="products.html?rec=nguoi-yeu">Quà tặng người yêu</a></li>
+              <li><a href="products.html?rec=cha-me">Quà tặng cha mẹ</a></li>
+              <li><a href="products.html?rec=be">Quà tặng bé</a></li>
               <li><a href="reminders.html">Nhắc hẹn tặng quà</a></li>
             </ul>
           </div>
@@ -358,7 +372,8 @@
 
   window.Herish = {
     data: D, formatPrice, discountOf, productCard, categoryLabel,
-    CATEGORIES, OCCASIONS, occasionsOf, renderChrome, renderAuthSlot, toast,
+    CATEGORIES, RECIPIENTS, recipientsOf, OCCASIONS, occasionsOf,
+    renderChrome, renderAuthSlot, toast,
     escapeHtml, tryRefreshFromApi, productUrl, Reminder, Auth,
   };
 })();
