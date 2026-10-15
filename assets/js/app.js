@@ -257,12 +257,8 @@
       document.getElementById('mainNav').classList.toggle('open');
     });
     const fab = document.getElementById('fabTop');
-    // Trang chủ: menu trong suốt đè lên banner, cuộn xuống mới hiện nền
-    const sh = document.querySelector('.site-header');
-    if (active === 'home') sh.classList.add('home-hero', 'at-top');
     window.addEventListener('scroll', () => {
       fab.classList.toggle('show', window.scrollY > 500);
-      if (active === 'home') sh.classList.toggle('at-top', window.scrollY < 50);
     }, { passive: true });
     fab.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   }

@@ -229,10 +229,7 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; color: var(--prima
   overflow: hidden;
 }
 
-/* Trang chủ: viên kính nổi trên banner (giữ hiệu ứng kính cả khi cuộn) */
-.site-header.home-hero.at-top .container {
-  background: rgba(255, 255, 255, .42);
-}
+/* Viên kính giữ NGUYÊN một kiểu ở mọi trạng thái — không đổi khi cuộn */
 
 /* HERO BANNER (ảnh bìa toàn khổ, chữ + nút thật đè lên trái) */
 .hero-cover { padding: 0; min-height: 600px; display: flex; align-items: center; overflow: hidden;
