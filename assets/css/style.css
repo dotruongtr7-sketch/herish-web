@@ -54,15 +54,48 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; color: var(--prima
   transform: translateX(-50%); font-size: .46em; color: var(--pink);
 }
 
-/* ---------- Topbar ---------- */
+/* ---------- Topbar: hotline | tìm kiếm | mạng xã hội | đăng nhập ---------- */
 .topbar {
   background: var(--primary-900);
   color: var(--lav-200);
-  font-size: .82rem;
-  padding: 6px 0;
+  font-size: .85rem;
+  padding: 8px 0;
 }
-.topbar .container { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.topbar a { color: #fff; font-weight: 600; }
+.topbar .container { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.tb-phone { color: #fff; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
+.tb-right { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.tb-search {
+  display: flex; align-items: center;
+  background: #fff; border-radius: 999px; padding: 2px 4px 2px 14px;
+}
+.tb-search input {
+  border: none; outline: none; background: none;
+  font-family: inherit; font-size: .85rem; width: 150px; color: var(--ink);
+}
+.tb-search input::placeholder { color: #a39bc4; }
+.tb-search button {
+  border: none; background: none; cursor: pointer; padding: 6px 9px;
+  color: var(--primary-900); display: flex; align-items: center;
+}
+.tb-socials { display: flex; gap: 8px; }
+.tb-socials a {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: #fff; color: var(--primary-900);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .15s, background .15s;
+}
+.tb-socials a:hover { transform: translateY(-2px); background: var(--lav-100); }
+/* Đăng nhập / chip user trên nền tối */
+.topbar .nav-login {
+  color: #fff; border: 1.5px solid rgba(255,255,255,.4);
+  background: none; padding: 5px 14px; font-size: .85rem;
+}
+.topbar .nav-login:hover { background: rgba(255,255,255,.12); border-color: #fff; }
+.topbar .user-chip { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.25); padding: 4px 9px 4px 5px; }
+.topbar .user-chip:hover, .topbar .user-chip:focus { border-color: #fff; }
+.topbar .user-chip .user-name { color: #fff; }
+.topbar .user-chip .caret { color: var(--lav-200); }
+.topbar .avatar-sm { width: 26px; height: 26px; font-size: .8rem; }
 
 /* ---------- Header ---------- */
 /* Khối bọc "tàng hình" để viên kính dính trực tiếp với TRANG (không bị khối bọc giới hạn) */

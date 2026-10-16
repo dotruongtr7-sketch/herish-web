@@ -83,6 +83,9 @@
       if (urlCat && H.CATEGORIES[urlCat]) state.cat = urlCat;
       const urlOcc = params.get('occ');
       if (urlOcc && H.OCCASIONS[urlOcc]) state.occ = urlOcc;
+      // Ô tìm kiếm trên topbar gửi ?q= sang đây
+      const urlQ = params.get('q');
+      if (urlQ) state.q = urlQ.trim();
 
       const el = {
         search: document.getElementById('fSearch'),
@@ -168,6 +171,7 @@
         H.toast('Đã xóa toàn bộ bộ lọc');
       }
 
+      if (state.q) el.search.value = state.q;   // điền sẵn từ khóa từ ?q=
       el.search.addEventListener('input', () => { state.q = el.search.value.trim(); apply(); });
       el.price.addEventListener('change', () => { state.price = el.price.value; apply(); });
       el.sort.addEventListener('change', () => { state.sort = el.sort.value; apply(); });

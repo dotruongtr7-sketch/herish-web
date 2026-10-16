@@ -189,8 +189,30 @@
     const header = `
     <div class="topbar">
       <div class="container">
-        <span>🎁 Freeship đơn từ 300K — Gói quà miễn phí</span>
-        <span>Hotline: <a href="tel:${c.hotline}">${c.hotline}</a> · ${c.availability}</span>
+        <a class="tb-phone" href="tel:${c.hotline}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.4 2.1L8 9.6a16 16 0 0 0 6.4 6.4l1.2-1.2a2 2 0 0 1 2.1-.4c.8.3 1.7.5 2.6.6A2 2 0 0 1 22 16.9z"/></svg>
+          ${c.hotline}
+        </a>
+        <div class="tb-right">
+          <form class="tb-search" action="products.html" role="search">
+            <input type="search" name="q" placeholder="Tìm kiếm" aria-label="Tìm kiếm sản phẩm">
+            <button type="submit" aria-label="Tìm">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" width="16" height="16"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+            </button>
+          </form>
+          <div class="tb-socials">
+            <a href="${SOCIAL.tiktok}" target="_blank" rel="noopener" aria-label="TikTok" title="TikTok">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M16.6 3c.4 2.1 1.8 3.5 3.9 3.8v3c-1.5 0-2.9-.5-3.9-1.3v6.4c0 3.9-2.7 6.1-5.9 6.1A5.6 5.6 0 0 1 5 15.4c0-3.2 2.5-5.7 5.9-5.6v3.1c-1.6-.2-2.9.9-2.9 2.5 0 1.5 1.1 2.6 2.6 2.6 1.6 0 2.9-1.2 2.9-3.2V3h3.1z"/></svg>
+            </a>
+            <a href="${SOCIAL.shopee}" target="_blank" rel="noopener" aria-label="Shopee" title="Shopee">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M6 7V6a6 6 0 0 1 12 0v1h3.2l-1.1 14.2a1 1 0 0 1-1 .8H4.9a1 1 0 0 1-1-.8L2.8 7H6zm2 0h8V6a4 4 0 0 0-8 0v1z"/></svg>
+            </a>
+            <a href="${SOCIAL.zalo}" target="_blank" rel="noopener" aria-label="Zalo" title="Zalo">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M12 3C6.5 3 2 6.9 2 11.7c0 2.7 1.5 5.2 3.8 6.8L5 22l3.6-1.9c1 .3 2.2.4 3.4.4 5.5 0 10-3.9 10-8.8S17.5 3 12 3z"/></svg>
+            </a>
+          </div>
+          <span id="authSlot"></span>
+        </div>
       </div>
     </div>
     <header class="site-header">
@@ -202,7 +224,6 @@
           <a href="reminders.html" ${active === 'reminders' ? 'class="active"' : ''}>Nhắc hẹn</a>
         </nav>
         <div class="header-actions">
-          <span id="authSlot"></span>
           <a class="nav-cta" href="products.html">🎁 Đặt quà ngay</a>
           <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
         </div>
