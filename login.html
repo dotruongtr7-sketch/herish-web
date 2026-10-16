@@ -8,85 +8,105 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
-  <div id="app-header"></div>
+<body class="lg-body">
+  <a class="lg-back" href="index.html">← Về trang chủ</a>
 
-  <section class="section" style="background:linear-gradient(135deg,var(--lav-50),#fff)">
-    <div class="container">
-      <div class="auth-layout">
+  <div class="lg-card">
 
-        <!-- Panel minh họa cô gái cầm hộp quà -->
-        <div class="auth-visual">
-          <div class="kv-flower" style="color:#ffffff; opacity:.1; top:-24px; right:8%; width:120px; height:120px"></div>
-          <div class="kv-flower" style="color:#ffffff; opacity:.08; bottom:-40px; left:-10px; width:190px; height:190px"></div>
-          <div class="auth-illus">
-            <img src="assets/img/hero-girl.jpg" alt="Đại diện thương hiệu Herish cầm hộp quà" loading="eager">
-          </div>
-          <h2>Trao yêu thương,<br>Herish lo phần còn lại 💜</h2>
-          <p>Đăng nhập để lưu lịch nhắc những ngày quan trọng — và không bao giờ lỡ một dịp tặng quà nào nữa.</p>
-        </div>
-
-        <!-- Form -->
-        <div class="auth-card">
-          <div class="auth-logo"><span class="logo">Her<span class="i-dot">ı</span>sh</span></div>
-          <p class="auth-sub">Tài khoản Herish — để lưu & quản lý lịch nhắc hẹn tặng quà của bạn</p>
-
-          <div class="auth-tabs">
-            <button id="tabLogin" class="active" type="button">Đăng nhập</button>
-            <button id="tabRegister" type="button">Đăng ký</button>
-          </div>
-
-          <!-- ĐĂNG NHẬP -->
-          <form class="auth-form" id="loginForm">
-            <label for="lgEmail">Email</label>
-            <input id="lgEmail" type="email" placeholder="ban@gmail.com" autocomplete="email" required>
-            <label for="lgPass">Mật khẩu</label>
-            <input id="lgPass" type="password" placeholder="••••••" autocomplete="current-password" required>
-            <button class="btn btn-primary" type="submit">Đăng nhập</button>
-            <div class="auth-msg" id="lgMsg"></div>
-            <p class="auth-hint">Chưa có tài khoản? <a href="#" id="toRegister">Đăng ký miễn phí</a></p>
-          </form>
-
-          <!-- ĐĂNG KÝ -->
-          <form class="auth-form" id="registerForm" hidden>
-            <label for="rgName">Họ và tên</label>
-            <input id="rgName" type="text" placeholder="Nguyễn Văn A" autocomplete="name" required>
-            <label for="rgEmail">Email</label>
-            <input id="rgEmail" type="email" placeholder="ban@gmail.com" autocomplete="email" required>
-            <label for="rgPhone">Số điện thoại *</label>
-            <input id="rgPhone" type="tel" placeholder="09xx xxx xxx" autocomplete="tel" pattern="[0-9+ ]{8,15}" required>
-            <label for="rgPass">Mật khẩu <span style="font-weight:400;color:var(--ink-soft)">(ít nhất 6 ký tự)</span></label>
-            <input id="rgPass" type="password" placeholder="••••••" autocomplete="new-password" required minlength="6">
-            <button class="btn btn-primary" type="submit">Tạo tài khoản</button>
-            <div class="auth-msg" id="rgMsg"></div>
-            <p class="auth-hint">Đã có tài khoản? <a href="#" id="toLogin">Đăng nhập</a></p>
-          </form>
-
-          <div class="auth-privacy">
-            🔒 Tài khoản được lưu an toàn ngay trên trình duyệt của bạn, mật khẩu được mã hóa (băm SHA-256).
-            Herish không gửi dữ liệu của bạn đi đâu khác.
-          </div>
-        </div>
-
+    <!-- PANEL TRÁI: ảnh đại diện + chữ viết tay + sóng tím -->
+    <div class="lg-visual">
+      <img src="assets/img/hero-girl.jpg" alt="Đại diện thương hiệu Herish cầm hộp quà">
+      <div class="lg-script">Little Moments<br>Brighter People ♡</div>
+      <div class="lg-wave">
+        <h2>Trao yêu thương,<br>Herish lo phần còn lại 💜</h2>
+        <p>Đăng nhập để lưu lịch nhắc những ngày quan trọng —
+          và không bao giờ lỡ một dịp tặng quà nào nữa.</p>
+        <span class="lg-dash"></span>
       </div>
     </div>
-  </section>
 
-  <div id="app-footer"></div>
+    <!-- PANEL PHẢI: form -->
+    <div class="lg-panel">
+      <div class="kv-flower" style="color:var(--pink); opacity:.22; top:-34px; right:-20px; width:130px; height:130px"></div>
+      <div class="kv-flower" style="color:var(--lav-200); opacity:.3; bottom:-40px; left:-26px; width:150px; height:150px"></div>
+
+      <span class="lg-logo">Her<span class="i-dot">ı</span>sh</span>
+      <p class="lg-sub">Tài khoản Herish — để lưu &amp; quản lý lịch nhắc hẹn tặng quà của bạn</p>
+
+      <div class="lg-tabs">
+        <button id="tabLogin" class="active" type="button">Đăng nhập</button>
+        <button id="tabRegister" type="button">Đăng ký</button>
+      </div>
+
+      <!-- ĐĂNG NHẬP -->
+      <form class="lg-form" id="loginForm">
+        <label for="lgEmail">Email</label>
+        <div class="lg-field">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          <input id="lgEmail" type="email" placeholder="ban@gmail.com" autocomplete="email" required>
+        </div>
+        <label for="lgPass">Mật khẩu</label>
+        <div class="lg-field">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          <input id="lgPass" type="password" placeholder="••••••••" autocomplete="current-password" required>
+          <button type="button" class="lg-eye" data-for="lgPass" aria-label="Hiện mật khẩu"></button>
+        </div>
+        <button class="lg-btn" type="submit">Đăng nhập <span>→</span></button>
+        <div class="auth-msg" id="lgMsg"></div>
+        <div class="lg-divider"></div>
+        <p class="lg-hint">Chưa có tài khoản? <a href="#" id="toRegister">Đăng ký miễn phí</a></p>
+      </form>
+
+      <!-- ĐĂNG KÝ -->
+      <form class="lg-form" id="registerForm" hidden>
+        <label for="rgName">Họ và tên</label>
+        <div class="lg-field">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+          <input id="rgName" type="text" placeholder="Nguyễn Văn A" autocomplete="name" required>
+        </div>
+        <label for="rgEmail">Email</label>
+        <div class="lg-field">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          <input id="rgEmail" type="email" placeholder="ban@gmail.com" autocomplete="email" required>
+        </div>
+        <label for="rgPhone">Số điện thoại</label>
+        <div class="lg-field">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.4 2.1L8 9.6a16 16 0 0 0 6.4 6.4l1.2-1.2a2 2 0 0 1 2.1-.4c.8.3 1.7.5 2.6.6A2 2 0 0 1 22 16.9z"/></svg>
+          <input id="rgPhone" type="tel" placeholder="09xx xxx xxx" autocomplete="tel" pattern="[0-9+ ]{8,15}" required>
+        </div>
+        <label for="rgPass">Mật khẩu <span style="font-weight:500;color:#9b93c0">(ít nhất 6 ký tự)</span></label>
+        <div class="lg-field">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          <input id="rgPass" type="password" placeholder="••••••••" autocomplete="new-password" required minlength="6">
+          <button type="button" class="lg-eye" data-for="rgPass" aria-label="Hiện mật khẩu"></button>
+        </div>
+        <button class="lg-btn" type="submit">Tạo tài khoản <span>→</span></button>
+        <div class="auth-msg" id="rgMsg"></div>
+        <div class="lg-divider"></div>
+        <p class="lg-hint">Đã có tài khoản? <a href="#" id="toLogin">Đăng nhập</a></p>
+      </form>
+
+      <div class="lg-privacy">
+        <span class="lg-lock">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        </span>
+        <div>Tài khoản được lưu an toàn ngay trên trình duyệt của bạn, mật khẩu được mã hóa
+          (băm SHA-256). Herish không gửi dữ liệu của bạn đi đâu khác.</div>
+      </div>
+    </div>
+  </div>
 
   <script src="assets/js/data.js"></script>
   <script src="assets/js/app.js"></script>
   <script>
     (function () {
       const H = window.Herish, A = H.Auth;
-      H.renderChrome('');
-
       const $ = id => document.getElementById(id);
 
-      // Nếu đã đăng nhập rồi → sang thẳng trang đích
+      // Đã đăng nhập rồi → sang thẳng trang đích
       const next = new URLSearchParams(location.search).get('next') || 'reminders.html';
       if (A.current()) { window.location.replace(next); return; }
 
@@ -103,6 +123,19 @@
       $('toRegister').addEventListener('click', e => { e.preventDefault(); show('register'); });
       $('toLogin').addEventListener('click', e => { e.preventDefault(); show('login'); });
 
+      // Mắt ẩn/hiện mật khẩu
+      const EYE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+      const EYE_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/><line x1="4" y1="4" x2="20" y2="20"/></svg>';
+      document.querySelectorAll('.lg-eye').forEach(btn => {
+        btn.innerHTML = EYE;
+        btn.addEventListener('click', () => {
+          const input = $(btn.dataset.for);
+          const showPass = input.type === 'password';
+          input.type = showPass ? 'text' : 'password';
+          btn.innerHTML = showPass ? EYE_OFF : EYE;
+        });
+      });
+
       function msg(el, text, ok) {
         el.textContent = text;
         el.className = 'auth-msg ' + (ok ? 'ok' : 'err');
@@ -111,10 +144,10 @@
       // Đăng nhập
       $('loginForm').addEventListener('submit', async function (e) {
         e.preventDefault();
-        const btn = this.querySelector('button[type=submit]');
+        const btn = this.querySelector('.lg-btn');
         btn.disabled = true;
         try {
-          const u = await A.login($('lgEmail').value, $('lgPass').value);
+          await A.login($('lgEmail').value, $('lgPass').value);
           msg($('lgMsg'), 'Đăng nhập thành công! Đang chuyển trang…', true);
           setTimeout(() => window.location.replace(next), 600);
         } catch (err) {
@@ -126,7 +159,7 @@
       // Đăng ký
       $('registerForm').addEventListener('submit', async function (e) {
         e.preventDefault();
-        const btn = this.querySelector('button[type=submit]');
+        const btn = this.querySelector('.lg-btn');
         btn.disabled = true;
         try {
           await A.register({
