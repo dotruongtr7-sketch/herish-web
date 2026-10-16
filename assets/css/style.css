@@ -85,6 +85,17 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; color: var(--prima
   transition: transform .15s, background .15s;
 }
 .tb-socials a:hover { transform: translateY(-2px); background: var(--lav-100); }
+/* Nút Tuyển dụng đỏ */
+.tb-jobs {
+  background: #e8192c; color: #fff !important;
+  font-weight: 700; font-size: .85rem;
+  padding: 6px 16px; border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(232, 25, 44, .35);
+  transition: background .15s, transform .15s;
+  white-space: nowrap;
+}
+.tb-jobs:hover { background: #c81223; transform: translateY(-1px); }
+
 /* Đăng nhập / chip user trên nền tối */
 .topbar .nav-login {
   color: #fff; border: 1.5px solid rgba(255,255,255,.4);

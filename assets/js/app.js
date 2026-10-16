@@ -9,6 +9,8 @@
     tiktok: 'https://www.tiktok.com/search?q=herish',   // TODO: thay bằng link TikTok Shop Herish
     shopee: 'https://shopee.vn/search?keyword=herish',  // TODO: thay bằng link Shopee Herish
     zalo: 'https://zalo.me/0972340107',
+    facebook: 'https://www.facebook.com/search/top?q=herish',          // TODO: thay bằng fanpage Herish
+    youtube: 'https://www.youtube.com/results?search_query=herish',    // TODO: thay bằng kênh YouTube Herish
   };
 
   // 3 nút đặt hàng dùng chung mọi nơi
@@ -201,8 +203,14 @@
             </button>
           </form>
           <div class="tb-socials">
+            <a href="${SOCIAL.facebook}" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.3-1.5 1.6-1.5h1.6V4.6c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.4H7.8V14h2.7v8h3z"/></svg>
+            </a>
             <a href="${SOCIAL.tiktok}" target="_blank" rel="noopener" aria-label="TikTok" title="TikTok">
               <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M16.6 3c.4 2.1 1.8 3.5 3.9 3.8v3c-1.5 0-2.9-.5-3.9-1.3v6.4c0 3.9-2.7 6.1-5.9 6.1A5.6 5.6 0 0 1 5 15.4c0-3.2 2.5-5.7 5.9-5.6v3.1c-1.6-.2-2.9.9-2.9 2.5 0 1.5 1.1 2.6 2.6 2.6 1.6 0 2.9-1.2 2.9-3.2V3h3.1z"/></svg>
+            </a>
+            <a href="${SOCIAL.youtube}" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M21.6 7.2a2.8 2.8 0 0 0-2-2C17.9 4.8 12 4.8 12 4.8s-5.9 0-7.6.4a2.8 2.8 0 0 0-2 2A29 29 0 0 0 2 12c0 1.6.1 3.2.4 4.8a2.8 2.8 0 0 0 2 2c1.7.4 7.6.4 7.6.4s5.9 0 7.6-.4a2.8 2.8 0 0 0 2-2c.3-1.6.4-3.2.4-4.8s-.1-3.2-.4-4.8zM10 15.2V8.8L15.5 12 10 15.2z"/></svg>
             </a>
             <a href="${SOCIAL.shopee}" target="_blank" rel="noopener" aria-label="Shopee" title="Shopee">
               <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M6 7V6a6 6 0 0 1 12 0v1h3.2l-1.1 14.2a1 1 0 0 1-1 .8H4.9a1 1 0 0 1-1-.8L2.8 7H6zm2 0h8V6a4 4 0 0 0-8 0v1z"/></svg>
@@ -211,6 +219,7 @@
               <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M12 3C6.5 3 2 6.9 2 11.7c0 2.7 1.5 5.2 3.8 6.8L5 22l3.6-1.9c1 .3 2.2.4 3.4.4 5.5 0 10-3.9 10-8.8S17.5 3 12 3z"/></svg>
             </a>
           </div>
+          <a class="tb-jobs" href="tuyendung.html">Tuyển dụng</a>
           <span id="authSlot"></span>
         </div>
       </div>
