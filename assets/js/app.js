@@ -10,7 +10,6 @@
     shopee: 'https://shopee.vn/search?keyword=herish',  // TODO: thay bằng link Shopee Herish
     zalo: 'https://zalo.me/0972340107',
     facebook: 'https://www.facebook.com/search/top?q=herish',          // TODO: thay bằng fanpage Herish
-    youtube: 'https://www.youtube.com/results?search_query=herish',    // TODO: thay bằng kênh YouTube Herish
   };
 
   // 3 nút đặt hàng dùng chung mọi nơi
@@ -164,6 +163,36 @@
     _setSession(email) { localStorage.setItem('herish_session', email); },
     logout() { localStorage.removeItem('herish_session'); },
 
+    // Cập nhật thông tin cá nhân (tên, SĐT)
+    updateInfo({ name, phone }) {
+      const email = localStorage.getItem('herish_session');
+      const users = this.users();
+      if (!email || !users[email]) throw new Error('Bạn chưa đăng nhập.');
+      name = (name || '').trim();
+      phone = (phone || '').trim();
+      if (!name) throw new Error('Tên không được để trống.');
+      if (!/^[0-9+][0-9+ ]{7,14}$/.test(phone)) throw new Error('Số điện thoại chưa đúng định dạng.');
+      users[email].name = name;
+      users[email].phone = phone;
+      this._saveUsers(users);
+      return this.current();
+    },
+
+    // Đổi mật khẩu (phải nhập đúng mật khẩu hiện tại)
+    async changePassword(currentPass, newPass) {
+      const email = localStorage.getItem('herish_session');
+      const users = this.users();
+      if (!email || !users[email]) throw new Error('Bạn chưa đăng nhập.');
+      const u = users[email];
+      const check = await this._hash(currentPass || '', u.salt);
+      if (check !== u.hash) throw new Error('Mật khẩu hiện tại không đúng.');
+      if ((newPass || '').length < 6) throw new Error('Mật khẩu mới cần ít nhất 6 ký tự.');
+      u.salt = this._salt();
+      u.hash = await this._hash(newPass, u.salt);
+      this._saveUsers(users);
+      return true;
+    },
+
     current() {
       const email = localStorage.getItem('herish_session');
       if (!email) return null;
@@ -203,20 +232,21 @@
             </button>
           </form>
           <div class="tb-socials">
-            <a href="${SOCIAL.facebook}" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.3-1.5 1.6-1.5h1.6V4.6c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.4H7.8V14h2.7v8h3z"/></svg>
+            <a class="sc-fb" href="${SOCIAL.facebook}" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">
+              <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#fff" d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.3-1.5 1.6-1.5h1.6V4.6c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.4H7.8V14h2.7v8h3z"/></svg>
             </a>
-            <a href="${SOCIAL.tiktok}" target="_blank" rel="noopener" aria-label="TikTok" title="TikTok">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M16.6 3c.4 2.1 1.8 3.5 3.9 3.8v3c-1.5 0-2.9-.5-3.9-1.3v6.4c0 3.9-2.7 6.1-5.9 6.1A5.6 5.6 0 0 1 5 15.4c0-3.2 2.5-5.7 5.9-5.6v3.1c-1.6-.2-2.9.9-2.9 2.5 0 1.5 1.1 2.6 2.6 2.6 1.6 0 2.9-1.2 2.9-3.2V3h3.1z"/></svg>
+            <a class="sc-tt" href="${SOCIAL.tiktok}" target="_blank" rel="noopener" aria-label="TikTok" title="TikTok">
+              <svg viewBox="0 0 24 24" width="15" height="15">
+                <path fill="#25F4EE" transform="translate(-0.7,0.4)" d="M16.6 3c.4 2.1 1.8 3.5 3.9 3.8v3c-1.5 0-2.9-.5-3.9-1.3v6.4c0 3.9-2.7 6.1-5.9 6.1A5.6 5.6 0 0 1 5 15.4c0-3.2 2.5-5.7 5.9-5.6v3.1c-1.6-.2-2.9.9-2.9 2.5 0 1.5 1.1 2.6 2.6 2.6 1.6 0 2.9-1.2 2.9-3.2V3h3.1z"/>
+                <path fill="#FE2C55" transform="translate(0.7,-0.4)" d="M16.6 3c.4 2.1 1.8 3.5 3.9 3.8v3c-1.5 0-2.9-.5-3.9-1.3v6.4c0 3.9-2.7 6.1-5.9 6.1A5.6 5.6 0 0 1 5 15.4c0-3.2 2.5-5.7 5.9-5.6v3.1c-1.6-.2-2.9.9-2.9 2.5 0 1.5 1.1 2.6 2.6 2.6 1.6 0 2.9-1.2 2.9-3.2V3h3.1z"/>
+                <path fill="#fff" d="M16.6 3c.4 2.1 1.8 3.5 3.9 3.8v3c-1.5 0-2.9-.5-3.9-1.3v6.4c0 3.9-2.7 6.1-5.9 6.1A5.6 5.6 0 0 1 5 15.4c0-3.2 2.5-5.7 5.9-5.6v3.1c-1.6-.2-2.9.9-2.9 2.5 0 1.5 1.1 2.6 2.6 2.6 1.6 0 2.9-1.2 2.9-3.2V3h3.1z"/>
+              </svg>
             </a>
-            <a href="${SOCIAL.youtube}" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M21.6 7.2a2.8 2.8 0 0 0-2-2C17.9 4.8 12 4.8 12 4.8s-5.9 0-7.6.4a2.8 2.8 0 0 0-2 2A29 29 0 0 0 2 12c0 1.6.1 3.2.4 4.8a2.8 2.8 0 0 0 2 2c1.7.4 7.6.4 7.6.4s5.9 0 7.6-.4a2.8 2.8 0 0 0 2-2c.3-1.6.4-3.2.4-4.8s-.1-3.2-.4-4.8zM10 15.2V8.8L15.5 12 10 15.2z"/></svg>
+            <a class="sc-sp" href="${SOCIAL.shopee}" target="_blank" rel="noopener" aria-label="Shopee" title="Shopee">
+              <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#fff" d="M6.2 7.2 7 6a5.6 5.6 0 0 1 10 0l.8 1.2h2.9l-1 13.3a1.2 1.2 0 0 1-1.2 1.1H5.5a1.2 1.2 0 0 1-1.2-1.1l-1-13.3h2.9zM8.9 7.2h6.2L14.6 6a3.6 3.6 0 0 0-5.2 0l-.5 1.2zm3.1 4c-1.8 0-3 .9-3 2.3 0 1.6 1.5 2 2.8 2.4 1.5.4 1.9.7 1.9 1.3 0 .7-.7 1.1-1.7 1.1-.9 0-1.8-.4-2.4-.9l-.7 1.1c.8.7 1.9 1.1 3.1 1.1 1.9 0 3.1-1 3.1-2.5 0-1.7-1.6-2.1-2.9-2.5-1.4-.4-1.8-.6-1.8-1.2 0-.6.6-1 1.6-1 .8 0 1.6.3 2.1.7l.7-1.1c-.7-.5-1.7-.8-2.8-.8z"/></svg>
             </a>
-            <a href="${SOCIAL.shopee}" target="_blank" rel="noopener" aria-label="Shopee" title="Shopee">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M6 7V6a6 6 0 0 1 12 0v1h3.2l-1.1 14.2a1 1 0 0 1-1 .8H4.9a1 1 0 0 1-1-.8L2.8 7H6zm2 0h8V6a4 4 0 0 0-8 0v1z"/></svg>
-            </a>
-            <a href="${SOCIAL.zalo}" target="_blank" rel="noopener" aria-label="Zalo" title="Zalo">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M12 3C6.5 3 2 6.9 2 11.7c0 2.7 1.5 5.2 3.8 6.8L5 22l3.6-1.9c1 .3 2.2.4 3.4.4 5.5 0 10-3.9 10-8.8S17.5 3 12 3z"/></svg>
+            <a class="sc-zl" href="${SOCIAL.zalo}" target="_blank" rel="noopener" aria-label="Zalo" title="Zalo">
+              <svg viewBox="0 0 24 24" width="26" height="26"><text x="12" y="15.5" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="9" font-weight="800" fill="#fff" font-style="italic">Zalo</text></svg>
             </a>
           </div>
           <a class="tb-jobs" href="tuyendung.html">Tuyển dụng</a>
@@ -312,6 +342,7 @@
             <b>${escapeHtml(user.name)}</b>
             <span>${escapeHtml(user.email)}</span>
           </div>
+          <a href="profile.html">👤 Thông tin cá nhân</a>
           <a href="reminders.html">⏰ Nhắc hẹn của tôi</a>
           <button type="button" id="logoutBtn">↩ Đăng xuất</button>
         </div>

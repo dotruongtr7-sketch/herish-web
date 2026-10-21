@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thông tin cá nhân — Herish</title>
+  <meta name="description" content="Quản lý thông tin tài khoản Herish của bạn: tên, số điện thoại, mật khẩu.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div id="app-header"></div>
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>👤 Thông tin cá nhân</h1>
+      <p>Quản lý tài khoản Herish của bạn — cập nhật thông tin để nhận nhắc hẹn và ưu đãi đúng kênh.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:36px">
+    <div class="container">
+
+      <!-- Chưa đăng nhập -->
+      <div class="auth-gate" id="gate" hidden>
+        <div class="ico">🔐</div>
+        <h2>Đăng nhập để xem thông tin cá nhân</h2>
+        <p>Bạn cần đăng nhập để quản lý tài khoản và lịch nhắc hẹn của mình.</p>
+        <div class="gate-actions">
+          <a class="btn btn-primary" href="login.html?next=profile.html">👤 Đăng nhập / Đăng ký</a>
+          <a class="btn btn-ghost" href="index.html">← Về trang chủ</a>
+        </div>
+      </div>
+
+      <!-- Đã đăng nhập -->
+      <div class="rem-grid" id="workspace" hidden>
+
+        <!-- CỘT TRÁI: thẻ hồ sơ -->
+        <div class="contact-card" style="text-align:center">
+          <div class="avatar" id="pAvatar"
+            style="width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,#7d57e4,#5b3ccc);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:2.2rem;margin:6px auto 14px">H</div>
+          <h3 id="pName" style="margin-bottom:2px"></h3>
+          <p id="pSince" style="color:var(--ink-soft);font-size:.85rem;margin-bottom:18px"></p>
+
+          <div style="text-align:left">
+            <div class="contact-line"><div class="ico">✉️</div><div><b>Email</b><span id="pEmail"></span></div></div>
+            <div class="contact-line"><div class="ico">📞</div><div><b>Số điện thoại</b><span id="pPhone"></span></div></div>
+          </div>
+
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px">
+            <a class="btn btn-primary" href="reminders.html">⏰ Lịch nhắc của tôi</a>
+            <button class="btn btn-ghost" id="logoutBtn2" type="button">↩ Đăng xuất</button>
+          </div>
+        </div>
+
+        <!-- CỘT PHẢI: chỉnh sửa -->
+        <div>
+          <div class="contact-card">
+            <h3>✏️ Cập nhật thông tin</h3>
+            <form class="contact-form" id="infoForm">
+              <label for="fName">Họ và tên</label>
+              <input id="fName" type="text" required>
+              <label for="fPhone">Số điện thoại</label>
+              <input id="fPhone" type="tel" pattern="[0-9+ ]{8,15}" required>
+              <button class="btn btn-primary" type="submit" style="margin-top:16px">Lưu thay đổi</button>
+              <div class="auth-msg" id="infoMsg"></div>
+            </form>
+          </div>
+
+          <div class="contact-card" style="margin-top:22px">
+            <h3>🔒 Đổi mật khẩu</h3>
+            <form class="contact-form" id="passForm">
+              <label for="fCur">Mật khẩu hiện tại</label>
+              <input id="fCur" type="password" autocomplete="current-password" required>
+              <label for="fNew">Mật khẩu mới <span style="font-weight:400;color:var(--ink-soft)">(ít nhất 6 ký tự)</span></label>
+              <input id="fNew" type="password" autocomplete="new-password" minlength="6" required>
+              <button class="btn btn-primary" type="submit" style="margin-top:16px">Đổi mật khẩu</button>
+              <div class="auth-msg" id="passMsg"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="app-footer"></div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    (function () {
+      const H = window.Herish, A = H.Auth;
+      H.renderChrome('');
+      const $ = id => document.getElementById(id);
+
+      let user = A.current();
+      if (!user) { $('gate').hidden = false; return; }
+      $('workspace').hidden = false;
+
+      function fill() {
+        const callName = user.name.trim().split(/\s+/).slice(-1)[0] || user.name;
+        $('pAvatar').textContent = callName.charAt(0).toUpperCase();
+        $('pName').textContent = user.name;
+        $('pEmail').textContent = user.email;
+        $('pPhone').textContent = user.phone || '(chưa có)';
+        $('pSince').textContent = user.created ? 'Thành viên Herish từ ' + new Date(user.created).toLocaleDateString('vi-VN') : 'Thành viên Herish';
+        $('fName').value = user.name;
+        $('fPhone').value = user.phone || '';
+      }
+      fill();
+
+      function msg(el, text, ok) { el.textContent = text; el.className = 'auth-msg ' + (ok ? 'ok' : 'err'); }
+
+      $('infoForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        try {
+          user = A.updateInfo({ name: $('fName').value, phone: $('fPhone').value });
+          fill();
+          H.renderAuthSlot();   // cập nhật tên trên topbar
+          msg($('infoMsg'), 'Đã lưu thông tin ✓', true);
+          H.toast('Đã cập nhật thông tin cá nhân 💜');
+        } catch (err) { msg($('infoMsg'), err.message, false); }
+      });
+
+      $('passForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const btn = this.querySelector('button[type=submit]');
+        btn.disabled = true;
+        try {
+          await A.changePassword($('fCur').value, $('fNew').value);
+          this.reset();
+          msg($('passMsg'), 'Đã đổi mật khẩu thành công ✓', true);
+          H.toast('Đổi mật khẩu thành công 🔒');
+        } catch (err) { msg($('passMsg'), err.message, false); }
+        btn.disabled = false;
+      });
+
+      $('logoutBtn2').addEventListener('click', function () {
+        A.logout();
+        H.toast('Đã đăng xuất');
+        setTimeout(() => window.location.href = 'index.html', 600);
+      });
+    })();
+  </script>
+</body>
+</html>

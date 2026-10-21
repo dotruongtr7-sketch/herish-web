@@ -80,11 +80,16 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; color: var(--prima
 .tb-socials { display: flex; gap: 8px; }
 .tb-socials a {
   width: 30px; height: 30px; border-radius: 50%;
-  background: #fff; color: var(--primary-900);
   display: flex; align-items: center; justify-content: center;
-  transition: transform .15s, background .15s;
+  transition: transform .15s, filter .15s;
+  overflow: hidden;
 }
-.tb-socials a:hover { transform: translateY(-2px); background: var(--lav-100); }
+.tb-socials a:hover { transform: translateY(-2px); filter: brightness(1.12); }
+/* Màu nhận diện thật của từng nền tảng */
+.tb-socials .sc-fb { background: #1877F2; }
+.tb-socials .sc-tt { background: #010101; }
+.tb-socials .sc-sp { background: #EE4D2D; }
+.tb-socials .sc-zl { background: #0068FF; }
 /* Nút Tuyển dụng đỏ */
 .tb-jobs {
   background: #e8192c; color: #fff !important;
@@ -291,8 +296,13 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; color: var(--prima
   content: ''; position: absolute; inset: 0; z-index: 1;
   background: linear-gradient(to right, rgba(238,231,249,.97) 0%, rgba(238,231,249,.9) 30%, rgba(238,231,249,.45) 46%, rgba(238,231,249,0) 60%);
 }
-.hero-cover .container { display: block; position: relative; z-index: 2; }
-.hero-cover .hero-text { max-width: 520px; }
+/* Hero tràn FULL bên trái: bỏ lề căn giữa, chữ bám sát mép trái màn hình */
+.hero-cover .container {
+  display: block; position: relative; z-index: 2;
+  width: 100%; max-width: none; margin: 0;
+  padding-left: clamp(24px, 5vw, 80px); padding-right: 24px;
+}
+.hero-cover .hero-text { max-width: 560px; }
 /* Chữ hero: đậm, nét — KHÔNG dùng viền trắng (gây lóa trên nền sáng) */
 .hero.hero-cover p.lead { color: #3f3760; }
 .hero-cover .hero-stats b { color: #2e2856; font-weight: 700; }
