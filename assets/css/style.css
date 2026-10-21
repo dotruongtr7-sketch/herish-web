@@ -793,6 +793,11 @@ h1, h2, h3 { font-family: var(--font-head); font-weight: 700; color: var(--prima
   background: linear-gradient(135deg, #7d57e4 0%, #5b3ccc 100%); color: #fff;
   box-shadow: 0 8px 20px rgba(100, 70, 210, .35);
 }
+/* 2 form chồng cùng một ô grid → chiều cao khung LUÔN bằng form cao nhất,
+   chuyển tab không làm card phóng to/thu nhỏ */
+.lg-forms { display: grid; }
+.lg-forms > form { grid-area: 1 / 1; }
+.lg-forms > form[hidden] { display: block; visibility: hidden; pointer-events: none; }
 .lg-form label { display: block; font-weight: 700; color: #3a2f6b; margin: 15px 0 8px; font-size: .95rem; }
 .lg-field { position: relative; }
 .lg-field .ic {
