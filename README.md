@@ -30,5 +30,9 @@ Cập nhật snapshot: chạy lại bước tải API → ghi đè `assets/js/da
 | 12 | Nút điều hướng sai link | Mọi link `?cat=`, `?code=` đều validate trước khi render |
 | 14 | Mất xuống dòng từ CMS | `white-space: pre-line` cho mô tả & FAQ |
 
+## Chống cache trình duyệt
+Mọi tham chiếu `style.css / app.js / data.js` trong các file HTML đều gắn `?v=<phiên bản>`.
+KHI SỬA CSS/JS: đổi chuỗi version ở tất cả HTML (tìm–thay `?v=20261021a` → giá trị mới) để khách tự nhận bản mới, không cần Ctrl+F5.
+
 ## Deploy
 GitHub Pages từ branch `main`, thư mục gốc. Muốn gắn lại tên miền riêng: thêm file `CNAME` + trỏ DNS.
