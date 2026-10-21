@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tư vấn chọn quà — Herish</title>
+  <meta name="description" content="Tư vấn chọn quà Herish: chọn người nhận, dịp tặng và ngân sách — nhận gợi ý hộp quà phù hợp ngay, hoặc chat Zalo để Herish tư vấn trực tiếp.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div id="app-header"></div>
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>💝 Tư vấn chọn quà</h1>
+      <p>Chưa biết tặng gì? Trả lời 3 câu hỏi — Herish gợi ý ngay những hộp quà phù hợp nhất,
+        hoặc chat trực tiếp để được tư vấn tận tình.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:36px">
+    <div class="container">
+
+      <!-- BỘ CHỌN NHANH -->
+      <div class="contact-card" style="margin-bottom:26px">
+        <h3>🎯 Tìm quà trong 10 giây</h3>
+        <div class="toolbar" style="box-shadow:none; padding:10px 0 0; margin-bottom:0">
+          <select id="selRec" aria-label="Tặng ai" style="flex:1 1 180px"></select>
+          <select id="selOcc" aria-label="Dịp tặng" style="flex:1 1 180px"></select>
+          <select id="selBudget" aria-label="Ngân sách" style="flex:1 1 180px">
+            <option value="">Mọi ngân sách</option>
+            <option value="0-300000">Dưới 300.000đ</option>
+            <option value="300000-500000">300.000đ – 500.000đ</option>
+            <option value="500000-99999999">Trên 500.000đ</option>
+          </select>
+          <button class="btn btn-primary" id="btnSuggest" type="button">✨ Gợi ý quà cho tôi</button>
+        </div>
+      </div>
+
+      <!-- KẾT QUẢ GỢI Ý -->
+      <div id="suggestWrap" hidden>
+        <div class="result-count" id="suggestCount" style="margin-bottom:16px"></div>
+        <div class="prod-grid" id="suggestGrid" style="margin-bottom:18px"></div>
+        <div style="text-align:center; margin-bottom:34px">
+          <a class="btn btn-ghost" id="seeAllLink" href="products.html">Xem tất cả mẫu phù hợp →</a>
+        </div>
+        <div class="empty-state" id="suggestEmpty" hidden style="margin-bottom:34px">
+          <div class="ico">🔍🎁</div>
+          <h3>Chưa có mẫu khớp hoàn toàn</h3>
+          <p>Đừng lo — nhắn Zalo cho Herish, tụi mình sẽ tư vấn và đặt riêng theo đúng ý bạn.</p>
+          <a class="btn btn-primary" href="https://zalo.me/0972340107" target="_blank" rel="noopener">💬 Chat Zalo ngay</a>
+        </div>
+      </div>
+
+      <!-- TƯ VẤN TRỰC TIẾP -->
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h3>💬 Tư vấn trực tiếp — phản hồi trong giờ làm việc</h3>
+          <div class="contact-line"><div class="ico">💬</div><div><b>Zalo (nhanh nhất)</b><span><a href="https://zalo.me/0972340107" target="_blank" rel="noopener">zalo.me/0972340107</a> — gửi ảnh, chốt mẫu, đặt hàng ngay</span></div></div>
+          <div class="contact-line"><div class="ico">📞</div><div><b>Hotline</b><span><a href="tel:0972340107">0972 340 107</a> · 08:30 đến 21:00 hàng ngày</span></div></div>
+          <div class="contact-line"><div class="ico">♪</div><div><b>TikTok / Shopee</b><span>Nhắn tin shop trên sàn — Herish hỗ trợ đặt hàng</span></div></div>
+          <div class="rem-note" style="margin-top:14px">
+            🎀 Cần gấp? Nói với Herish ngày bạn cần nhận — tụi mình ưu tiên gói và gửi trong 24h.
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <h3>📮 Để lại yêu cầu — Herish gọi lại tư vấn</h3>
+          <form class="contact-form" id="adviseForm">
+            <label for="avName">Tên của bạn</label>
+            <input id="avName" type="text" placeholder="Nguyễn Văn A" required>
+            <label for="avPhone">Số điện thoại</label>
+            <input id="avPhone" type="tel" placeholder="09xx xxx xxx" required pattern="[0-9+ ]{8,15}">
+            <label for="avMsg">Bạn muốn tặng ai, dịp gì, ngân sách bao nhiêu?</label>
+            <textarea id="avMsg" rows="4" placeholder="Ví dụ: Tặng bạn gái dịp sinh nhật 20/11, ngân sách khoảng 500K, nàng thích màu hồng…"></textarea>
+            <div class="checkbox-line">
+              <input type="checkbox" id="avNotify" checked>
+              <label for="avNotify" style="margin:0; font-weight:500">Nhận thông báo ưu đãi & mẫu quà mới</label>
+            </div>
+            <button class="btn btn-primary" type="submit">Gửi yêu cầu tư vấn 💌</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div id="app-footer"></div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    (function () {
+      const H = window.Herish, D = H.data;
+      H.renderChrome('tuvan');
+      const $ = id => document.getElementById(id);
+
+      // Đổ lựa chọn từ cấu hình chung (đồng bộ với trang Sản phẩm)
+      $('selRec').innerHTML = '<option value="">Tặng ai cũng được</option>' +
+        Object.entries(H.RECIPIENTS)
+          .filter(([k]) => k !== 'doanh-nghiep')
+          .map(([k, v]) => `<option value="${k}">${v}</option>`).join('');
+      $('selOcc').innerHTML = '<option value="">Mọi dịp</option>' +
+        Object.entries(H.OCCASIONS).map(([k, v]) => `<option value="${k}">${v}</option>`).join('');
+
+      function suggest() {
+        const rec = $('selRec').value, occ = $('selOcc').value, budget = $('selBudget').value;
+        let items = D.products.filter(p => p.stock > 0);
+        if (rec) items = items.filter(p => H.recipientsOf(p).includes(rec));
+        if (occ) items = items.filter(p => H.occasionsOf(p).includes(occ));
+        if (budget) {
+          const [min, max] = budget.split('-').map(Number);
+          items = items.filter(p => p.sale >= min && p.sale <= max);
+        }
+        items.sort((a, b) => H.discountOf(b) - H.discountOf(a));
+        const top = items.slice(0, 6);
+
+        $('suggestWrap').hidden = false;
+        $('suggestEmpty').hidden = top.length > 0;
+        $('suggestGrid').style.display = top.length ? '' : 'none';
+        $('seeAllLink').style.display = top.length ? '' : 'none';
+        $('suggestCount').innerHTML = top.length
+          ? `💜 Herish gợi ý <b>${top.length}</b> mẫu hợp nhất (trong ${items.length} mẫu phù hợp):`
+          : '';
+        $('suggestGrid').innerHTML = top.map(H.productCard).join('');
+
+        const params = new URLSearchParams();
+        if (rec) params.set('rec', rec);
+        if (occ) params.set('occ', occ);
+        $('seeAllLink').href = 'products.html' + (params.toString() ? '?' + params.toString() : '');
+        $('suggestWrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      $('btnSuggest').addEventListener('click', suggest);
+
+      // Form yêu cầu tư vấn → mở email soạn sẵn gửi Herish
+      $('adviseForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const name = $('avName').value.trim();
+        const phone = $('avPhone').value.trim();
+        const msg = $('avMsg').value.trim();
+        const notify = $('avNotify').checked ? 'Có' : 'Không';
+        const body = encodeURIComponent(
+          `Yêu cầu tư vấn chọn quà:\n- Tên: ${name}\n- SĐT: ${phone}\n- Nhận ưu đãi: ${notify}\n\nNhu cầu:\n${msg}`);
+        window.location.href = `mailto:${D.contact.email}?subject=${encodeURIComponent('[Tư vấn] ' + name + ' — ' + phone)}&body=${body}`;
+        H.toast('Đang mở email gửi yêu cầu — Herish sẽ gọi lại cho bạn 💜');
+      });
+    })();
+  </script>
+</body>
+</html>
