@@ -260,7 +260,7 @@
         <nav class="main-nav" id="mainNav">
           <a href="index.html" ${active === 'home' ? 'class="active"' : ''}>Trang chủ</a>
           <a href="products.html" ${active === 'products' ? 'class="active"' : ''}>Sản phẩm</a>
-          <a href="tuvan.html" ${active === 'tuvan' ? 'class="active"' : ''}>Tư vấn</a>
+          <a href="tuvan.html" ${active === 'tuvan' ? 'class="active"' : ''}>Tư vấn chọn quà</a>
           <a href="reminders.html" ${active === 'reminders' ? 'class="active"' : ''}>Nhắc hẹn</a>
         </nav>
         <div class="header-actions">
