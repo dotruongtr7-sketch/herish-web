@@ -30,6 +30,11 @@ Cập nhật snapshot: chạy lại bước tải API → ghi đè `assets/js/da
 | 12 | Nút điều hướng sai link | Mọi link `?cat=`, `?code=` đều validate trước khi render |
 | 14 | Mất xuống dòng từ CMS | `white-space: pre-line` cho mô tả & FAQ |
 
+## Lead về Google Sheet
+Các form (Liên hệ, Tư vấn, Báo hàng về) gọi `Herish.submitLead()` trong `app.js`.
+- Chưa cấu hình: form tự mở email soạn sẵn (mailto) — vẫn hoạt động.
+- Để lead đổ thẳng về Google Sheet: deploy `google-apps-script-leads.gs` (hướng dẫn trong file) → dán URL web app vào biến `LEAD_ENDPOINT` ở đầu `assets/js/app.js` → bump version → push.
+
 ## Chống cache trình duyệt
 Mọi tham chiếu `style.css / app.js / data.js` trong các file HTML đều gắn `?v=<phiên bản>`.
 KHI SỬA CSS/JS: đổi chuỗi version ở tất cả HTML (tìm–thay `?v=20261021a` → giá trị mới) để khách tự nhận bản mới, không cần Ctrl+F5.

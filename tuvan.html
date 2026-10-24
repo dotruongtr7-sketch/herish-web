@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=20261021b">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261021c">
 </head>
 <body>
   <div id="app-header"></div>
@@ -102,8 +102,8 @@
 
   <div id="app-footer"></div>
 
-  <script src="assets/js/data.js?v=20261021b"></script>
-  <script src="assets/js/app.js?v=20261021b"></script>
+  <script src="assets/js/data.js?v=20261021c"></script>
+  <script src="assets/js/app.js?v=20261021c"></script>
   <script>
     (function () {
       const H = window.Herish, D = H.data;
@@ -147,17 +147,18 @@
       }
       $('btnSuggest').addEventListener('click', suggest);
 
-      // Form yêu cầu tư vấn → mở email soạn sẵn gửi Herish
-      $('adviseForm').addEventListener('submit', function (e) {
+      // Form yêu cầu tư vấn → lead về Google Sheet (hoặc email nếu chưa cấu hình)
+      $('adviseForm').addEventListener('submit', async function (e) {
         e.preventDefault();
-        const name = $('avName').value.trim();
-        const phone = $('avPhone').value.trim();
-        const msg = $('avMsg').value.trim();
-        const notify = $('avNotify').checked ? 'Có' : 'Không';
-        const body = encodeURIComponent(
-          `Yêu cầu tư vấn chọn quà:\n- Tên: ${name}\n- SĐT: ${phone}\n- Nhận ưu đãi: ${notify}\n\nNhu cầu:\n${msg}`);
-        window.location.href = `mailto:${D.contact.email}?subject=${encodeURIComponent('[Tư vấn] ' + name + ' — ' + phone)}&body=${body}`;
-        H.toast('Đang mở email gửi yêu cầu — Herish sẽ gọi lại cho bạn 💜');
+        const r = await H.submitLead({
+          type: 'Tư vấn chọn quà',
+          name: $('avName').value.trim(),
+          phone: $('avPhone').value.trim(),
+          message: $('avMsg').value.trim(),
+          extra: 'Nhận ưu đãi: ' + ($('avNotify').checked ? 'Có' : 'Không'),
+        });
+        if (r.via === 'sheet') { this.reset(); $('avNotify').checked = true; H.toast('Đã gửi yêu cầu! Herish sẽ gọi lại tư vấn cho bạn 💜'); }
+        else H.toast('Đang mở email gửi yêu cầu — Herish sẽ gọi lại cho bạn 💜');
       });
     })();
   </script>

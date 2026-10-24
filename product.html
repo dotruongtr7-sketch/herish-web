@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=20261021b">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261021c">
 </head>
 <body>
   <div id="app-header"></div>
@@ -39,8 +39,8 @@
 
   <div id="app-footer"></div>
 
-  <script src="assets/js/data.js?v=20261021b"></script>
-  <script src="assets/js/app.js?v=20261021b"></script>
+  <script src="assets/js/data.js?v=20261021c"></script>
+  <script src="assets/js/app.js?v=20261021c"></script>
   <script>
     (function () {
       const H = window.Herish, D = H.data;
@@ -128,12 +128,15 @@
 
         const notifyForm = document.getElementById('notifyForm');
         if (notifyForm) {
-          notifyForm.addEventListener('submit', function (e) {
+          notifyForm.addEventListener('submit', async function (e) {
             e.preventDefault();
-            const phone = document.getElementById('notifyPhone').value.trim();
-            const body = encodeURIComponent(`Khách đăng ký nhận thông báo có hàng.\nSản phẩm: ${p.code} — ${p.name}\nSĐT: ${phone}`);
-            window.location.href = `mailto:${D.contact.email}?subject=${encodeURIComponent('[Herish.vn] Đăng ký báo hàng về — ' + p.code)}&body=${body}`;
-            H.toast('Cảm ơn bạn! Herish sẽ báo ngay khi có hàng 💌');
+            const r = await H.submitLead({
+              type: 'Báo hàng về',
+              phone: document.getElementById('notifyPhone').value.trim(),
+              message: `Đăng ký nhận thông báo khi có hàng: ${p.code} — ${p.name}`,
+            });
+            if (r.via === 'sheet') { this.reset(); H.toast('Cảm ơn bạn! Herish sẽ báo ngay khi có hàng 💌'); }
+            else H.toast('Cảm ơn bạn! Herish sẽ báo ngay khi có hàng 💌');
           });
         }
 

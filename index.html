@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=20261021b">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261021c">
 </head>
 <body>
   <div id="app-header"></div>
@@ -180,8 +180,8 @@
 
   <div id="app-footer"></div>
 
-  <script src="assets/js/data.js?v=20261021b"></script>
-  <script src="assets/js/app.js?v=20261021b"></script>
+  <script src="assets/js/data.js?v=20261021c"></script>
+  <script src="assets/js/app.js?v=20261021c"></script>
   <script>
     (function () {
       const H = window.Herish, D = H.data;
@@ -204,17 +204,18 @@
         <div class="contact-line"><div class="ico">📞</div><div><b>Hotline</b><span><a href="tel:${c.hotline}">${c.hotline}</a> · ${c.availability}</span></div></div>
         <div class="contact-line"><div class="ico">✉️</div><div><b>Email</b><span><a href="mailto:${c.email}">${c.email}</a></span></div></div>`;
 
-      // Form liên hệ: mở mail soạn sẵn (web tĩnh, không cần server)
-      document.getElementById('contactForm').addEventListener('submit', function (e) {
+      // Form liên hệ → lead về Google Sheet (hoặc email nếu chưa cấu hình)
+      document.getElementById('contactForm').addEventListener('submit', async function (e) {
         e.preventDefault();
-        const name = document.getElementById('cfName').value.trim();
-        const phone = document.getElementById('cfPhone').value.trim();
-        const msg = document.getElementById('cfMsg').value.trim();
-        const notify = document.getElementById('cfNotify').checked ? 'Có' : 'Không';
-        const body = encodeURIComponent(
-          `Tên: ${name}\nSĐT: ${phone}\nNhận thông báo ưu đãi: ${notify}\n\nNội dung:\n${msg}`);
-        window.location.href = `mailto:${D.contact.email}?subject=${encodeURIComponent('[Herish] Tư vấn chọn quà — ' + name)}&body=${body}`;
-        H.toast('Đang mở ứng dụng email để gửi lời nhắn…');
+        const r = await H.submitLead({
+          type: 'Liên hệ',
+          name: document.getElementById('cfName').value.trim(),
+          phone: document.getElementById('cfPhone').value.trim(),
+          message: document.getElementById('cfMsg').value.trim(),
+          extra: 'Nhận ưu đãi: ' + (document.getElementById('cfNotify').checked ? 'Có' : 'Không'),
+        });
+        if (r.via === 'sheet') { this.reset(); document.getElementById('cfNotify').checked = true; H.toast('Đã gửi lời nhắn! Herish sẽ liên hệ lại sớm 💜'); }
+        else H.toast('Đang mở ứng dụng email để gửi lời nhắn…');
       });
     })();
   </script>

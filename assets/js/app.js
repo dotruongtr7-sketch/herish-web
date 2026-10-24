@@ -12,6 +12,38 @@
     facebook: 'https://www.facebook.com/search/top?q=herish',          // TODO: thay bằng fanpage Herish
   };
 
+  // ===== LEAD → GOOGLE SHEET =====
+  // Dán URL Google Apps Script (deploy web app) vào đây để mọi form đổ thẳng về Sheet.
+  // Để trống -> form tự fallback mở email soạn sẵn (vẫn hoạt động, không gãy).
+  const LEAD_ENDPOINT = '';
+
+  // Gửi 1 lead: ưu tiên về Sheet (no-cors fire-and-forget), không có/ lỗi thì mở email
+  async function submitLead(data) {
+    data.page = (location.pathname.split('/').pop() || 'index');
+    data.at = new Date().toLocaleString('vi-VN');
+    if (LEAD_ENDPOINT) {
+      try {
+        await fetch(LEAD_ENDPOINT, {
+          method: 'POST', mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(data),
+        });
+        return { via: 'sheet' };
+      } catch (e) { /* rơi xuống email */ }
+    }
+    const subject = `[${data.type || 'Liên hệ'}] ${data.name || ''} — ${data.phone || ''}`;
+    const body = [
+      'Loại: ' + (data.type || ''),
+      'Tên: ' + (data.name || ''),
+      'SĐT: ' + (data.phone || ''),
+      'Email: ' + (data.email || ''),
+      'Nội dung: ' + (data.message || ''),
+      data.extra ? 'Thêm: ' + data.extra : '',
+    ].filter(Boolean).join('\n');
+    window.location.href = `mailto:${D.contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    return { via: 'mailto' };
+  }
+
   // FAQ bổ sung (CMS cũ chỉ có 3 câu) — hiển thị chung ở mục Hỏi đáp trang chủ
   const EXTRA_FAQS = [
     {
@@ -336,6 +368,9 @@
         <div class="footer-bottom">© ${new Date().getFullYear()} Herish. Trao quà — gửi trọn yêu thương.</div>
       </div>
     </footer>
+    <a class="fab-zalo" href="${SOCIAL.zalo}" target="_blank" rel="noopener" aria-label="Chat Zalo với Herish" title="Chat Zalo với Herish">
+      <svg viewBox="0 0 24 24" width="34" height="34"><text x="12" y="15.5" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="8.6" font-weight="800" fill="#fff" font-style="italic">Zalo</text></svg>
+    </a>
     <button class="fab-top" id="fabTop" aria-label="Lên đầu trang">↑</button>
     <div class="toast" id="toast"></div>`;
 
@@ -480,7 +515,7 @@
   window.Herish = {
     data: D, formatPrice, discountOf, productCard, categoryLabel,
     CATEGORIES, RECIPIENTS, recipientsOf, OCCASIONS, occasionsOf,
-    SOCIAL, orderButtons, renderChrome, renderAuthSlot, toast,
+    SOCIAL, orderButtons, submitLead, renderChrome, renderAuthSlot, toast,
     escapeHtml, tryRefreshFromApi, productUrl, Reminder, Auth,
   };
 })();
