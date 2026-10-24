@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dotruongtr7-sketch.github.io/herish-web/sitemap.xml

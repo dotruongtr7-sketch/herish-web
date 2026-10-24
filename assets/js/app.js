@@ -12,6 +12,36 @@
     facebook: 'https://www.facebook.com/search/top?q=herish',          // TODO: thay bằng fanpage Herish
   };
 
+  // FAQ bổ sung (CMS cũ chỉ có 3 câu) — hiển thị chung ở mục Hỏi đáp trang chủ
+  const EXTRA_FAQS = [
+    {
+      question: 'Đặt hàng Herish qua kênh nào?',
+      answer: 'Bạn có thể đặt qua 3 kênh:\n1. TikTok Shop — bấm nút TikTok trên trang sản phẩm.\n2. Shopee — bấm nút Shopee.\n3. Zalo 0972 340 107 — nhắn mã sản phẩm, Herish chốt đơn và giao tận nơi.\nCần tư vấn trước khi đặt? Dùng trang "Tư vấn chọn quà" hoặc gọi hotline nhé.',
+    },
+    {
+      question: 'Phí giao hàng bao nhiêu? Bao lâu nhận được quà?',
+      answer: 'MIỄN PHÍ giao hàng cho đơn từ 300.000đ. Herish gói và bàn giao vận chuyển trong 24 giờ làm việc; nội thành Hà Nội / TP.HCM nhận sau 1–2 ngày, tỉnh thành khác 2–4 ngày. Cần quà đến đúng ngày đặc biệt? Báo Herish khi đặt để được căn thời gian gửi.',
+    },
+    {
+      question: 'Có được gói quà và viết thiệp theo yêu cầu không?',
+      answer: 'Có — và hoàn toàn MIỄN PHÍ. Mọi hộp quà đều được gói thủ công, thắt nơ. Bạn muốn ghi lời chúc riêng, chỉ cần nhắn nội dung qua Zalo khi đặt, Herish sẽ viết thiệp giúp bạn. Các set có khung ảnh còn được in ảnh kỷ niệm miễn phí.',
+    },
+    {
+      question: 'Nhận hàng bị lỗi hoặc giao sai thì đổi trả thế nào?',
+      answer: 'Herish nhận đổi trả trong 3 ngày kể từ khi nhận hàng với lỗi sản xuất, hư hỏng vận chuyển hoặc giao sai mẫu — Herish chịu toàn bộ chi phí. Mẹo: luôn quay video khi mở hàng để được xử lý nhanh nhất. Chi tiết xem trang Chính sách đổi trả.',
+    },
+    {
+      question: 'Dịch vụ "Nhắc hẹn tặng quà" là gì? Có mất phí không?',
+      answer: 'Hoàn toàn miễn phí. Bạn tạo tài khoản, lưu các ngày quan trọng (sinh nhật mẹ, kỷ niệm ngày cưới…) — hệ thống nhắc bạn trước 3–15 ngày qua Google Calendar/Gmail, hoặc để Herish gọi điện nhắc. Không bao giờ lỡ một dịp tặng quà nào nữa.',
+    },
+    {
+      question: 'Herish có nhận đặt quà tặng doanh nghiệp số lượng lớn không?',
+      answer: 'Có. Herish nhận đặt quà tặng doanh nghiệp (tri ân khách hàng, quà 8/3 — 20/10 cho nhân viên nữ…) số lượng lớn, có thể in logo thương hiệu theo yêu cầu. Gọi 0972 340 107 hoặc chat Zalo để nhận báo giá riêng trong ngày.',
+    },
+  ];
+  // Gộp FAQ: câu từ CMS cũ + câu bổ sung (không trùng)
+  D.faqs = [...D.faqs, ...EXTRA_FAQS.filter(e => !D.faqs.some(f => f.question === e.question))];
+
   // 3 nút đặt hàng dùng chung mọi nơi
   function orderButtons() {
     return `
@@ -287,6 +317,8 @@
               <li><a href="products.html?rec=cha-me">Quà tặng cha mẹ</a></li>
               <li><a href="products.html?rec=be">Quà tặng bé</a></li>
               <li><a href="reminders.html">Nhắc hẹn tặng quà</a></li>
+              <li><a href="chinhsach.html">Chính sách giao hàng · đổi trả · bảo mật</a></li>
+              <li><a href="index.html#faq">Câu hỏi thường gặp</a></li>
             </ul>
           </div>
           <div>

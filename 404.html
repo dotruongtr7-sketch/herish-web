@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Không tìm thấy trang — Herish</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Trang 404 tự chứa style — được phục vụ ở mọi đường dẫn nên không dựa file ngoài */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      font-family: 'Inter', sans-serif; color: #37306b; padding: 24px; text-align: center;
+      background:
+        radial-gradient(520px 420px at 8% 10%, #f3d7ee 0%, transparent 60%),
+        radial-gradient(620px 520px at 94% 88%, #d9c6f2 0%, transparent 60%),
+        linear-gradient(135deg, #ece2f7 0%, #e9dcf4 100%);
+    }
+    .card {
+      background: #fff; border-radius: 28px; padding: 52px 44px; max-width: 520px; width: 100%;
+      box-shadow: 0 30px 80px rgba(90, 60, 160, .25);
+    }
+    .logo { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: #665baf; }
+    .logo .dot { position: relative; }
+    .logo .dot::after { content: '✿'; position: absolute; top: -0.55em; left: 50%; transform: translateX(-50%); font-size: .45em; color: #e4a9cd; }
+    .big { font-family: 'Quicksand', sans-serif; font-size: 5rem; font-weight: 700; color: #cdc7ec; line-height: 1; margin: 18px 0 4px; }
+    h1 { font-family: 'Quicksand', sans-serif; font-size: 1.4rem; color: #37306b; margin-bottom: 10px; }
+    p { color: #736d96; font-size: .95rem; margin-bottom: 26px; }
+    .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    a.btn {
+      display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+      padding: 13px 26px; border-radius: 999px; font-weight: 700; font-size: .95rem;
+      transition: transform .2s;
+    }
+    a.btn:hover { transform: translateY(-2px); }
+    .btn-main { background: linear-gradient(135deg, #7d57e4, #5b3ccc); color: #fff; box-shadow: 0 12px 26px rgba(100,70,210,.35); }
+    .btn-ghost { background: #fff; color: #665baf; border: 1.5px solid #cdc7ec; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">Her<span class="dot">ı</span>sh</div>
+    <div class="big">404</div>
+    <h1>Ôi, trang này không tồn tại 🎁</h1>
+    <p>Có thể đường dẫn đã thay đổi hoặc món quà bạn tìm đã được "mở" mất rồi.
+      Đừng lo — kho quà của Herish vẫn đầy ắp!</p>
+    <div class="actions">
+      <a class="btn btn-main" href="/herish-web/">🏠 Về trang chủ</a>
+      <a class="btn btn-ghost" href="/herish-web/products.html">🎁 Xem quà tặng</a>
+    </div>
+  </div>
+</body>
+</html>
