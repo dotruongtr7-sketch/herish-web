@@ -45,16 +45,16 @@
 
 /* XTRUONGMKTER • REPORTS V2, all custom classes rp-* */
 .rp-shell{min-height:calc(100vh - 66px)}
-.rp-container{max-width:1840px;margin:0 auto;padding:22px 25px 30px}
-.rp-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin:0 0 20px}
+.rp-container{max-width:1840px;margin:0 auto;padding:14px 25px 16px}
+.rp-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin:0 0 12px}
 .rp-kicker{color:#ad8cff;font-weight:800;letter-spacing:.16em;font-size:10px;margin-bottom:9px}
-.rp-top h1{margin:0 0 6px;font-size:clamp(28px,2.45vw,35px);letter-spacing:-.035em}
+.rp-top h1{margin:0;font-size:clamp(22px,2vw,28px);letter-spacing:-.035em}
 .rp-top p{margin:0;color:#98b8e3;line-height:1.6;font-size:12px}
 .rp-head-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
 .rp-statusline{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 15px;background:linear-gradient(100deg,#102346dd,#0d1c38a8);border:1px solid #365584;border-radius:11px;margin-bottom:16px;flex-wrap:wrap}
 .rp-statusline strong{font-size:12px;letter-spacing:.04em}.rp-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#40e1ba;box-shadow:0 0 12px #39e7c2;margin-right:8px}
 .rp-muted{font-size:11px;color:#9ab5db}.rp-warning{color:#f3cd7d}
-.rp-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.rp-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
 .rp-presets{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .rp-pill{border:1px solid #315079;border-radius:9px;background:#0e2345;color:#c6dcfc;font-size:12px;font-weight:650;height:34px;padding:0 13px;white-space:nowrap}
 .rp-pill.active{background:linear-gradient(120deg,#8c54ee,#6238c1);border-color:#ab87fb;color:white;box-shadow:0 0 18px #8256f53e}
@@ -111,7 +111,7 @@
  </aside>
  <div class="page-root"><header class="topbar"><button class="icon-btn menu-btn" id="menuToggle" aria-label="Mở menu"><span data-icon="menu"></span></button><label class="global-search"><span class="ico" data-icon="search"></span><input id="globalSearch" placeholder="Tìm bản ghi theo mô tả, mã, kênh..." aria-label="Tìm bản ghi"/><kbd>Ctrl K</kbd></label><div class="top-actions"><button class="btn ghost" id="scopeBtn" aria-label="Chọn dự án ở thanh trên cùng">◇ <span id="scopeName">HERISH</span> ▾</button><span class="demo-badge"><i class="status-dot"></i><span id="modeText">CHƯA CÓ SỐ LIỆU</span></span><button class="icon-btn" id="dataToolsBtn" title="Nhập / xuất và quản lý dữ liệu"><span data-icon="settings"></span></button><div class="avatar">XT</div></div></header>
  <main class="workspace rp-shell"><div class="rp-container">
- <section class="rp-top"><div><div class="rp-kicker">QUẢN TRỊ / XTRUONGMKTER / BÁO CÁO</div><h1>Báo cáo <span class="rp-mark">BẢN CHẠY THỬ</span></h1><p>Theo dõi thu, chi, công việc và khách hàng từ một không gian dự án duy nhất.</p><p class="rp-warning" id="dataWarning">Số liệu minh họa, không phải kết quả kinh doanh thực tế.</p></div><div class="rp-head-actions"><button class="btn ghost" id="printBtn"><span data-icon="file"></span>In / lưu PDF</button><button class="btn primary" id="exportBtn"><span data-icon="download"></span>Xuất CSV</button></div></section>
+ <section class="rp-top"><div><div class="rp-kicker">QUẢN TRỊ / XTRUONGMKTER / BÁO CÁO</div><h1>Báo cáo</h1><p class="rp-warning" id="dataWarning" style="display:none"></p></div><div class="rp-head-actions"><button class="btn ghost" id="printBtn"><span data-icon="file"></span>In / lưu PDF</button><button class="btn primary" id="exportBtn"><span data-icon="download"></span>Xuất CSV</button></div></section>
  <section class="rp-controls" aria-label="Bộ lọc báo cáo"><div class="rp-presets"><button class="rp-pill" data-preset="today" title="Chỉ xem dữ liệu của ngày hôm nay tại Việt Nam">Hôm nay</button><button class="rp-pill active" data-preset="7">7 ngày</button><button class="rp-pill" data-preset="30">30 ngày</button><button class="rp-pill" data-preset="90">90 ngày</button><button class="rp-pill" data-preset="all">Toàn bộ</button></div><div class="rp-datebox"><span class="rp-muted">Từ</span><input class="rp-date" type="date" id="startDate" aria-label="Ngày bắt đầu"/><span class="rp-muted">đến</span><input class="rp-date" type="date" id="endDate" aria-label="Ngày kết thúc"/><label class="rp-check"><input type="checkbox" id="compareCheck" checked/> So kỳ trước</label></div></section>
  <section class="rp-metrics" id="kpiGrid" aria-label="Chỉ số tổng quan"></section>
  <section class="rp-grid"><div class="rp-panel"><div class="rp-panel-head"><div><h2>Thu và chi theo thời gian</h2><p>Biểu đồ tự thay đổi theo dự án và khoảng thời gian</p></div><span class="rp-small-label">VNĐ</span></div><div id="timeChart" class="rp-chart"></div><div class="rp-legend"><button id="legendRevenue"><i style="background:#ab77ff"></i>Tổng thu</button><button id="legendExpense"><i style="background:#4ac8ff"></i>Tổng chi</button></div></div><div class="rp-panel"><div class="rp-panel-head"><div><h2>Doanh thu theo kênh</h2><p>Thay cho biểu đồ dự án bị trùng phạm vi</p></div><span class="rp-small-label">Phân bổ</span></div><div class="rp-bars" id="channelChart"></div></div></section>
