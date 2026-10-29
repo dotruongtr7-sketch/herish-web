@@ -401,7 +401,42 @@ bind();render();
     var t=e.target&&e.target.closest&&e.target.closest('[data-action="xt-reconnect"]');
     if(t){e.preventDefault();e.stopPropagation(); if(!tok()){window.xtSetToken();} else {window.xtCheckConn();} }
   },true);
-  function boot(){ setTimeout(window.xtCheckConn,500); }
+  // ---- Đồng bộ số liệu <-> Google Sheet (mỗi module 1 gói JSON) ----
+  var XT_KEYS={finance:'xtruong-finance-v2-data',customers:'xtruongmkter-customers-partners-v3',projects:'xtruongmkter-projects-v2',reports:'xtruongmkter-report-v2'};
+  var xtSyncing=false, xtPushTimers={};
+  function xtGetLS(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+  function xtSetLS(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+  window.xtPull=function(){
+    if(!tok())return Promise.resolve();
+    xtSyncing=true;
+    return window.xtdb.readAll().then(function(res){
+      if(res&&res.ok&&res.data){
+        Object.keys(XT_KEYS).forEach(function(coll){
+          var rows=res.data[coll]||[], st=null;
+          for(var i=0;i<rows.length;i++){if(rows[i].id==='state'){st=rows[i];break;}}
+          if(st&&st.json){xtSetLS(XT_KEYS[coll],String(st.json));}
+        });
+      }
+    }).catch(function(){}).then(function(){xtSyncing=false;});
+  };
+  function xtFlash(txt){var el=document.getElementById('xtConnChip');if(!el)return;el.textContent=txt;setTimeout(window.xtPaintConn,1800);}
+  window.xtPush=function(coll){
+    if(!tok())return Promise.resolve();
+    var key=XT_KEYS[coll], val=xtGetLS(key); if(val==null)return Promise.resolve();
+    return window.xtdb.replace(coll,[{id:'state',json:val,updatedAt:new Date().toISOString()}]).then(function(r){if(r&&r.ok)xtFlash('☁ Đã lưu ✓');}).catch(function(){});
+  };
+  function xtSchedulePush(coll){if(xtPushTimers[coll])clearTimeout(xtPushTimers[coll]);xtPushTimers[coll]=setTimeout(function(){window.xtPush(coll);},1500);}
+  window.addEventListener('storage',function(e){
+    if(xtSyncing||!e.key)return;
+    var coll=null; Object.keys(XT_KEYS).forEach(function(c){if(XT_KEYS[c]===e.key)coll=c;});
+    if(coll)xtSchedulePush(coll);
+  });
+  window.xtBootSync=function(){
+    return window.xtPull().then(function(){
+      try{var f=document.querySelector('iframe.ke-frame'); if(f&&f.contentWindow)f.contentWindow.location.reload();}catch(e){}
+    });
+  };
+  function boot(){ setTimeout(function(){ window.xtCheckConn().then(function(){ if(window.xtConnState&&window.xtConnState.status==='ok') window.xtBootSync(); }); }, 500); }
   if(document.readyState!=='loading') boot(); else window.addEventListener('DOMContentLoaded',boot);
 })();
 </script></body></html>
