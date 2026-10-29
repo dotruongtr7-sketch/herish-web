@@ -15,7 +15,7 @@
  * BẢO MẬT: đổi TOKEN bên dưới thành chuỗi bí mật của riêng anh.
  */
 
-var TOKEN = 'xtruong-2026';   // << đổi thành mật khẩu bí mật của anh
+var TOKEN = 'DAT-TOKEN-BI-MAT-O-DAY';   // << đổi thành mật khẩu bí mật của anh (app dùng đúng chuỗi này)
 
 function doGet(e)  { return handle_(e, 'GET'); }
 function doPost(e) { return handle_(e, 'POST'); }
