@@ -246,7 +246,7 @@ def init_database():
             admin_email = os.environ.get("CERISH_ADMIN_EMAIL", "admin@cerish.local")
             con.execute("INSERT INTO users(email,name,password_hash,role,created_at) VALUES (?,?,?,?,?)",
                         (admin_email,"Quản trị CERISH",hash_password(pwd),"admin",now()))
-        if not con.execute("SELECT 1 FROM partners LIMIT 1").fetchone() and os.environ.get("CERISH_SEED_DEMO", "1") == "1":
+        if not con.execute("SELECT 1 FROM partners LIMIT 1").fetchone() and os.environ.get("CERISH_SEED_DEMO", "0") == "1":
             seed(con)
             # Seed is always fictional; link demo videos to their own booking.
             con.execute("UPDATE videos SET booking_id=(SELECT b.id FROM bookings b WHERE b.partner_id=videos.partner_id ORDER BY b.id DESC LIMIT 1) WHERE COALESCE(booking_id,0)=0")
@@ -486,7 +486,7 @@ def change_password(payload: PasswordUpdate, req: Request):
 @app.get("/api/config")
 def config(req: Request):
     current_user(req)
-    return {"brand": BRAND_NAME, "statuses": STATUS, "demo": os.environ.get("CERISH_SEED_DEMO", "1")=="1"}
+    return {"brand": BRAND_NAME, "statuses": STATUS, "demo": os.environ.get("CERISH_SEED_DEMO", "0")=="1"}
 
 @app.get("/api/data/{table}")
 def list_items(table: str, req: Request, q: str="", status: str="", page: int=1, per_page: int=10,
