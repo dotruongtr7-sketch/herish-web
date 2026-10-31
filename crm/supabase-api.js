@@ -54,11 +54,13 @@ function setToken(t){try{if(!t)localStorage.removeItem(TOKEN_KEY);else localStor
 var realFetch=window.fetch.bind(window);
 async function rpc(fn,args){
  if(!SB_URL||!SB_KEY)throw new HttpError(503,'Web chưa được cấu hình Supabase. Liên hệ quản trị viên.');
+ // Key JWT cũ (eyJ...) mới gửi kèm Authorization; key mới sb_... CHỈ dùng apikey
+ // (gửi sb_ qua Authorization Bearer sẽ bị Supabase báo "Invalid JWT").
+ var headers={'Content-Type':'application/json','apikey':SB_KEY};
+ if(SB_KEY.indexOf('eyJ')===0)headers['Authorization']='Bearer '+SB_KEY;
  var res;
  try{
-  res=await realFetch(SB_URL+'/rest/v1/rpc/'+fn,{method:'POST',
-   headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY},
-   body:JSON.stringify(args||{})});
+  res=await realFetch(SB_URL+'/rest/v1/rpc/'+fn,{method:'POST',headers:headers,body:JSON.stringify(args||{})});
  }catch(e){throw new HttpError(503,'Không kết nối được Supabase. Kiểm tra mạng rồi thử lại.')}
  var out;
  try{out=await res.json()}catch(e){throw new HttpError(502,'Supabase trả về phản hồi không hợp lệ.')}
