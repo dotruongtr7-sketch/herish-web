@@ -74,7 +74,7 @@ end; $$;
 
 -- ---------- Đăng nhập / phiên ----------
 create or replace function cerish_login(p_email text, p_password text)
-returns jsonb language plpgsql security definer set search_path = public as $$
+returns jsonb language plpgsql security definer set search_path = public, extensions as $$
 declare u cerish_users; tok text;
 begin
   select * into u from cerish_users
@@ -151,7 +151,7 @@ end; $$;
 
 -- ---------- Đổi mật khẩu ----------
 create or replace function cerish_password(p_token text, p_current_password text, p_new_password text)
-returns jsonb language plpgsql security definer set search_path = public as $$
+returns jsonb language plpgsql security definer set search_path = public, extensions as $$
 declare u cerish_users := cerish_session_user(p_token);
 begin
   if u.id is null then return jsonb_build_object('ok', false, 'code', 401, 'error', 'Phiên đăng nhập đã hết hạn'); end if;
@@ -165,7 +165,7 @@ end; $$;
 
 -- ---------- Quản lý nhân sự (chỉ admin) ----------
 create or replace function cerish_user_create(p_token text, p_name text, p_email text, p_password text, p_role text)
-returns jsonb language plpgsql security definer set search_path = public as $$
+returns jsonb language plpgsql security definer set search_path = public, extensions as $$
 declare u cerish_users := cerish_session_user(p_token); nid bigint; em text := lower(trim(p_email)); nm text := trim(p_name);
 begin
   if u.id is null then return jsonb_build_object('ok', false, 'code', 401, 'error', 'Phiên đăng nhập đã hết hạn'); end if;
@@ -183,7 +183,7 @@ begin
 end; $$;
 
 create or replace function cerish_user_update(p_token text, p_id bigint, p_data jsonb)
-returns jsonb language plpgsql security definer set search_path = public as $$
+returns jsonb language plpgsql security definer set search_path = public, extensions as $$
 declare u cerish_users := cerish_session_user(p_token); t cerish_users;
 begin
   if u.id is null then return jsonb_build_object('ok', false, 'code', 401, 'error', 'Phiên đăng nhập đã hết hạn'); end if;
