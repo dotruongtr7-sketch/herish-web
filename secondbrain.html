@@ -403,7 +403,7 @@ bind();render();
     var s=window.xtConnState||{status:'checking'};
     el.classList.remove('ok','fail','checking');
     if(s.status==='ok'){el.classList.add('ok');el.textContent='☁ Đã kết nối Sheet';el.title='Google Sheet đã kết nối ✓';}
-    else if(s.status==='needtoken'){el.classList.add('fail');el.textContent='🔑 Nhập token';el.title='Bấm để nhập token kết nối (xtruong-2026)';}
+    else if(s.status==='needtoken'){el.classList.add('fail');el.textContent='🔑 Nhập token';el.title='Bấm để nhập token kết nối Google Sheet';}
     else if(s.status==='fail'){el.classList.add('fail');el.textContent='⚠ Chưa kết nối';el.title='Lỗi: '+(s.msg||'')+' — bấm để thử lại';}
     else {el.classList.add('checking');el.textContent='⏳ Đang kiểm tra…';}
   };
