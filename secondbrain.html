@@ -284,9 +284,12 @@ function brainAnswerHtml(raw){const q=normalize(raw), stop=new Set(['cho','toi',
  if(!terms.length)return '<div class="brain-empty">Anh nhập câu hỏi cụ thể hơn nhé, ví dụ: “Doanh thu HERISH” hoặc “Quy trình spa”.</div>';
  const d=globalDataset, matched=d.projects.find(p=>q.includes(normalize(p.name))), pId=matched?.id, pid=matched?[matched.id]:d.projects.map(p=>p.id);
  let answer='', rows=[];const searchData=searchSources();
- const financial=/doanh thu|tong thu|ban hang|chi phi|tong chi|loi nhuan|thu chi|dong tien|ngan sach/.test(q);
- const tasks=/nhiem vu|cong viec|deadline|qua han|hoan thanh/.test(q);
- const customers=/khach hang|khach moi|tu van|da mua/.test(q);
+ // TẮT ba nhánh tài chính / nhiệm vụ / khách hàng. Chúng cộng số từ bộ dữ liệu mẫu
+ // nhồi sẵn trong trang ("Doanh thu minh họa HERISH"...), không phải sổ sách thật.
+ // Hễ câu hỏi chứa "chi phí" hay "doanh thu" là chúng cướp quyền trả lời và đưa ra
+ // con số bịa, trong khi 261 tài liệu thật từ ổ D nằm ngay đó mà không được ngó tới.
+ // Để false thì mọi câu hỏi đều tra thẳng vào tài liệu thật.
+ const financial=false, tasks=false, customers=false;
  if(financial){const transactions=d.tx.filter(x=>!pId||x.projectId===pId),income=transactions.filter(x=>x.type==='income').reduce((n,x)=>n+Number(x.amount),0),expense=transactions.filter(x=>x.type==='expense').reduce((n,x)=>n+Number(x.amount),0);answer=`${matched?matched.name:'Cả ba dự án'}: Tổng thu <b>${money(income)}</b>, tổng chi <b>${money(expense)}</b>, chênh lệch thu − chi <b>${money(income-expense)}</b>. Chênh lệch này không phải lợi nhuận kế toán.`;rows=searchData.filter(x=>x.kind==='Thu chi'&&(!pId||x.projectId===pId)).slice(0,12)}
  else if(tasks){const t=d.tasks.filter(x=>!pId||x.projectId===pId);answer=`${matched?matched.name:'Ba dự án'} có <b>${t.length} nhiệm vụ</b>, trong đó <b>${t.filter(x=>x.status==='done').length} hoàn thành</b>, <b>${t.filter(x=>x.status!=='done'&&x.due<plus(0)).length} quá hạn</b>.`;rows=searchData.filter(x=>x.kind==='Nhiệm vụ'&&(!pId||x.projectId===pId)).slice(0,12)}
  else if(customers){const c=d.customers.filter(x=>!pId||x.projectId===pId);answer=`${matched?matched.name:'Ba dự án'} có <b>${c.length} hồ sơ khách hàng</b> trong bản demo, gồm <b>${c.filter(x=>x.stage==='Khách mới').length} khách mới</b> và <b>${c.filter(x=>x.stage==='Đã mua').length} đã mua</b>.`;rows=searchData.filter(x=>x.kind==='Khách hàng'&&(!pId||x.projectId===pId)).slice(0,12)}
